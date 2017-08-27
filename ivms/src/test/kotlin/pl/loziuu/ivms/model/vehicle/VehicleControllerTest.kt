@@ -78,6 +78,5 @@ class VehicleControllerTest {
     fun deleteNonExistingEntityShouldReturnNotFound() {
         val result = mockMvc.perform(delete("/vehicles/100"))
                 .andReturn()
-        print(result.resolvedException.message)
     }
 }

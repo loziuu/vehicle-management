@@ -14,5 +14,4 @@ class VehicleConfiguration {
 
     @Bean
     fun vehicleQueryService(repository: VehicleQueryRepository): VehicleQueryService = VehicleQueryServiceImpl(repository)
-
 }

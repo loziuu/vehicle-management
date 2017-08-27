@@ -29,9 +29,6 @@ class VehicleController(val facade: VehicleFacade) {
         return ResponseEntity(null, HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("{id}/insurances")
-    fun getInsurances(@PathVariable id: Long) = facade.getInsurances(id)
-
     @PostMapping("{id}/insurances")
     fun addInsurance(@PathVariable id: Long, @RequestBody dto: InsuranceDto): ResponseEntity<InsuranceDto> {
         val entity = facade.addInsurance(InsuranceDto(dto.id, dto.startDate, dto.endDate, id))

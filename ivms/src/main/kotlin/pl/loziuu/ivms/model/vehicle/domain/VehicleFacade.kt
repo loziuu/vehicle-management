@@ -17,12 +17,5 @@ class VehicleFacade(val command: VehicleService, val query: VehicleQueryService,
 
     fun delete(id: Long) = command.delete(id)
 
-    fun getInsurances(vehicleId: Long): List<InsuranceQueryDto> {
-        if (query.doesExists(vehicleId))
-            return insuranceFacade.getVehicleInsurances(vehicleId)
-        else
-            throw VehicleNotFoundException()
-    }
-
     fun addInsurance(dto: InsuranceDto): InsuranceDto = insuranceFacade.addInsurance(dto)
 }

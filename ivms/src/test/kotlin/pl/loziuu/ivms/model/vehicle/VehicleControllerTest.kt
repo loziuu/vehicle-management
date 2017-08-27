@@ -13,9 +13,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.transaction.annotation.Transactional
+import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
 
 @SpringBootTest
+@Transactional
 @RunWith(SpringRunner::class)
 class VehicleControllerTest {
 
@@ -78,5 +81,25 @@ class VehicleControllerTest {
     fun deleteNonExistingEntityShouldReturnNotFound() {
         val result = mockMvc.perform(delete("/vehicles/100"))
                 .andReturn()
+    }
+
+    @Test
+    fun getVehicleInsurancesShouldReturnOk() {
+        mockMvc.perform(get("/vehicles/1/insurances"))
+                .andExpect(status().isOk)
+    }
+
+    @Test
+    fun getVehicleInsurancesOfNonExistingVehicleShouldReturnNotFound() {
+        mockMvc.perform(get("/vehicles/100/insurances"))
+                .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun addInsuranceToVehicleShouldReturnCreated() {
+        val result = mockMvc.perform(post("/vehicles/1/insurances")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(jsonMapper.writeValueAsString(InsuranceDto())))
+                .andExpect(status().isCreated)
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @DataJpaTest
 @RunWith(SpringRunner::class)
 class InsuranceQueryServiceTest {
+
     @Autowired
     lateinit var repository: InstanceQueryRepository
     lateinit var service: InsuranceQueryService

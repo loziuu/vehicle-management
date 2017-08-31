@@ -83,6 +83,7 @@ class VehicleControllerTest {
                 .andReturn()
     }
 
+
     @Test
     fun addInsuranceToVehicleShouldReturnCreated() {
         mockMvc.perform(post("/vehicles/1/insurances")
@@ -90,4 +91,17 @@ class VehicleControllerTest {
                 .content(jsonMapper.writeValueAsString(InsuranceDto())))
                 .andExpect(status().isCreated)
     }
+
+    @Test
+    fun getVehicleInsurancesShouldReturnOk() {
+        mockMvc.perform(get("/vehicles/1/insurances"))
+                .andExpect(status().isOk)
+    }
+
+    @Test
+    fun deleteExistingInsuranceShouldReturnNoContent() {
+        mockMvc.perform(delete("/vehicles/1/insurances/1"))
+                .andExpect(status().isNoContent)
+    }
+
 }

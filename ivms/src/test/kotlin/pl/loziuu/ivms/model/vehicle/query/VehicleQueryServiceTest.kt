@@ -32,7 +32,12 @@ class VehicleQueryServiceTest {
     @Test
     fun getExistingEntityShouldReturnQueryDto() {
         val dto = service.get(1L)
+
+        print(dto.insurances)
+        println(dto.repairs)
         assertThat(dto).isNotNull();
+        assertThat(dto.insurances).isNotEmpty
+        assertThat(dto.repairs).isNotEmpty
     }
 
     @Test(expected = VehicleNotFoundException::class)

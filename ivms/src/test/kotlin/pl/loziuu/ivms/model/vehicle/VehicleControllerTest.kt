@@ -103,5 +103,4 @@ class VehicleControllerTest {
         mockMvc.perform(delete("/vehicles/1/insurances/1"))
                 .andExpect(status().isNoContent)
     }
-
 }

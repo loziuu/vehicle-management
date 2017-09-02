@@ -1,6 +1,11 @@
 package pl.loziuu.ivms.model.vehicle.query
 
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
+import pl.loziuu.ivms.model.insurance.exception.InsuranceNotFoundException
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
+import pl.loziuu.ivms.model.repair.domain.Repair
+import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import javax.persistence.*
 
@@ -12,5 +17,25 @@ class VehicleQueryDto(
         val manufacturer: String = "",
         val productionYear: Int = 0,
         @OneToMany(mappedBy = "vehicleId") val insurances: List<InsuranceQueryDto> = listOf(),
-        @OneToMany(mappedBy = "vehicleId") val repairs: List<RepairQueryDto> = listOf())
+        @OneToMany(mappedBy = "vehicleId") val repairs: List<RepairQueryDto> = listOf()) {
+
+    fun getInsurance(insuranceId: Long): InsuranceQueryDto {
+        try {
+            return insurances.filter { insurance -> insurance.id == insuranceId }.first()
+        } catch(e: NoSuchElementException) {
+            throw InsuranceNotFoundException()
+        }
+    }
+
+    fun getRepair(repairId: Long): RepairQueryDto {
+        try {
+            return repairs.filter { repair -> repair.id == repairId }.first()
+        } catch (e: NoSuchElementException) {
+            throw RepairNotFoundException()
+        }
+    }
+}
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class RepairNotFoundException : RuntimeException()
 

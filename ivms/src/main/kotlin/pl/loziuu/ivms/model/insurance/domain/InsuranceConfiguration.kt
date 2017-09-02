@@ -10,10 +10,12 @@ import pl.loziuu.ivms.model.insurance.query.InsuranceQueryServiceImpl
 class InsuranceConfiguration {
 
     @Bean
-    fun insuranceService(repository: InsuranceRepository): InsuranceService = InsuranceServiceImpl(repository)
+    fun insuranceService(repository: InsuranceRepository): InsuranceService
+            = InsuranceServiceImpl(repository)
 
     @Bean
-    fun insuranceQueryService(repository: InstanceQueryRepository): InsuranceQueryService = InsuranceQueryServiceImpl(repository)
+    fun insuranceQueryService(repository: InstanceQueryRepository): InsuranceQueryService
+            = InsuranceQueryServiceImpl(repository)
 
     @Bean
     fun insuranceFacade(commandRepository: InsuranceRepository, queryRepository: InstanceQueryRepository): InsuranceFacade {

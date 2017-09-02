@@ -10,8 +10,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
@@ -102,5 +101,12 @@ class VehicleControllerTest {
     fun deleteExistingInsuranceShouldReturnNoContent() {
         mockMvc.perform(delete("/vehicles/1/insurances/1"))
                 .andExpect(status().isNoContent)
+    }
+
+    @Test
+    fun getRepairsForVehicle() {
+        mockMvc.perform(get("/vehicles/1/repairs"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.length()").value(2))
     }
 }

@@ -1,5 +1,6 @@
 package pl.loziuu.ivms.model.insurance.query
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -9,4 +10,4 @@ class InsuranceQueryDto(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                         val id: Long = 0,
                         val startDate: LocalDate = LocalDate.now(),
                         val endDate: LocalDate = LocalDate.now(),
-                        val vehicleId: Long = 0)
+                        @JsonIgnore val vehicleId: Long = 0)

@@ -7,6 +7,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
+import pl.loziuu.ivms.model.repair.domain.RepairDto
+import pl.loziuu.ivms.model.repair.domain.RepairRepository
+import pl.loziuu.ivms.model.repair.domain.RepairService
+import pl.loziuu.ivms.model.repair.domain.RepairServiceImpl
 
 
 @DataJpaTest
@@ -24,8 +28,8 @@ class RepairServiceTest {
 
     @Test
     fun shouldAddNewRepair() {
-        service.add(RepairDto())
+        service.add(RepairDto(0, "Nowa naprawa", 120.0, 1L))
 
-        assertThat(repository.findAll().size).isEqualTo(1);
+        assertThat(repository.findAll().size).isEqualTo(3)
     }
 }

@@ -44,4 +44,11 @@ class VehicleQueryServiceTest {
     fun getNonExistingEntityShouldThrowException() {
         service.get(100L)
     }
+
+    @Test
+    fun getAllRepairsFromVehicleQueryDtoShouldReturn2Repairs() {
+        val vehicle = service.get(1L)
+
+        assertThat(vehicle.repairs.size).isEqualTo(2);
+    }
 }

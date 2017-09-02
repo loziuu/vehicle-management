@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
+import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleFacade
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
@@ -25,6 +26,12 @@ class VehicleController(val facade: VehicleFacade) {
     @GetMapping("{id}/insurances")
     fun getVehicleInsurances(@PathVariable id: Long): ResponseEntity<List<InsuranceQueryDto>> {
         val entities = facade.get(id).insurances
+        return ResponseEntity(entities, HttpStatus.OK)
+    }
+
+    @GetMapping("{id}/repairs")
+    fun getVehicleRepairs(@PathVariable id:Long): ResponseEntity<List<RepairQueryDto>> {
+        val entities = facade.get(id).repairs
         return ResponseEntity(entities, HttpStatus.OK)
     }
 

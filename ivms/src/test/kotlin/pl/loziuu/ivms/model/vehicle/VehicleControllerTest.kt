@@ -10,11 +10,11 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
+import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
 
 @SpringBootTest
@@ -104,4 +104,42 @@ class VehicleControllerTest {
                 .andExpect(status().isNoContent)
     }
 
+    @Test
+    fun getRepairsForVehicleShouldReturnOk() {
+        mockMvc.perform(get("/vehicles/1/repairs"))
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("$.length()").value(2))
+    }
+
+    @Test
+    fun postShouldAddNewRepairShoudReturnCreated() {
+        mockMvc.perform(post("/vehicles/1/repairs")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(jsonMapper.writeValueAsString(RepairDto())))
+                .andExpect(status().isCreated)
+    }
+
+    @Test
+    fun getOneVehicleRepairShouldReturnOk() {
+        mockMvc.perform(get("/vehicles/1/repairs/1"))
+                .andExpect(status().isOk)
+    }
+
+    @Test
+    fun getNonExistingVehicleRepairShouldReturnNotFound() {
+        mockMvc.perform(get("/vehicles/1/repairs/100"))
+                .andExpect(status().isNotFound)
+    }
+
+    @Test
+    fun getVehicleInsuranceShouldReturnOk() {
+        mockMvc.perform(get("/vehicles/1/insurances/1"))
+                .andExpect(status().isOk)
+    }
+
+    @Test
+    fun getNonExistingVehicleInsuranceShouldReturnNotFound() {
+        mockMvc.perform(get("/vehicles/1/insurances/100"))
+                .andExpect(status().isNotFound)
+    }
 }

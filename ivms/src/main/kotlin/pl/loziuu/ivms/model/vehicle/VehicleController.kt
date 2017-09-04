@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
+import pl.loziuu.ivms.model.repair.domain.RepairDto
+import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleFacade
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
@@ -28,6 +30,24 @@ class VehicleController(val facade: VehicleFacade) {
         return ResponseEntity(entities, HttpStatus.OK)
     }
 
+    @GetMapping("{id}/insurances/{insuranceId}")
+    fun getVehicleInsurance(@PathVariable id: Long, @PathVariable insuranceId: Long): ResponseEntity<InsuranceQueryDto> {
+        val entities = facade.get(id).getInsurance(insuranceId)
+        return ResponseEntity(entities, HttpStatus.OK)
+    }
+
+    @GetMapping("{id}/repairs")
+    fun getVehicleRepairs(@PathVariable id: Long): ResponseEntity<List<RepairQueryDto>> {
+        val entities = facade.get(id).repairs
+        return ResponseEntity(entities, HttpStatus.OK)
+    }
+
+    @GetMapping("{id}/repairs/{repairId}")
+    fun getVehicleRepair(@PathVariable id: Long, @PathVariable repairId: Long): ResponseEntity<RepairQueryDto> {
+        val entities = facade.get(id).getRepair(repairId)
+        return ResponseEntity(entities, HttpStatus.OK)
+    }
+
     @PostMapping
     fun add(@RequestBody dto: VehicleDto): ResponseEntity<VehicleDto> {
         val vehicle = facade.add(dto)
@@ -36,8 +56,14 @@ class VehicleController(val facade: VehicleFacade) {
 
     @PostMapping("{id}/insurances")
     fun addInsurance(@PathVariable id: Long, @RequestBody dto: InsuranceDto): ResponseEntity<InsuranceDto> {
-        val entity = facade.addInsurance(InsuranceDto(dto.id, dto.startDate, dto.endDate, id))
+        val entity = facade.addInsurance(InsuranceDto(0, dto.startDate, dto.endDate, id))
         return ResponseEntity(entity, HttpStatus.CREATED)
+    }
+
+    @PostMapping("{id}/repairs")
+    fun addRepair(@PathVariable id: Long, @RequestBody dto: RepairDto): ResponseEntity<RepairDto> {
+        val repair = facade.addRepair(RepairDto(0, dto.description, dto.cost, id))
+        return ResponseEntity(repair, HttpStatus.CREATED)
     }
 
     @DeleteMapping("{id}")

@@ -1,0 +1,16 @@
+apply plugin: 'docker'
+
+buildscript {
+
+    repositories { jcenter() }
+
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+task startBackend {}
+startBackend.dependsOn((":ivms:runAll"))
+
+task startFrontend {}
+startFrontend.dependsOn((":front:runAll"))

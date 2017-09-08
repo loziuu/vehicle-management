@@ -13,6 +13,7 @@ import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
 
 @RestController
 @RequestMapping("/vehicles")
+@CrossOrigin(origins = arrayOf("http://localhost:4200"))
 class VehicleController(val facade: VehicleFacade) {
 
     @GetMapping
@@ -56,13 +57,13 @@ class VehicleController(val facade: VehicleFacade) {
 
     @PostMapping("{id}/insurances")
     fun addInsurance(@PathVariable id: Long, @RequestBody dto: InsuranceDto): ResponseEntity<InsuranceDto> {
-        val entity = facade.addInsurance(InsuranceDto(0, dto.startDate, dto.endDate, id))
+        val entity = facade.addInsurance(InsuranceDto(0, dto.startDate, dto.endDate, dto.company, id))
         return ResponseEntity(entity, HttpStatus.CREATED)
     }
 
     @PostMapping("{id}/repairs")
     fun addRepair(@PathVariable id: Long, @RequestBody dto: RepairDto): ResponseEntity<RepairDto> {
-        val repair = facade.addRepair(RepairDto(0, dto.description, dto.cost, id))
+        val repair = facade.addRepair(RepairDto(0, dto.description, dto.cost, dto.date, id))
         return ResponseEntity(repair, HttpStatus.CREATED)
     }
 
@@ -75,6 +76,12 @@ class VehicleController(val facade: VehicleFacade) {
     @DeleteMapping("{vehicleId}/insurances/{insuranceId}")
     fun deleteInsurance(@PathVariable vehicleId: Long, @PathVariable insuranceId: Long): ResponseEntity<Any> {
         facade.deleteInsurance(vehicleId, insuranceId)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
+    @DeleteMapping("{vehicleId}/repairs/{repairId}")
+    fun deleteRepair(@PathVariable vehicleId: Long, @PathVariable repairId: Long): ResponseEntity<Any> {
+        facade.deleteRepair(vehicleId, repairId)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }

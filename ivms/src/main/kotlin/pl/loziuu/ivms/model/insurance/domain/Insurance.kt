@@ -10,6 +10,7 @@ data class Insurance(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                      val id: Long = 0,
                      val startDate: LocalDate = now(),
                      val endDate: LocalDate = now(),
+                     val company: String = "",
                      val vehicleId: Long = 0) {
-    fun toDto() = InsuranceDto(this.id, this.startDate, this.endDate, this.vehicleId)
+    fun toDto() = InsuranceDto(this.id, this.startDate, this.endDate, this.company, this.vehicleId)
 }

@@ -20,6 +20,7 @@ apply plugin: 'org.springframework.boot'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
 compileKotlin {
 	kotlinOptions.jvmTarget = "1.8"
 }
@@ -31,15 +32,20 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-hateoas')
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 	compile("com.h2database:h2")
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
+	testCompile("com.jayway.jsonpath:json-path")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+// run all task
+task runAll {}
+runAll.dependsOn(bootRun)

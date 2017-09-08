@@ -1,0 +1,17 @@
+<table class="table table-hover table-striped">
+	<tr>
+		<th>Model</th>
+		<th>Manufacturer</th>
+		<th>Prodcution Year</th>
+		<th>Actions</th>
+	</tr>
+	<tr *ngFor="let vehicle of vehicles">
+		<td>{{vehicle.content.model}}</td>
+		<td>{{vehicle.content.manufacturer}}</td>
+		<td>{{vehicle.content.productionYear}}</td>
+		<td>
+			<a [routerLink]="['/vehicle', vehicle.content.id]" class="btn btn-xs btn-info">Show</a>
+			<button (click)="delete(vehicle.content.id)" class="btn btn-xs btn-danger">Delete</button>
+		</td>
+	</tr>
+</table>

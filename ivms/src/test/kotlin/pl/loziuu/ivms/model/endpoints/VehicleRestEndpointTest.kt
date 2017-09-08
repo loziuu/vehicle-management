@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.model.vehicle
+package pl.loziuu.ivms.model.endpoints
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Before
@@ -13,17 +13,19 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
+import pl.loziuu.ivms.model.endpoints.VehicleRestController
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
+import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
 @RunWith(SpringRunner::class)
-class VehicleControllerTest {
+class VehicleRestEndpointTest {
 
     @Autowired
-    lateinit var controller: VehicleController
+    lateinit var controller: VehicleRestController
     @Autowired
     lateinit var jsonMapper: ObjectMapper
     lateinit var mockMvc: MockMvc
@@ -37,27 +39,27 @@ class VehicleControllerTest {
 
     @Test
     fun getAllVehiclesShouldReturnJsonAndOk() {
-        mockMvc.perform(get("/vehicles"))
+        mockMvc.perform(get("/v1/vehicles"))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     }
 
     @Test
     fun getOneShouldReturnJsonAndOk() {
-        mockMvc.perform(get("/vehicles/1"))
+        mockMvc.perform(get("/v1/vehicles/1"))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
     }
 
     @Test
     fun getNonExistingShouldReturnNotFound() {
-        mockMvc.perform(get("/vehicles/100"))
+        mockMvc.perform(get("/v1/vehicles/100"))
                 .andExpect(status().isNotFound)
     }
 
     @Test
     fun validPostShouldAddVehicleAndReturnCreated() {
-        mockMvc.perform(post("/vehicles")
+        mockMvc.perform(post("/v1/vehicles")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(jsonMapper.writeValueAsString(VehicleDto())))
                 .andExpect(status().isCreated)
@@ -65,7 +67,7 @@ class VehicleControllerTest {
 
     @Test
     fun invalidPostShouldReturnBadRequest() {
-        mockMvc.perform(post("/vehicles")
+        mockMvc.perform(post("/v1/vehicles")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(jsonMapper.writeValueAsString(null)))
                 .andExpect(status().isBadRequest)
@@ -73,20 +75,19 @@ class VehicleControllerTest {
 
     @Test
     fun deleteEntityShouldReturnNoContent() {
-        mockMvc.perform(delete("/vehicles/1"))
+        mockMvc.perform(delete("/v1/vehicles/1"))
                 .andExpect(status().isNoContent)
     }
 
     @Test
     fun deleteNonExistingEntityShouldReturnNotFound() {
-        mockMvc.perform(delete("/vehicles/100"))
+        mockMvc.perform(delete("/v1/vehicles/100"))
                 .andReturn()
     }
 
-
     @Test
     fun addInsuranceToVehicleShouldReturnCreated() {
-        mockMvc.perform(post("/vehicles/1/insurances")
+        mockMvc.perform(post("/v1/vehicles/1/insurances")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(jsonMapper.writeValueAsString(InsuranceDto())))
                 .andExpect(status().isCreated)
@@ -94,52 +95,54 @@ class VehicleControllerTest {
 
     @Test
     fun getVehicleInsurancesShouldReturnOk() {
-        mockMvc.perform(get("/vehicles/1/insurances"))
+        mockMvc.perform(get("/v1/vehicles/1/insurances"))
                 .andExpect(status().isOk)
     }
 
     @Test
     fun deleteExistingInsuranceShouldReturnNoContent() {
-        mockMvc.perform(delete("/vehicles/1/insurances/1"))
+        mockMvc.perform(delete("/v1/vehicles/1/insurances/1"))
                 .andExpect(status().isNoContent)
     }
 
     @Test
     fun getRepairsForVehicleShouldReturnOk() {
-        mockMvc.perform(get("/vehicles/1/repairs"))
+        mockMvc.perform(get("/v1/vehicles/1/repairs"))
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("$.length()").value(2))
     }
 
     @Test
     fun postShouldAddNewRepairShoudReturnCreated() {
-        mockMvc.perform(post("/vehicles/1/repairs")
+        val repairDto = RepairDto(0, "test", 100.0, LocalDate.now())
+
+        mockMvc.perform(post("/v1/vehicles/1/repairs")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(jsonMapper.writeValueAsString(RepairDto())))
+                .content(jsonMapper.writeValueAsString(repairDto)))
                 .andExpect(status().isCreated)
     }
 
     @Test
     fun getOneVehicleRepairShouldReturnOk() {
-        mockMvc.perform(get("/vehicles/1/repairs/1"))
+        mockMvc.perform(get("/v1/vehicles/1/repairs/1"))
                 .andExpect(status().isOk)
     }
 
     @Test
     fun getNonExistingVehicleRepairShouldReturnNotFound() {
-        mockMvc.perform(get("/vehicles/1/repairs/100"))
+        mockMvc.perform(get("/v1/vehicles/1/repairs/100"))
                 .andExpect(status().isNotFound)
     }
 
     @Test
     fun getVehicleInsuranceShouldReturnOk() {
-        mockMvc.perform(get("/vehicles/1/insurances/1"))
+        mockMvc.perform(get("/v1/vehicles/1/insurances/1"))
                 .andExpect(status().isOk)
     }
 
     @Test
     fun getNonExistingVehicleInsuranceShouldReturnNotFound() {
-        mockMvc.perform(get("/vehicles/1/insurances/100"))
+        mockMvc.perform(get("/v1/vehicles/1/insurances/100"))
                 .andExpect(status().isNotFound)
     }
 }

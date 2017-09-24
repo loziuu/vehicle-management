@@ -24,7 +24,7 @@ class InsuranceServiceTest {
 
     @Test
     fun shouldAddInsurance() {
-        service.add(InsuranceDto(0, LocalDate.now(), LocalDate.now(), 1));
+        service.add(InsuranceDto(0, LocalDate.now(), LocalDate.now(), "PZU"));
 
         assertThat(repository.findAll().size).isEqualTo(3)
     }

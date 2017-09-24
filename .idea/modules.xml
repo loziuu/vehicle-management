@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/front/front.iml" filepath="$PROJECT_DIR$/.idea/modules/front/front.iml" group="front" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ivms/ivms.iml" filepath="$PROJECT_DIR$/.idea/modules/ivms/ivms.iml" group="ivms" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ivms/ivms_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ivms/ivms_main.iml" group="ivms" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ivms/ivms_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ivms/ivms_test.iml" group="ivms" />
+      <module fileurl="file://$PROJECT_DIR$/vehicle-management.iml" filepath="$PROJECT_DIR$/vehicle-management.iml" />
+    </modules>
+  </component>
+</project>

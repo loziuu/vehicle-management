@@ -10,7 +10,6 @@ import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
 import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
-import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleFacade
 import pl.loziuu.ivms.model.vehicle.domain.VehicleService
 import pl.loziuu.ivms.model.vehicle.ports.VehicleRestPort
@@ -51,8 +50,8 @@ class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
     }
 
     override fun postVehicle(details: VehicleDetails): ResponseEntity<Any> {
-        val addedVehicle = facade.add(VehicleDto(0, details.model, details.manufacturer, details.productionYear))
-        val vehicle = facade.get(addedVehicle.id)
+        val id = facade.add(details)
+        val vehicle = facade.get(id)
         val link = VehicleResource(vehicle).getLink("self")
         return ResponseEntity.created(URI.create(link.href)).build()
     }

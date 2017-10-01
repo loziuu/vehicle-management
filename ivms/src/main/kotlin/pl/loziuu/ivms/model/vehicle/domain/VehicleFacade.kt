@@ -5,7 +5,6 @@ import pl.loziuu.ivms.model.insurance.domain.InsuranceService
 import pl.loziuu.ivms.model.insurance.exception.InsuranceNotFoundException
 import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.repair.domain.RepairService
-import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import pl.loziuu.ivms.model.vehicle.query.RepairNotFoundException
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryService
@@ -21,8 +20,8 @@ class VehicleFacade(val command: VehicleService,
     fun get(id: Long): VehicleQueryDto
             = query.get(id)
 
-    fun add(dto: VehicleDto): VehicleDto
-            = command.add(dto)
+    fun add(details: VehicleDetails): Long
+            = command.add(details)
 
     fun delete(id: Long)
             = command.delete(id)

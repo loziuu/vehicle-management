@@ -13,10 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
-import pl.loziuu.ivms.model.endpoints.VehicleRestController
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.repair.domain.RepairDto
-import pl.loziuu.ivms.model.vehicle.domain.VehicleDto
+import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
 import java.time.LocalDate
 
 @SpringBootTest
@@ -61,7 +60,7 @@ class VehicleRestEndpointTest {
     fun validPostShouldAddVehicleAndReturnCreated() {
         mockMvc.perform(post("/v1/vehicles")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(jsonMapper.writeValueAsString(VehicleDto())))
+                .content(jsonMapper.writeValueAsString(VehicleDetails())))
                 .andExpect(status().isCreated)
     }
 

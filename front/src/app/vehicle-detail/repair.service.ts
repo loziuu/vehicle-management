@@ -9,15 +9,13 @@ export class RepairService {
 
   constructor(private http: Http) {}
 
-  public addRepair(id, repair: Repair): Promise<Repair> {
-    return this.http.post('http://localhost:8080/vehicles/' + id + '/repairs', repair)
-      .toPromise()
-      .then(response => response.json() as Repair)
-      .catch(error => this.handleError(error));
+  public addRepair(id, repair: Repair): Promise<any> {
+    return this.http.post('http://localhost:8080/v1/vehicles/' + id + '/repairs', repair)
+      .toPromise();
   }
 
   public deleteRepair(vehicleId, repairId): Promise<any> {
-    return this.http.delete('http://localhost:8080/vehicles/' + vehicleId + '/repairs/' + repairId)
+    return this.http.delete('http://localhost:8080/v1/vehicles/' + vehicleId + '/repairs/' + repairId)
     .toPromise();
   }
 

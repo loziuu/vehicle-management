@@ -6,13 +6,12 @@
 		<th>Actions</th>
 	</tr>
 	<tr *ngFor="let vehicle of vehicles">
-		<td>{{vehicle.model}}</td>
-		<td>{{vehicle.manufacturer}}</td>
-		<td>{{vehicle.productionYear}}</td>
+		<td>{{vehicle.content.model}}</td>
+		<td>{{vehicle.content.manufacturer}}</td>
+		<td>{{vehicle.content.productionYear}}</td>
 		<td>
-			<a [routerLink]="['/vehicle', vehicle.id]" class="btn btn-xs btn-info">Show</a>
-			<button (click)="delete(vehicle.id)" class="btn btn-xs btn-danger">Delete</button>
+			<a [routerLink]="['/vehicle', vehicle.content.id]" class="btn btn-xs btn-info">Show</a>
+			<button (click)="delete(vehicle.content.id)" class="btn btn-xs btn-danger">Delete</button>
 		</td>
 	</tr>
 </table>
-

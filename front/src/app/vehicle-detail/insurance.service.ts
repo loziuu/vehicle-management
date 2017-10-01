@@ -8,14 +8,13 @@ import 'rxjs/add/operator/toPromise';
 export class InsuranceService {
   constructor(private http: Http) {}
 
-  public addInsurance(vehicle_id, insurance): Promise<Insurance> {
-    return this.http.post("http://localhost:8080/vehicles/" + vehicle_id + "/insurances", insurance)
-      .toPromise()
-      .then(response => response.json() as Insurance);
+  public addInsurance(vehicle_id, insurance): Promise<any> {
+    return this.http.post("http://localhost:8080/v1/vehicles/" + vehicle_id + "/insurances", insurance)
+      .toPromise();
     }
 
   public deleteInsurance(vehicle_id, insurances_id): Promise<any> {
-    return this.http.delete("http://localhost:8080/vehicles" + vehicle_id + "/insurances/" + insurances_id)
+    return this.http.delete("http://localhost:8080/v1/vehicles" + vehicle_id + "/insurances/" + insurances_id)
       .toPromise();
   }
 }

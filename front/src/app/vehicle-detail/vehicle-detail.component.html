@@ -1,7 +1,7 @@
 <div *ngIf="vehicle">
 	<div class="col-lg-12">
-		<h1>{{vehicle.manufacturer}} {{vehicle.model}},
-			{{vehicle.productionYear}}</h1>
+		<h1>{{vehicle.content.manufacturer}} {{vehicle.content.model}},
+			{{vehicle.content.productionYear}}</h1>
 		<br />
 	</div>
 
@@ -12,18 +12,18 @@
 			<table class="table">
 				<tr>
 					<th>Date</th>
-					<th>Description</th>
 					<th>Cost</th>
+					<th>Description</th>
 					<th>Options</th>
 				</tr>
-				<tr *ngFor="let repair of vehicle.repairs">
-					<td>{{repair.date}}</td>
-					<td>{{repair.description}}</td>
-					<td>{{repair.cost}}</td>
+				<tr *ngFor="let repair of vehicle.content.repairs">
+					<td class="col-lg-2">{{repair.date}}</td>
+					<td class="col-lg-2">{{repair.cost}}</td>
+					<td class="col-lg-7">{{repair.description}}</td>
 					<td><button class="btn btn-danger btn-xs" (click)="deleteRepair(repair.id)">Delete</button></td>
 				</tr>
 			</table>
-			<p *ngIf="vehicle.repairs[0] == undefined">No repairs!</p>
+			<p *ngIf="vehicle.content.repairs[0] == undefined">No repairs!</p>
 		</div>
 
 		<div class="row">
@@ -34,7 +34,7 @@
 					<th>Start date</th>
 					<th>End date</th>
 				</tr>
-				<tr *ngFor="let insurance of vehicle.insurances">
+				<tr *ngFor="let insurance of vehicle.content.insurances">
 					<td>{{insurance.company}}</td>
 					<td>{{insurance.startDate}}</td>
 					<td>{{insurance.endDate}}</td>
@@ -43,9 +43,9 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-6">
-			<app-repairform [vehicle_id]="vehicle.id" (onAdd)="initVehicle()"></app-repairform>
+			<app-repairform [vehicle_id]="vehicle.content.id" (onAdd)="initVehicle()"></app-repairform>
 		</div>
 		<div class="col-lg-6">
-			<app-insuranceform [vehicle_id]="vehicle.id" (onAdd)="initVehicle()"></app-insuranceform>
+			<app-insuranceform [vehicle_id]="vehicle.content.id" (onAdd)="initVehicle()"></app-insuranceform>
 		</div>
 </div>

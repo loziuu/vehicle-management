@@ -15,28 +15,28 @@ import 'rxjs/add/operator/switchMap';
 })
 export class VehicleDetailComponent implements OnInit {
   vehicle: Vehicle;
-  
+
   constructor(
     private vehicleService: VehicleService,
     private route: ActivatedRoute,
     private repairService: RepairService,
     private location: Location
   ) {}
-  
+
   ngOnInit(): void {
     this.initVehicle();
   }
-  
+
   public initVehicle() {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.vehicleService.getVehicle(+params.get('id')))
       .subscribe(vehicle => this.vehicle = vehicle);
   }
-  
+
   public deleteRepair(repairId) {
-    this.repairService.deleteRepair(this.vehicle.id, repairId).then(() => this.initVehicle());
+    this.repairService.deleteRepair(this.vehicle.content.id, repairId).then(() => this.initVehicle());
   }
-  
+
   public goBack() {
     this.location.back();
   }

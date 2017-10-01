@@ -5,7 +5,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-creation',
   template: `
-    <p *ngIf="isSuccess" class="text-success">Successfuly added vehicle!</p>
+    <div *ngIf="isSuccess" class="alert alert-success">
+      Successfuly added vehicle!
+    </div>
+
     <label for="model">Model</label>
     <input [(ngModel)]="vehicle.model" type="text" class="form-control" name="model"><br/>
     <label for="manufacturer">Manufacturer</label>
@@ -27,18 +30,18 @@ export class CreationComponent implements OnInit {
   ngOnInit() {
     this.initVehicle();
   }
-  
+
   public submit() {
     this.vehicleService.addVehicle(this.vehicle).then(() => {
      this.isSuccess = true;
-     this.initVehicle(); 
+     this.initVehicle();
     });
   }
-  
+
   public reset() {
-    this.initVehicle(); 
+    this.initVehicle();
   }
-  
+
   private initVehicle() {
     this.vehicle = new Vehicle();
   }

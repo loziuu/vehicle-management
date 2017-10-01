@@ -12,14 +12,14 @@
 			<table class="table">
 				<tr>
 					<th>Date</th>
-					<th>Description</th>
 					<th>Cost</th>
+					<th>Description</th>
 					<th>Options</th>
 				</tr>
 				<tr *ngFor="let repair of vehicle.content.repairs">
-					<td>{{repair.date}}</td>
-					<td>{{repair.description}}</td>
-					<td>{{repair.cost}}</td>
+					<td class="col-lg-2">{{repair.date}}</td>
+					<td class="col-lg-2">{{repair.cost}}</td>
+					<td class="col-lg-7">{{repair.description}}</td>
 					<td><button class="btn btn-danger btn-xs" (click)="deleteRepair(repair.id)">Delete</button></td>
 				</tr>
 			</table>

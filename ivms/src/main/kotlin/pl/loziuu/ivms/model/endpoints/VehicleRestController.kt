@@ -57,7 +57,7 @@ class VehicleRestController(val restAdapter: VehicleRestAdapter){
 
     @PostMapping("{id}/insurances")
     fun addInsurance(@PathVariable id: Long, @RequestBody dto: InsuranceDto): ResponseEntity<Any> {
-        return restAdapter.postInsurance(InsuranceDto(0, dto.startDate, dto.endDate, "Some company", id))
+        return restAdapter.postInsurance(InsuranceDto(0, dto.startDate, dto.endDate, dto.company, id))
     }
 
     @DeleteMapping("{id}")

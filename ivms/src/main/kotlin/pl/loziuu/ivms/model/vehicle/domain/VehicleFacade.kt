@@ -38,7 +38,7 @@ class VehicleFacade(val command: VehicleService,
     }
 
     fun addRepair(repairDto: RepairDto): RepairDto =
-        repairService.add(repairDto)
+        command.addRepair(repairDto.vehicleId, repairDto)
 
     fun deleteRepair(vehicleId: Long, repairId: Long) {
         val vehicleRepairs = get(vehicleId).repairs

@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
-import pl.loziuu.ivms.model.repair.domain.RepairDto
+import pl.loziuu.ivms.model.repair.domain.RepairDetails
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
 import java.time.LocalDate
 
@@ -113,7 +113,7 @@ class VehicleRestEndpointTest {
 
     @Test
     fun postShouldAddNewRepairShoudReturnCreated() {
-        val repairDto = RepairDto(0, "test", 100.0, LocalDate.now())
+        val repairDto = RepairDetails("0", 120.0,  LocalDate.now())
 
         mockMvc.perform(post("/v1/vehicles/1/repairs")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)

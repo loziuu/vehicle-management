@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.model.vehicle.adapters
+package pl.loziuu.ivms.infrastructure.adapters
 
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
@@ -7,14 +7,12 @@ import org.springframework.http.ResponseEntity
 import pl.loziuu.ivms.model.endpoints.VehicleRestController
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
-import pl.loziuu.ivms.model.repair.domain.RepairDto
+import pl.loziuu.ivms.model.repair.domain.RepairDetails
 import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
 import pl.loziuu.ivms.model.vehicle.domain.VehicleFacade
-import pl.loziuu.ivms.model.vehicle.domain.VehicleService
 import pl.loziuu.ivms.model.vehicle.ports.VehicleRestPort
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
-import pl.loziuu.ivms.model.vehicle.query.VehicleQueryService
 import java.net.URI
 
 class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
@@ -56,18 +54,14 @@ class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
         return ResponseEntity.created(URI.create(link.href)).build()
     }
 
-    override fun postRepair(dto: RepairDto): ResponseEntity<Any> {
-        val addedRepair = facade.addRepair(dto)
-        val repair = facade.get(addedRepair.vehicleId).getRepair(addedRepair.id)
-        val link = RepairResource(repair).getLink("self")
-        return ResponseEntity.created(URI.create(link.href)).build()
+    override fun postRepair(vehicleId: Long, details: RepairDetails): ResponseEntity<Any> {
+        val addedRepair = facade.addRepair(vehicleId, details)
+        return ResponseEntity.status(201).build()
     }
 
-    override fun postInsurance(dto: InsuranceDto): ResponseEntity<Any> {
-        val addedInsurance = facade.addInsurance(dto)
-        val insurance = facade.get(addedInsurance.vehicleId).getInsurance(addedInsurance.id)
-        val link = InsuranceResource(insurance).getLink("self")
-        return ResponseEntity.created(URI.create(link.href)).build()
+    override fun postInsurance(vehicleId: Long, dto: InsuranceDto): ResponseEntity<Any> {
+        val addedInsurance = facade.addInsurance(vehicleId, dto)
+        return ResponseEntity.status(201).build()
     }
 
     override fun deleteVehicle(id: Long): ResponseEntity<Any> {

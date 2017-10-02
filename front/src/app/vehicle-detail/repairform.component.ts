@@ -9,7 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     <div class="panel-heading">Add repair</div>
     <div class="panel-body">
       <label for="date">Date</label>
-      <input type="date" class="form-control" name="date"><br/>
+      <input type="date" class="form-control" name="date" [(ngModel)]="repair.date"><br/>
       <label for="cost">Cost</label>
       <input type="number" class="form-control" name="cost" [(ngModel)]="repair.cost"><br/>
       <label for="description">Description</label>

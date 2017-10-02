@@ -1,18 +1,12 @@
 package pl.loziuu.ivms.model.vehicle.domain
 
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
-import pl.loziuu.ivms.model.insurance.domain.InsuranceService
-import pl.loziuu.ivms.model.insurance.exception.InsuranceNotFoundException
-import pl.loziuu.ivms.model.repair.domain.RepairDto
-import pl.loziuu.ivms.model.repair.domain.RepairService
-import pl.loziuu.ivms.model.vehicle.query.RepairNotFoundException
+import pl.loziuu.ivms.model.repair.domain.RepairDetails
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
 import pl.loziuu.ivms.model.vehicle.query.VehicleQueryService
 
 class VehicleFacade(val command: VehicleService,
-                    val query: VehicleQueryService,
-                    val insuranceService: InsuranceService,
-                    val repairService: RepairService) {
+                    val query: VehicleQueryService) {
 
     fun getAll(): List<VehicleQueryDto>
             = query.getAll()
@@ -26,25 +20,15 @@ class VehicleFacade(val command: VehicleService,
     fun delete(id: Long)
             = command.delete(id)
 
-    fun addInsurance(dto: InsuranceDto): InsuranceDto
-            = insuranceService.add(dto)
+    fun addInsurance(vehicleId: Long, dto: InsuranceDto)
+            = command.addInsurance(vehicleId, dto)
 
-    fun deleteInsurance(vehicleId: Long, insuranceId: Long) {
-        val vehicleInsurances = get(vehicleId).insurances
-        if (vehicleInsurances.any { insurance -> insurance.id == insuranceId })
-            insuranceService.delete(insuranceId)
-        else
-            throw InsuranceNotFoundException()
-    }
+    fun deleteInsurance(vehicleId: Long, insuranceId: Long)
+            = command.removeInsurance(vehicleId, insuranceId)
 
-    fun addRepair(repairDto: RepairDto): RepairDto =
-        command.addRepair(repairDto.vehicleId, repairDto)
+    fun addRepair(vehicleId: Long, details: RepairDetails)
+            = command.addRepair(vehicleId, details)
 
-    fun deleteRepair(vehicleId: Long, repairId: Long) {
-        val vehicleRepairs = get(vehicleId).repairs
-        if (vehicleRepairs.any { repair -> repair.id == repairId })
-            repairService.delete(repairId)
-        else
-            throw RepairNotFoundException()
-    }
+    fun deleteRepair(vehicleId: Long, repairId: Long)
+            = command.deleteRepair(vehicleId, repairId)
 }

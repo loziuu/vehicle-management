@@ -25,7 +25,7 @@ class VehicleServiceTest {
 
     @Test
     fun shouldAddVehicleAndReturnDto() {
-        val dto = service.add(VehicleDto())
+        val dto = service.add(VehicleDetails())
 
         assertNotNull(dto)
         assertThat(repository.findAll().size).isEqualTo(3)

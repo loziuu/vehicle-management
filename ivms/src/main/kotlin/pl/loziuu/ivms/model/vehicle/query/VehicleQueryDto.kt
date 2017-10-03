@@ -4,8 +4,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 import pl.loziuu.ivms.model.insurance.exception.InsuranceNotFoundException
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
-import pl.loziuu.ivms.model.repair.domain.Repair
-import pl.loziuu.ivms.model.repair.domain.RepairDto
 import pl.loziuu.ivms.model.repair.query.RepairQueryDto
 import javax.persistence.*
 
@@ -21,15 +19,15 @@ class VehicleQueryDto(
 
     fun getInsurance(insuranceId: Long): InsuranceQueryDto {
         try {
-            return insurances.filter { insurance -> insurance.id == insuranceId }.first()
-        } catch(e: NoSuchElementException) {
+            return insurances.filter { it.id == insuranceId }.first()
+        } catch (e: NoSuchElementException) {
             throw InsuranceNotFoundException()
         }
     }
 
     fun getRepair(repairId: Long): RepairQueryDto {
         try {
-            return repairs.filter { repair -> repair.id == repairId }.first()
+            return repairs.filter { it.id == repairId }.first()
         } catch (e: NoSuchElementException) {
             throw RepairNotFoundException()
         }

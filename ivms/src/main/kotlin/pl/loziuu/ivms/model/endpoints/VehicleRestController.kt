@@ -4,15 +4,15 @@ import org.springframework.hateoas.ResourceSupport
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
-import pl.loziuu.ivms.model.repair.domain.RepairDto
-import pl.loziuu.ivms.model.vehicle.adapters.VehicleRestAdapter
+import pl.loziuu.ivms.model.repair.domain.RepairDetails
+import pl.loziuu.ivms.infrastructure.adapters.VehicleRestAdapter
+import pl.loziuu.ivms.model.insurance.domain.InsurancePeriod
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
-import java.time.LocalDate
 
 @RestController
 @RequestMapping("v1/vehicles")
 @CrossOrigin(origins = arrayOf("http://localhost:4200"))
-class VehicleRestController(val restAdapter: VehicleRestAdapter){
+class VehicleRestController(val restAdapter: VehicleRestAdapter) {
 
     @GetMapping
     fun getAllVehicles(): List<ResourceSupport> {
@@ -50,14 +50,13 @@ class VehicleRestController(val restAdapter: VehicleRestAdapter){
     }
 
     @PostMapping("{id}/repairs")
-    fun addRepair(@PathVariable id: Long, @RequestBody dto: RepairDto): ResponseEntity<Any> {
-        val vdto = RepairDto(0, dto.description, dto.cost, LocalDate.now(), id)
-        return restAdapter.postRepair(vdto);
+    fun addRepair(@PathVariable id: Long, @RequestBody details: RepairDetails): ResponseEntity<Any> {
+        return restAdapter.postRepair(id, details);
     }
 
     @PostMapping("{id}/insurances")
     fun addInsurance(@PathVariable id: Long, @RequestBody dto: InsuranceDto): ResponseEntity<Any> {
-        return restAdapter.postInsurance(InsuranceDto(0, dto.startDate, dto.endDate, dto.company, id))
+        return restAdapter.postInsurance(id, InsuranceDto(0, dto.startDate, dto.endDate, dto.company))
     }
 
     @DeleteMapping("{id}")

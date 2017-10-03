@@ -15,8 +15,8 @@ import { InsuranceService } from "./insurance.service";
       <input type="text" class="form-control" name="company" [(ngModel)]="insurance.company"><br/>
       <label for="cost">Start date</label>
       <input type="date" class="form-control" name="cost" [(ngModel)]="insurance.startDate"><br/>
-      <label for="description">End date</label>
-      <input type="date" class="form-control" name="cost" [(ngModel)]="insurance.endDate"><br/>
+      <label for="end_date">End date</label>
+      <input type="date" class="form-control" name="end_date" [(ngModel)]="insurance.endDate"><br/>
       <button class="btn btn-primary"(click)="submit()">Add new insurance</button>
       <button class="btn btn-warning" (click)="reset()">Reset</button>
     </div>
@@ -33,7 +33,7 @@ export class InsuranceformComponent implements OnInit {
 
   constructor(private insuranceService: InsuranceService) { }
 
-  insurance :Insurance;
+  insurance: Insurance;
 
   ngOnInit() {
     this.insurance = new Insurance();

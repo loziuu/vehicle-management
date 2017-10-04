@@ -11,4 +11,10 @@ class InsuranceQueryDto(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                         val startDate: LocalDate = LocalDate.now(),
                         val endDate: LocalDate = LocalDate.now(),
                         val company: String = "",
-                        @JsonIgnore val vehicleId: Long = 0)
+                        @JsonIgnore val vehicleId: Long = 0) {
+
+    fun isActual(): Boolean {
+        return endDate.isAfter(LocalDate.now())
+    }
+
+}

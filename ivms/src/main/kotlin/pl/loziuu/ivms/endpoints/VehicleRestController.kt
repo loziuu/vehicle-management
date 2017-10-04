@@ -1,12 +1,11 @@
-package pl.loziuu.ivms.model.endpoints
+package pl.loziuu.ivms.endpoints
 
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import pl.loziuu.ivms.infrastructure.adapters.VehicleRestAdapter
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.repair.domain.RepairDetails
-import pl.loziuu.ivms.infrastructure.adapters.VehicleRestAdapter
-import pl.loziuu.ivms.model.insurance.domain.InsurancePeriod
 import pl.loziuu.ivms.model.vehicle.domain.VehicleDetails
 
 @RestController

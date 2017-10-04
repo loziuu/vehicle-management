@@ -1,5 +1,6 @@
 package pl.loziuu.ivms.model.insurance.domain
 
+import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
@@ -8,4 +9,17 @@ data class Insurance(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                      val id: Long = 0,
                      val dateRange: InsurancePeriod = InsurancePeriod(),
                      val company: String = "",
-                     var vehicleId: Long = 0)
+                     var vehicleId: Long = 0) {
+
+    fun isActual(): Boolean {
+        return getExpirationDate().isAfter(LocalDate.now())
+    }
+
+    fun getExpirationDate(): LocalDate {
+        return dateRange.endDate
+    }
+
+    fun getBeginningDate(): LocalDate {
+        return dateRange.startDate
+    }
+}

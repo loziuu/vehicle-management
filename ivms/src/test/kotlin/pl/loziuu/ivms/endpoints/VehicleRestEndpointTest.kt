@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.model.endpoints
+package pl.loziuu.ivms.endpoints
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.Before
@@ -41,7 +41,7 @@ class VehicleRestEndpointTest {
         mockMvc.perform(get("/v1/vehicles"))
                 .andExpect(status().isOk)
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-    }
+        }
 
     @Test
     fun getOneShouldReturnJsonAndOk() {

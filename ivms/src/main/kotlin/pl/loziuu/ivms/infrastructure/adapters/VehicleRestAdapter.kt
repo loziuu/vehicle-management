@@ -4,7 +4,7 @@ import org.springframework.hateoas.ResourceSupport
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo
 import org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn
 import org.springframework.http.ResponseEntity
-import pl.loziuu.ivms.model.endpoints.VehicleRestController
+import pl.loziuu.ivms.endpoints.VehicleRestController
 import pl.loziuu.ivms.model.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
 import pl.loziuu.ivms.model.repair.domain.RepairDetails
@@ -77,28 +77,5 @@ class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
     override fun deleteVehicleInsurance(vehicleId: Long, insuranceId: Long): ResponseEntity<Any> {
         facade.deleteInsurance(vehicleId, insuranceId)
         return ResponseEntity.noContent().build()
-    }
-}
-
-class VehicleResource(val content: VehicleQueryDto) : ResourceSupport() {
-
-    init {
-        add(linkTo(methodOn(VehicleRestController::class.java).getSingleVehicle(content.id)).withRel("self"))
-        add(linkTo(methodOn(VehicleRestController::class.java).getVehicleRepairs(content.id)).withRel("repairs"))
-        add(linkTo(methodOn(VehicleRestController::class.java).getVehicleInsurances(content.id)).withRel("insurances"))
-    }
-}
-
-class RepairResource(val content: RepairQueryDto) : ResourceSupport() {
-
-    init {
-        add(linkTo(methodOn(VehicleRestController::class.java).getVehicleRepair(content.vehicleId, content.id)).withRel("self"))
-    }
-}
-
-class InsuranceResource(val content: InsuranceQueryDto) : ResourceSupport() {
-
-    init {
-        add(linkTo(methodOn(VehicleRestController::class.java).getVehicleInsurance(content.vehicleId, content.id)).withRel("self"))
     }
 }

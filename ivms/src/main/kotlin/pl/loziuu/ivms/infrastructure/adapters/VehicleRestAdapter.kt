@@ -55,12 +55,12 @@ class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
     }
 
     override fun postRepair(vehicleId: Long, details: RepairDetails): ResponseEntity<Any> {
-        val addedRepair = facade.addRepair(vehicleId, details)
+        facade.addRepair(vehicleId, details)
         return ResponseEntity.status(201).build()
     }
 
     override fun postInsurance(vehicleId: Long, dto: InsuranceDto): ResponseEntity<Any> {
-        val addedInsurance = facade.addInsurance(vehicleId, dto)
+        facade.addInsurance(vehicleId, dto)
         return ResponseEntity.status(201).build()
     }
 

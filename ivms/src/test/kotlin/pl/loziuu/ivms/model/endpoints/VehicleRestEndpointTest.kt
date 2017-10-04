@@ -60,7 +60,7 @@ class VehicleRestEndpointTest {
     fun validPostShouldAddVehicleAndReturnCreated() {
         mockMvc.perform(post("/v1/vehicles")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(jsonMapper.writeValueAsString(VehicleDetails())))
+                .content(jsonMapper.writeValueAsString(VehicleDetails("Model", "Manufacturer", 2000))))
                 .andExpect(status().isCreated)
     }
 
@@ -88,7 +88,7 @@ class VehicleRestEndpointTest {
     fun addInsuranceToVehicleShouldReturnCreated() {
         mockMvc.perform(post("/v1/vehicles/1/insurances")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(jsonMapper.writeValueAsString(InsuranceDto())))
+                .content(jsonMapper.writeValueAsString(InsuranceDto(company = "Company"))))
                 .andExpect(status().isCreated)
     }
 

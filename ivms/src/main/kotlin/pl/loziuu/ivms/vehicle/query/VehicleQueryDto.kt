@@ -51,3 +51,4 @@ class VehicleQueryDto(
 @ResponseStatus(HttpStatus.NOT_FOUND)
 class RepairNotFoundException : RuntimeException()
 
+    

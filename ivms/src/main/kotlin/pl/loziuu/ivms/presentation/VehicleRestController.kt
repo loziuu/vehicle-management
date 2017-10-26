@@ -15,12 +15,12 @@ class VehicleRestController(val restAdapter: VehicleRestAdapter) {
 
     @GetMapping
     fun getAllVehicles(): List<ResourceSupport> {
-        return restAdapter.getAll();
+        return restAdapter.getAllVehicles();
     }
 
     @GetMapping("{id}")
     fun getSingleVehicle(@PathVariable id: Long): ResourceSupport {
-        return restAdapter.get(id)
+        return restAdapter.getVehicle(id)
     }
 
     @GetMapping("{id}/repairs")

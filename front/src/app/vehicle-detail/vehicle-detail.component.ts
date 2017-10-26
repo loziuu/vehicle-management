@@ -29,12 +29,12 @@ export class VehicleDetailComponent implements OnInit {
 
   public initVehicle() {
     this.route.paramMap
-      .switchMap((params: ParamMap) => this.vehicleService.getVehicle(+params.get('id')))
+      .switchMap((params: ParamMap) => this.vehicleService.getVehicle(+params.getVehicle('id')))
       .subscribe(vehicle => this.vehicle = vehicle);
   }
 
-  public deleteRepair(repairId) {
-    this.repairService.deleteRepair(this.vehicle.content.id, repairId).then(() => this.initVehicle());
+  public removeRepair(repairId) {
+    this.repairService.removeRepair(this.vehicle.content.id, repairId).then(() => this.initVehicle());
   }
 
   public goBack() {

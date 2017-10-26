@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration
 import pl.loziuu.ivms.infrastructure.adapters.VehicleRestAdapter
 import pl.loziuu.ivms.infrastructure.adapters.VehicleSearchAdapter
 import pl.loziuu.ivms.vehicle.domain.VehicleFacade
-import pl.loziuu.ivms.vehicle.query.VehicleQueryService
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleQueryService
 
 @Configuration
 class EndpointsConfiguration {

@@ -1,7 +1,8 @@
-package pl.loziuu.ivms.vehicle.domain
+package pl.loziuu.ivms.vehicle.ports.primary
 
 import pl.loziuu.ivms.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.repair.domain.RepairDetails
+import pl.loziuu.ivms.vehicle.domain.VehicleDetails
 
 interface VehicleService {
     fun add(details: VehicleDetails): Long

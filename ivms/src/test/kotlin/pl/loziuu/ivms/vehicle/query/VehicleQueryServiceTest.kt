@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 import pl.loziuu.ivms.vehicle.exception.VehicleNotFoundException
+import pl.loziuu.ivms.vehicle.ports.secondary.VehicleQueryRepository
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleQueryService
 
 @DataJpaTest
 @RunWith(SpringRunner::class)

@@ -5,6 +5,8 @@ import pl.loziuu.ivms.insurance.domain.InsuranceFactory
 import pl.loziuu.ivms.repair.domain.RepairDetails
 import pl.loziuu.ivms.repair.domain.RepairFactory
 import pl.loziuu.ivms.vehicle.exception.VehicleNotFoundException
+import pl.loziuu.ivms.vehicle.ports.secondary.VehicleRepository
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleService
 
 class VehicleServiceImpl(val repository: VehicleRepository) : VehicleService {
 
@@ -15,19 +17,19 @@ class VehicleServiceImpl(val repository: VehicleRepository) : VehicleService {
 
     override fun addRepair(vehicleId: Long, details: RepairDetails) {
         val vehicle = repository.findOne(vehicleId)
-        vehicle.addRepair(RepairFactory.create(details))
+        vehicle.postRepair(RepairFactory.create(details))
         repository.save(vehicle)
     }
 
     override fun addInsurance(vehicleId: Long, dto: InsuranceDto) {
         val vehicle = repository.findOne(vehicleId)
-        vehicle.addInsurance(InsuranceFactory.create(dto))
+        vehicle.postInsurance(InsuranceFactory.create(dto))
         repository.save(vehicle)
     }
 
     override fun deleteRepair(vehicleId: Long, repairId: Long) {
         val vehicle = repository.findOne(vehicleId)
-        vehicle.deleteRepair(repairId)
+        vehicle.removeRepair(repairId)
         repository.save(vehicle)
     }
 

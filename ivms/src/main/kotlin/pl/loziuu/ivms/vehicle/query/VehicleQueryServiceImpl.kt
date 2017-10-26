@@ -1,6 +1,8 @@
 package pl.loziuu.ivms.vehicle.query
 
 import pl.loziuu.ivms.vehicle.exception.VehicleNotFoundException
+import pl.loziuu.ivms.vehicle.ports.secondary.VehicleQueryRepository
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleQueryService
 
 class VehicleQueryServiceImpl(val repository: VehicleQueryRepository) : VehicleQueryService {
     override fun get(id: Long): VehicleQueryDto = repository.findOne(id) ?: throw VehicleNotFoundException()

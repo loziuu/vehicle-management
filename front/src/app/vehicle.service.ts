@@ -12,14 +12,14 @@ export class VehicleService {
   private apiLocation = 'http://localhost:8080/v1/vehicles/';
 
   public getVehicles(): Promise<Vehicle[]> {
-    return this.http.get(this.apiLocation)
+    return this.http.getVehicle(this.apiLocation)
       .toPromise()
       .then(response => response.json() as Vehicle[])
       .catch(error => this.handleError(error));
   }
 
   public getVehicle(id: number): Promise<Vehicle> {
-    return this.http.get(this.apiLocation + id)
+    return this.http.getVehicle(this.apiLocation + id)
       .toPromise()
       .then(response => response.json() as Vehicle)
       .catch(error => this.handleError(error));

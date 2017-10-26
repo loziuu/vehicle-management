@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.vehicle.ports
+package pl.loziuu.ivms.vehicle.ports.primary
 
 import org.springframework.hateoas.ResourceSupport
 

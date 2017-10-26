@@ -1,4 +1,6 @@
-package pl.loziuu.ivms.vehicle.query
+package pl.loziuu.ivms.vehicle.ports.primary
+
+import pl.loziuu.ivms.vehicle.query.VehicleQueryDto
 
 interface VehicleQueryService {
     fun getAll(): List<VehicleQueryDto>

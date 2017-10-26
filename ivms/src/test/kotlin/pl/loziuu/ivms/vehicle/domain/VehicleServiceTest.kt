@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 import pl.loziuu.ivms.vehicle.exception.VehicleNotFoundException
+import pl.loziuu.ivms.vehicle.ports.secondary.VehicleRepository
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleService
 
 @DataJpaTest
 @RunWith(SpringRunner::class)
@@ -24,11 +26,11 @@ class VehicleServiceTest {
     }
 
     @Test
-    fun shouldAddVehicleAndReturnDto() {
-        val dto = service.add(VehicleDetails("Model", "Manufacturer", 2000))
+    fun shouldAddVehicleAndReturnId() {
+        val id = service.add(VehicleDetails("Model", "Manufacturer", 2000))
 
-        assertNotNull(dto)
-        assertThat(repository.findAll().size).isEqualTo(3)
+        assertNotNull(id)
+        assertThat(repository.findOne(id)).isNotNull()
     }
 
     @Test

@@ -2,8 +2,9 @@ package pl.loziuu.ivms.vehicle.domain
 
 import pl.loziuu.ivms.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.repair.domain.RepairDetails
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleService
 import pl.loziuu.ivms.vehicle.query.VehicleQueryDto
-import pl.loziuu.ivms.vehicle.query.VehicleQueryService
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleQueryService
 
 class VehicleFacade(val command: VehicleService,
                     val query: VehicleQueryService) {

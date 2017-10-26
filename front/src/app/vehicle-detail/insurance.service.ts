@@ -8,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 export class InsuranceService {
   constructor(private http: Http) {}
 
-  public addInsurance(vehicle_id, insurance): Promise<any> {
+  public postInsurance(vehicle_id, insurance): Promise<any> {
     return this.http.post("http://localhost:8080/v1/vehicles/" + vehicle_id + "/insurances", insurance)
       .toPromise();
     }

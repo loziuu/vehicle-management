@@ -18,7 +18,7 @@ class InsuranceFactoryTest {
     }
 
     @Test(expected = ValidationException::class)
-    fun blankCompanyShouldReturnInsurance() {
+    fun blankCompanyShouldThrowException() {
         val insurance = InsuranceFactory.create(InsuranceDto(company = ""))
     }
 

@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.vehicle.ports
+package pl.loziuu.ivms.vehicle.ports.primary
 
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.http.ResponseEntity
@@ -8,13 +8,14 @@ import pl.loziuu.ivms.vehicle.domain.VehicleDetails
 
 interface VehicleRestPort {
 
-    fun get(id: Long): ResourceSupport
+    fun getVehicle(id: Long): ResourceSupport
+    fun getAllVehicles(): List<ResourceSupport>
     fun getVehicleRepairs(id: Long): List<ResourceSupport>
     fun getVehicleInsurances(id: Long): List<ResourceSupport>
-    fun getAll(): List<ResourceSupport>
-    fun postVehicle(details: VehicleDetails): ResponseEntity<Any>
     fun getVehicleRepair(vehicleId: Long, repairId: Long): ResourceSupport
     fun getVehicleInsurance(vehicleId: Long, insuranceId: Long): ResourceSupport
+
+    fun postVehicle(details: VehicleDetails): ResponseEntity<Any>
     fun postRepair(vehicleId: Long, details: RepairDetails): ResponseEntity<Any>
     fun postInsurance(vehicleId: Long, dto: InsuranceDto): ResponseEntity<Any>
     fun deleteVehicle(id: Long): ResponseEntity<Any>

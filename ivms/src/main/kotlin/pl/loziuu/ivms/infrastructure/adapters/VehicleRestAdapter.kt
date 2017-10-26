@@ -6,12 +6,12 @@ import pl.loziuu.ivms.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.repair.domain.RepairDetails
 import pl.loziuu.ivms.vehicle.domain.VehicleDetails
 import pl.loziuu.ivms.vehicle.domain.VehicleFacade
-import pl.loziuu.ivms.vehicle.ports.VehicleRestPort
+import pl.loziuu.ivms.vehicle.ports.primary.VehicleRestPort
 import java.net.URI
 
 class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
 
-    override fun get(id: Long): ResourceSupport {
+    override fun getVehicle(id: Long): ResourceSupport {
         val vehicle = facade.get(id)
         return VehicleResource(vehicle)
     }
@@ -26,7 +26,7 @@ class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
         return InsuranceResource(insurance)
     }
 
-    override fun getAll(): List<ResourceSupport> {
+    override fun getAllVehicles(): List<ResourceSupport> {
         val vehicles = facade.getAll();
         return vehicles.map { v -> VehicleResource(v) }
     }

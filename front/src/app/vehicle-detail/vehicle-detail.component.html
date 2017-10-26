@@ -20,7 +20,7 @@
 					<td class="col-lg-2">{{repair.date}}</td>
 					<td class="col-lg-2">{{repair.cost}}</td>
 					<td class="col-lg-7">{{repair.description}}</td>
-					<td><button class="btn btn-danger btn-xs" (click)="deleteRepair(repair.id)">Delete</button></td>
+					<td><button class="btn btn-danger btn-xs" (click)="removeRepair(repair.id)">Delete</button></td>
 				</tr>
 			</table>
 			<p *ngIf="vehicle.content.repairs[0] == undefined">No repairs!</p>

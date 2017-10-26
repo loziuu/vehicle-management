@@ -37,7 +37,7 @@ export class RepairformComponent implements OnInit {
   }
 
   public submit() {
-    this.repairService.addRepair(this.vehicle_id, this.repair).then(() => {
+    this.repairService.postRepair(this.vehicle_id, this.repair).then(() => {
      this.onAdd.emit(true);
      this.repair = new Repair();
     });

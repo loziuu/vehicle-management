@@ -40,7 +40,7 @@ export class InsuranceformComponent implements OnInit {
   }
 
   public submit() {
-    this.insuranceService.addInsurance(this.vehicle_id, this.insurance)
+    this.insuranceService.postInsurance(this.vehicle_id, this.insurance)
       .then(() => {
         this.onAdd.emit(true);
         this.insurance = new Insurance();

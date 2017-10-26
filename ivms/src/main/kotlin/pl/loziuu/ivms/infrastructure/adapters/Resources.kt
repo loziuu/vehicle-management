@@ -2,10 +2,10 @@ package pl.loziuu.ivms.infrastructure.adapters
 
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.hateoas.mvc.ControllerLinkBuilder
-import pl.loziuu.ivms.endpoints.VehicleRestController
-import pl.loziuu.ivms.model.insurance.query.InsuranceQueryDto
-import pl.loziuu.ivms.model.repair.query.RepairQueryDto
-import pl.loziuu.ivms.model.vehicle.query.VehicleQueryDto
+import pl.loziuu.ivms.presentation.VehicleRestController
+import pl.loziuu.ivms.insurance.query.InsuranceQueryDto
+import pl.loziuu.ivms.repair.query.RepairQueryDto
+import pl.loziuu.ivms.vehicle.query.VehicleQueryDto
 
 class Resources {
 }

@@ -30,6 +30,7 @@ compileTestKotlin {
 
 repositories {
 	mavenCentral()
+	maven { url "http://conjars.org/repo" }
 }
 
 dependencies {
@@ -40,6 +41,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 	compile("com.h2database:h2")
 	compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+	compile("fuzzy4j:fuzzy4j:1.3-SNAPSHOT")
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
 	testCompile("com.jayway.jsonpath:json-path")

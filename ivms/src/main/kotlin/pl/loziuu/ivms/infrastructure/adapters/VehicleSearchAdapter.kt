@@ -1,8 +1,8 @@
 package pl.loziuu.ivms.infrastructure.adapters
 
 import org.springframework.hateoas.ResourceSupport
-import pl.loziuu.ivms.model.vehicle.ports.VehicleSearchPort
-import pl.loziuu.ivms.model.vehicle.query.VehicleQueryService
+import pl.loziuu.ivms.vehicle.ports.VehicleSearchPort
+import pl.loziuu.ivms.vehicle.query.VehicleQueryService
 
 class VehicleSearchAdapter(val queryService: VehicleQueryService) : VehicleSearchPort {
 

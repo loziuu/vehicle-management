@@ -2,6 +2,7 @@ package pl.loziuu.ivms.infrastructure.adapters
 
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.hateoas.mvc.ControllerLinkBuilder
+import pl.loziuu.ivms.checkout.CheckoutQueryDto
 import pl.loziuu.ivms.presentation.VehicleRestController
 import pl.loziuu.ivms.insurance.query.InsuranceQueryDto
 import pl.loziuu.ivms.repair.query.RepairQueryDto
@@ -16,6 +17,7 @@ class VehicleResource(val content: VehicleQueryDto) : ResourceSupport() {
         add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getSingleVehicle(content.id)).withRel("self"))
         add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getVehicleRepairs(content.id)).withRel("repairs"))
         add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getVehicleInsurances(content.id)).withRel("insurances"))
+        add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getVehicleCheckous(content.id)).withRel("checkouts"))
     }
 }
 
@@ -30,5 +32,12 @@ class InsuranceResource(val content: InsuranceQueryDto) : ResourceSupport() {
 
     init {
         add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getVehicleInsurance(content.vehicleId, content.id)).withRel("self"))
+    }
+}
+
+class CheckoutResoruce(val content: CheckoutQueryDto) : ResourceSupport() {
+
+    init {
+        add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(VehicleRestController::class.java).getVehicleCheckout(content.vehicleId, content.id)).withRel("self"))
     }
 }

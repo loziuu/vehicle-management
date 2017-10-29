@@ -1,5 +1,6 @@
 package pl.loziuu.ivms.infrastructure.adapters
 
+import org.hibernate.annotations.Check
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.http.ResponseEntity
 import pl.loziuu.ivms.insurance.domain.InsuranceDto
@@ -10,6 +11,16 @@ import pl.loziuu.ivms.vehicle.ports.primary.VehicleRestPort
 import java.net.URI
 
 class VehicleRestAdapter(val facade: VehicleFacade) : VehicleRestPort {
+
+    override fun getVehicleCheckouts(vehicleId: Long): List<ResourceSupport> {
+        val vehicle = facade.get(vehicleId)
+        return vehicle.checkouts.map { it -> CheckoutResoruce(it) }
+    }
+
+    override fun getVehicleCheckout(vehicleId: Long, id: Long): ResourceSupport {
+        val vehicle = facade.get(vehicleId)
+        return CheckoutResoruce(vehicle.getCheckout(id))
+    }
 
     override fun getVehicle(id: Long): ResourceSupport {
         val vehicle = facade.get(id)

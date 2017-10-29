@@ -14,6 +14,8 @@ interface VehicleRestPort {
     fun getVehicleInsurances(id: Long): List<ResourceSupport>
     fun getVehicleRepair(vehicleId: Long, repairId: Long): ResourceSupport
     fun getVehicleInsurance(vehicleId: Long, insuranceId: Long): ResourceSupport
+    fun getVehicleCheckouts(vehicleId: Long): List<ResourceSupport>
+    fun getVehicleCheckout(vehicleId: Long, id: Long): ResourceSupport
 
     fun postVehicle(details: VehicleDetails): ResponseEntity<Any>
     fun postRepair(vehicleId: Long, details: RepairDetails): ResponseEntity<Any>

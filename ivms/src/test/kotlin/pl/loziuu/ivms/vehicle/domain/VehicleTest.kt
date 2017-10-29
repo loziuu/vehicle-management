@@ -1,7 +1,12 @@
 package pl.loziuu.ivms.vehicle.domain
 
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.omg.PortableInterceptor.SUCCESSFUL
+import pl.loziuu.ivms.checkout.Checkout
+import pl.loziuu.ivms.checkout.CheckoutResult
 import pl.loziuu.ivms.insurance.domain.InsuranceDto
 import pl.loziuu.ivms.insurance.domain.InsuranceFactory
 import pl.loziuu.ivms.repair.domain.Repair
@@ -44,5 +49,30 @@ class VehicleTest {
         val vehicle = Vehicle()
 
         assertThat(vehicle.isInsured()).isFalse()
+    }
+
+    @Test
+    fun raportSuccessfulCheckoutShouldReturnCheckoutedVehicle() {
+        val now = LocalDate.now()
+        val vehicle = Vehicle()
+
+        vehicle.raportCheckout(now, now.plusYears(1), CheckoutResult.POSITIVE)
+
+        assertTrue(vehicle.hasViableCheckout())
+    }
+
+    @Test
+    fun raportUnsuccessfulCheckoutShouldReturnCheckoutedVehicle() {
+        val now = LocalDate.now()
+        val vehicle = Vehicle()
+
+        vehicle.raportCheckout(now, now.plusYears(1), CheckoutResult.NEGATIVE)
+
+        assertFalse(vehicle.hasViableCheckout())
+    }
+
+    @Test
+    fun newVehicleShouldNotHaveViableCheckout() {
+        assertFalse(Vehicle().hasViableCheckout())
     }
 }

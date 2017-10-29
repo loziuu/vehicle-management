@@ -6,7 +6,7 @@ import java.time.LocalDate
 object VehicleFactory {
     fun create(details: VehicleDetails): Vehicle {
         validate(details)
-        return Vehicle(details = details);
+        return Vehicle(details = details)
     }
 
     private fun validate(details: VehicleDetails) {

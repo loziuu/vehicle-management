@@ -3,10 +3,10 @@ package pl.loziuu.ivms.presentation
 import org.springframework.hateoas.ResourceSupport
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import pl.loziuu.ivms.insurance.domain.InsuranceDto
-import pl.loziuu.ivms.repair.domain.RepairDetails
-import pl.loziuu.ivms.vehicle.domain.VehicleDetails
-import pl.loziuu.ivms.vehicle.ports.primary.VehicleRestPort
+import pl.loziuu.ivms.maintenance.insurance.domain.InsuranceDto
+import pl.loziuu.ivms.maintenance.repair.domain.RepairDetails
+import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
+import pl.loziuu.ivms.management.vehicle.ports.primary.VehicleRestPort
 
 @RestController
 @RequestMapping("v1/vehicles")
@@ -15,7 +15,7 @@ class VehicleRestController(val restPort: VehicleRestPort) {
 
     @GetMapping
     fun getAllVehicles(): List<ResourceSupport> {
-        return restPort.getAllVehicles();
+        return restPort.getAllVehicles()
     }
 
     @GetMapping("{id}")
@@ -55,12 +55,12 @@ class VehicleRestController(val restPort: VehicleRestPort) {
 
     @PostMapping
     fun addVehicle(@RequestBody details: VehicleDetails): ResponseEntity<Any> {
-        return restPort.postVehicle(details);
+        return restPort.postVehicle(details)
     }
 
     @PostMapping("{id}/repairs")
     fun addRepair(@PathVariable id: Long, @RequestBody details: RepairDetails): ResponseEntity<Any> {
-        return restPort.postRepair(id, details);
+        return restPort.postRepair(id, details)
     }
 
     @PostMapping("{id}/insurances")
@@ -75,7 +75,7 @@ class VehicleRestController(val restPort: VehicleRestPort) {
 
     @DeleteMapping("{vehicleId}/repairs/{repairId}")
     fun deleteRepair(@PathVariable vehicleId: Long, @PathVariable repairId: Long): ResponseEntity<Any> {
-        return restPort.deleteVehicleRepair(vehicleId, repairId);
+        return restPort.deleteVehicleRepair(vehicleId, repairId)
     }
 
     @DeleteMapping("{vehicleId}/insurances/{insuranceId}")

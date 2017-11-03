@@ -2,10 +2,10 @@ package pl.loziuu.ivms.presentation
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import pl.loziuu.ivms.infrastructure.adapters.VehicleRestAdapter
-import pl.loziuu.ivms.infrastructure.adapters.VehicleSearchAdapter
-import pl.loziuu.ivms.vehicle.domain.VehicleFacade
-import pl.loziuu.ivms.vehicle.ports.primary.VehicleQueryService
+import pl.loziuu.ivms.management.infrastructure.adapters.VehicleRestAdapter
+import pl.loziuu.ivms.management.infrastructure.adapters.VehicleSearchAdapter
+import pl.loziuu.ivms.management.vehicle.domain.VehicleFacade
+import pl.loziuu.ivms.management.vehicle.ports.primary.VehicleQueryService
 
 @Configuration
 class EndpointsConfiguration {

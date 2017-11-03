@@ -2,9 +2,9 @@ package pl.loziuu.ivms.management.vehicle.domain
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import pl.loziuu.ivms.management.vehicle.ports.secondary.VehicleRepository
-import pl.loziuu.ivms.management.vehicle.ports.secondary.VehicleQueryRepository
 import pl.loziuu.ivms.management.vehicle.ports.primary.VehicleQueryService
+import pl.loziuu.ivms.management.vehicle.ports.secondary.VehicleQueryRepository
+import pl.loziuu.ivms.management.vehicle.ports.secondary.VehicleRepository
 import pl.loziuu.ivms.management.vehicle.query.VehicleQueryServiceImpl
 
 @Configuration

@@ -4,7 +4,7 @@ import org.springframework.hateoas.ResourceSupport
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import pl.loziuu.ivms.vehicle.ports.primary.VehicleSearchPort
+import pl.loziuu.ivms.management.vehicle.ports.primary.VehicleSearchPort
 
 @RestController
 @RequestMapping("v1/vehicles/search")

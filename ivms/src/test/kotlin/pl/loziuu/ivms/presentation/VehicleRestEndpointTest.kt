@@ -13,9 +13,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
-import pl.loziuu.ivms.insurance.domain.InsuranceDto
-import pl.loziuu.ivms.repair.domain.RepairDetails
-import pl.loziuu.ivms.vehicle.domain.VehicleDetails
+import pl.loziuu.ivms.maintenance.insurance.domain.InsuranceDto
+import pl.loziuu.ivms.maintenance.repair.domain.RepairDetails
+import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
 import java.time.LocalDate
 
 @SpringBootTest

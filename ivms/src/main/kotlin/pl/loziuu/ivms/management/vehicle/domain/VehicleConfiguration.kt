@@ -14,12 +14,4 @@ class VehicleConfiguration {
     fun vehicleQueryService(queryRepository: VehicleQueryRepository): VehicleQueryService {
         return VehicleQueryServiceImpl(queryRepository)
     }
-
-    @Bean
-    fun vehicleFacade(commandRepository: VehicleRepository,
-                      queryRepository: VehicleQueryRepository): VehicleFacade {
-        val command = VehicleServiceImpl(commandRepository)
-        val query = VehicleQueryServiceImpl(queryRepository)
-        return VehicleFacade(command, query)
-    }
 }

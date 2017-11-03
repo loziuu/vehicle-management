@@ -11,4 +11,4 @@ class RepairQueryDto(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                      val description: String = "",
                      val cost: Double = 0.0,
                      val date: LocalDate = LocalDate.now(),
-                     @JsonIgnore val vehicleId: Long = 0)
+                     @JsonIgnore val journalId: Long = 0)

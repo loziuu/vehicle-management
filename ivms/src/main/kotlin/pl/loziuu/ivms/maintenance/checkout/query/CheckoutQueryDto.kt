@@ -12,7 +12,7 @@ class CheckoutQueryDto(
         val date: LocalDate = LocalDate.now(),
         val expirationDate: LocalDate = LocalDate.now(),
         @Enumerated(EnumType.STRING) val result: CheckoutResult = CheckoutResult.NEGATIVE,
-        val vehicleId: Long = 0) {
+        val journalId: Long = 0) {
 
     @JsonIgnore
     fun isViable(): Boolean {

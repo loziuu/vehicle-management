@@ -1,6 +1,5 @@
 package pl.loziuu.ivms.maintenance.repair.domain
 
-import pl.loziuu.ivms.maintenance.VehicleId
 import javax.persistence.*
 
 @Entity
@@ -8,7 +7,7 @@ import javax.persistence.*
 class Repair(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
              val id: Long = 0,
              val details: RepairDetails = RepairDetails(),
-             var vehicleId: VehicleId = VehicleId()) {
+             var journalId: Long = 0) {
 
     fun getCost(): Double = details.cost
 }

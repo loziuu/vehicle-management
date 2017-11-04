@@ -5,4 +5,4 @@ import javax.persistence.Embeddable
 
 @Embeddable
 data class InsurancePeriod(val startDate: LocalDate = LocalDate.now(),
-                           val endDate: LocalDate = LocalDate.now())
+                           val endDate: LocalDate = LocalDate.now().plusYears(1))

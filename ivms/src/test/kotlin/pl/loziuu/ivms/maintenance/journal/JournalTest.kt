@@ -24,7 +24,7 @@ class JournalTest {
     fun shouldRegisterInsurance() {
         val journal = Journal()
 
-        journal.registgerInsurance(InsurancePeriod(LocalDate.now(), LocalDate.now()), Company("ABC"))
+        journal.registerInsurance(InsurancePeriod(LocalDate.now(), LocalDate.now()), Company("ABC"))
 
         assertThat(journal.insurances).hasSize(1)
     }
@@ -47,4 +47,54 @@ class JournalTest {
 
         assertThat(journal.sumRepairExpenses()).isEqualTo(600.0)
     }
+
+    @Test
+    fun journalWithoutInsuranceShouldNotBeInsured() {
+        assertThat(Journal().hasActualInsurance()).isFalse()
+    }
+
+    @Test
+    fun journalWithNewInsuranceShouldBeInsured() {
+        val journal = Journal()
+
+        journal.registerInsurance(InsurancePeriod(), Company())
+
+        assertThat(journal.hasActualInsurance()).isTrue()
+    }
+
+    @Test
+    fun journalWithOldInsuranceShouldNotBeInsured() {
+        val journal = Journal()
+
+        journal.registerInsurance(InsurancePeriod(date("2000-01-01"), date("2001-01-01")), Company("PZU"))
+
+        assertThat(journal.hasActualInsurance()).isFalse()
+    }
+
+    @Test
+    fun journalWithoutCheckoutShouldNotContainValidCheckout() {
+        val journal = Journal()
+
+        assertThat(journal.hasValidCheckout()).isFalse()
+    }
+
+    @Test
+    fun addPositiveCheckoutShouldContaintValidCheckout() {
+        val journal = Journal()
+
+        journal.registerCheckout(LocalDate.now(), LocalDate.now().plusYears(1), CheckoutResult.POSITIVE)
+
+        assertThat(journal.hasValidCheckout()).isTrue()
+    }
+
+    @Test
+    fun addNegativeCheckoutShouldNotContainValidCheckout() {
+        val journal = Journal()
+
+        journal.registerCheckout(LocalDate.now(), LocalDate.now().plusDays(14), CheckoutResult.NEGATIVE)
+
+        assertThat(journal.hasValidCheckout()).isFalse()
+    }
+
+    private fun date(date: String) = LocalDate.parse(date)
 }

@@ -1,6 +1,6 @@
 package pl.loziuu.ivms.maintenance.journal.port
 
-interface JournalCommand {
-
+interface JournalSetupCommand {
     fun setupJournal(vehicleId: Long) : Long
+    fun removeJournal(vehicleId: Long)
 }

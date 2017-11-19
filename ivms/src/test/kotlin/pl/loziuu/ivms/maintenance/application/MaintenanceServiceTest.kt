@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit4.SpringRunner
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult
+import pl.loziuu.ivms.maintenance.journal.domain.Journal
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
 import java.time.LocalDate
 
@@ -18,6 +19,9 @@ class MaintenanceServiceTest {
 
     @Autowired
     lateinit var service : MaintenanceService
+
+    @Autowired
+    lateinit var queryService : MaintenanceQueryService
 
     @Autowired
     lateinit var repository : JournalRepository
@@ -42,5 +46,12 @@ class MaintenanceServiceTest {
         service.registerCheckout(2L, LocalDate.now(), LocalDate.now().plusYears(1), CheckoutResult.POSITIVE)
 
         assertThat(repository.findOneByVehicleId(2L).hasValidCheckout()).isTrue()
+    }
+
+    @Test
+    fun getJournalsForFleet() {
+        val journals = queryService.getJournalsForFleet(1L)
+
+        assertThat(journals).hasSize(2)
     }
 }

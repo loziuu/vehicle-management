@@ -43,4 +43,5 @@ class MaintenanceService(val repository: JournalRepository) : JournalSetupComman
         journal.registerCheckout(checkoutDate, expirationDate, result)
         repository.save(journal)
     }
+
 }

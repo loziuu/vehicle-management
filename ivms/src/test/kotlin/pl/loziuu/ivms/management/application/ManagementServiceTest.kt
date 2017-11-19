@@ -22,6 +22,9 @@ class ManagementServiceTest {
     lateinit var service : ManagementService
 
     @Autowired
+    lateinit var queryService: ManagementQueryService
+
+    @Autowired
     lateinit var repository : FleetRepository
 
     @Autowired
@@ -71,5 +74,12 @@ class ManagementServiceTest {
         print(journal.repairs)
         assertThat(journal).isNotNull()
         assertThat(journal.sumRepairExpenses()).isEqualTo(0.0)
+    }
+
+    @Test
+    fun getFleet() {
+        val fleet = queryService.getFleet(1L)
+
+        assertThat(fleet.vehicles).hasSize(2)
     }
 }

@@ -1,7 +1,5 @@
 package pl.loziuu.ivms.maintenance.journal.domain
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import org.apache.tomcat.jni.Local
 import pl.loziuu.ivms.ddd.Aggregate
 import pl.loziuu.ivms.maintenance.checkout.domain.Checkout
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult

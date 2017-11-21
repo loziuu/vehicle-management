@@ -14,7 +14,6 @@ import java.time.LocalDate
 
 @SpringBootTest
 @RunWith(SpringRunner::class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class MaintenanceServiceTest {
 
     @Autowired

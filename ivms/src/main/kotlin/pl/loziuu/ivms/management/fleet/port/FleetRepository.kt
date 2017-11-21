@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.management.fleet.port.secondary
+package pl.loziuu.ivms.management.fleet.port
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

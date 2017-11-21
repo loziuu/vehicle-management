@@ -24,7 +24,9 @@ class Fleet(
         return vehicles.first { it -> it.local == vehicleId }
     }
 
-    fun removeVehicle(vehicleId: Long) {
-        vehicles.removeIf({ it -> it.local == vehicleId })
+    fun removeVehicle(vehicleId: Long): Long {
+        val vehicle = getVehicle(vehicleId);
+        vehicles.remove(vehicle)
+        return vehicle.id
     }
 }

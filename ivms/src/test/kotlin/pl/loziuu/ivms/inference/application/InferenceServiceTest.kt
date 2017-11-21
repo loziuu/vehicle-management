@@ -17,6 +17,6 @@ class InferenceServiceTest {
 
     @Test
     fun getFleetStatus() {
-
+        print(service.getFleetStatus(1L))
     }
 }

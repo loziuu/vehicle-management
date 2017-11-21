@@ -4,7 +4,7 @@ import fuzzy4j.flc.Variable
 import pl.loziuu.ivms.ddd.ApplicationService
 import pl.loziuu.ivms.inference.fuzzy.FleetLogic
 import pl.loziuu.ivms.maintenance.application.MaintenanceQueryService
-import pl.loziuu.ivms.maintenance.journal.domain.Journal
+import pl.loziuu.ivms.maintenance.journal.query.JournalDto
 
 @ApplicationService
 class InferenceService(val maintenanceService: MaintenanceQueryService) {
@@ -16,9 +16,9 @@ class InferenceService(val maintenanceService: MaintenanceQueryService) {
         return FleetLogic.getStatus(withoutInsurance, withoutCheckout)
     }
 
-    private fun getPercentageForNotCheckouted(journals: List<Journal>) =
+    private fun getPercentageForNotCheckouted(journals: List<JournalDto>) =
             (journals.count { !it.hasValidCheckout() }.toDouble() / journals.size.toDouble()) * 100.0
 
-    private fun getPercentageForNotInsured(journals: List<Journal>) =
+    private fun getPercentageForNotInsured(journals: List<JournalDto>) =
             (journals.count { !it.hasActualInsurance() }.toDouble() / journals.size.toDouble()) * 100.0
 }

@@ -1,5 +1,6 @@
 package pl.loziuu.ivms.maintenance.repair.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity

@@ -1,13 +1,20 @@
 package pl.loziuu.ivms.maintenance.application
 
+import org.springframework.transaction.annotation.Transactional
 import pl.loziuu.ivms.ddd.ApplicationService
-import pl.loziuu.ivms.maintenance.journal.domain.Journal
-import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
+import pl.loziuu.ivms.maintenance.journal.query.JournalDto
+import pl.loziuu.ivms.maintenance.journal.query.JournalQueryRepository
 
 @ApplicationService
-class MaintenanceQueryService(val fleetResolver: FleetResolver, val repository: JournalRepository) {
+class MaintenanceQueryService(val fleetResolver: FleetResolver, val repository: JournalQueryRepository) {
 
-    fun getJournalsForFleet(fleetId: Long) : List<Journal> {
+    @Transactional(readOnly = true)
+    fun getJournalForVehicle(vehicleId: Long): JournalDto {
+        return repository.findOneByVehicleId(vehicleId);
+    }
+
+    @Transactional(readOnly = true)
+    fun getJournalsForFleet(fleetId: Long): List<JournalDto> {
         return fleetResolver.getVehicleIdsForFleet(fleetId).map { repository.findOneByVehicleId(it) }
     }
 }

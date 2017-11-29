@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.maintenance.checkout.ports.primary
+package pl.loziuu.ivms.maintenance.checkout.ports
 
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult
 import java.time.LocalDate

@@ -29,7 +29,7 @@ export class VehicleDetailComponent implements OnInit {
 
   public initVehicle() {
     this.route.paramMap
-      .switchMap((params: ParamMap) => this.vehicleService.getVehicle(+params.getVehicle('id')))
+      .switchMap((params: ParamMap) => this.vehicleService.getVehicle(+params.get('id')))
       .subscribe(vehicle => this.vehicle = vehicle);
   }
 

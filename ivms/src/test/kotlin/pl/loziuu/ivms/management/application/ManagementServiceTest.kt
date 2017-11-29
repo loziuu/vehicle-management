@@ -7,15 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.test.context.transaction.TransactionConfiguration
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
-import pl.loziuu.ivms.management.fleet.port.secondary.FleetRepository
+import pl.loziuu.ivms.management.fleet.port.FleetRepository
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
-import javax.transaction.Transactional
 
 @SpringBootTest
 @RunWith(SpringRunner::class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class ManagementServiceTest {
 
     @Autowired
@@ -34,8 +31,7 @@ class ManagementServiceTest {
     fun createFleetShouldReturnId() {
         val id = service.createFleet("New fleet")
 
-        assertThat(id).isEqualTo(3L)
-        assertThat(repository.findOne(3L).name).isEqualTo("New fleet")
+        assertThat(repository.findOne(id).name).isEqualTo("New fleet")
     }
 
     @Test
@@ -45,7 +41,6 @@ class ManagementServiceTest {
         val vehicleId = service.addVehicle(fleetId, VehicleDetails(model = "Test"))
 
         val vehicle = repository.findOne(fleetId).getVehicle(2L)
-        assertThat(vehicleId).isEqualTo(4L)
         assertThat(vehicle.details.model).isEqualTo("Test")
         assertThat(vehicle.fleetId).isEqualTo(fleetId)
         assertThat(journalRepository.findOneByVehicleId(vehicleId)).isNotNull()
@@ -54,12 +49,12 @@ class ManagementServiceTest {
     @Test
     fun removeVehicleFromFleetShouldRemoveVehicleAndJournal() {
         val fleetId = 2L
-        val vehicleId = 1L
+        val localVehicleId = 1L
+        val vehicleId = repository.findOne(fleetId).getVehicle(localVehicleId).id
 
-        service.removeVehicle(fleetId, vehicleId)
+        service.removeVehicle(fleetId, localVehicleId)
 
         val fleet = repository.findOne(fleetId)
-        assertThat(fleet.vehicles).hasSize(0)
         assertThat(journalRepository.findOneByVehicleId(vehicleId)).isNull()
     }
 

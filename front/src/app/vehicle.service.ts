@@ -9,23 +9,23 @@ export class VehicleService {
 
   constructor(private http: Http) {}
 
-  private apiLocation = 'http://localhost:8080/v1/vehicles/';
+  private apiLocation = 'http://localhost:8080/api/v1/fleets/1/vehicles/';
 
   public getVehicles(): Promise<Vehicle[]> {
-    return this.http.getVehicle(this.apiLocation)
+    return this.http.get(this.apiLocation)
       .toPromise()
       .then(response => response.json() as Vehicle[])
       .catch(error => this.handleError(error));
   }
 
   public getVehicle(id: number): Promise<Vehicle> {
-    return this.http.getVehicle(this.apiLocation + id)
+    return this.http.get(this.apiLocation + id)
       .toPromise()
       .then(response => response.json() as Vehicle)
       .catch(error => this.handleError(error));
   }
 
-  public addVehicle(vehicle: Vehicle): Promise<any> {
+  public createVehicle(vehicle: Vehicle): Promise<any> {
     return this.http.post(this.apiLocation, vehicle)
       .toPromise();
   }
@@ -35,6 +35,5 @@ export class VehicleService {
   }
 
   handleError(error) {
-    return Promise.reject(error.message || error);
   }
 }

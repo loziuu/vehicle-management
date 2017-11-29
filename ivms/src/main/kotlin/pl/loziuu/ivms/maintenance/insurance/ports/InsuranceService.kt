@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.maintenance.insurance.ports.primary
+package pl.loziuu.ivms.maintenance.insurance.ports
 
 import java.time.LocalDate
 

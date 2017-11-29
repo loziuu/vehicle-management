@@ -2,10 +2,10 @@ package pl.loziuu.ivms.maintenance.application
 
 import pl.loziuu.ivms.ddd.ApplicationService
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult
-import pl.loziuu.ivms.maintenance.checkout.ports.primary.CheckoutService
+import pl.loziuu.ivms.maintenance.checkout.ports.CheckoutService
 import pl.loziuu.ivms.maintenance.insurance.domain.Company
 import pl.loziuu.ivms.maintenance.insurance.domain.InsurancePeriod
-import pl.loziuu.ivms.maintenance.insurance.ports.primary.InsuranceService
+import pl.loziuu.ivms.maintenance.insurance.ports.InsuranceService
 import pl.loziuu.ivms.maintenance.journal.domain.Journal
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
 import pl.loziuu.ivms.maintenance.journal.port.JournalSetupCommand

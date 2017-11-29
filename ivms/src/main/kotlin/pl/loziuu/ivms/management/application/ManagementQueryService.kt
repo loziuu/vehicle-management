@@ -1,13 +1,20 @@
 package pl.loziuu.ivms.management.application
 
 import pl.loziuu.ivms.ddd.ApplicationService
-import pl.loziuu.ivms.management.fleet.domain.Fleet
-import pl.loziuu.ivms.management.fleet.port.secondary.FleetRepository
+import pl.loziuu.ivms.management.fleet.query.FleetDto
+import pl.loziuu.ivms.management.fleet.query.FleetQueryRepository
 
 @ApplicationService
-class ManagementQueryService(val repository: FleetRepository) {
+class ManagementQueryService(val repository: FleetQueryRepository) {
 
-    fun getFleet(fleetId: Long): Fleet {
-        return repository.findOne(fleetId)
+    fun getAllFleets(): List<FleetDto> {
+        return repository.findAll()
+    }
+
+    fun getFleet(fleetId: Long): FleetDto {
+        val fleet = repository.findOne(fleetId)
+        if (fleet == null)
+            throw NoSuchElementException()
+        return fleet
     }
 }

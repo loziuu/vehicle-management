@@ -30,7 +30,7 @@ class RestCommandAdapter(val fleetCommand: FleetCommand,
 
     fun registerInsurance(fleetId: Long, vehicleId: Long, dto: RegisterInsuranceDto) {
         val vehicle = getVehicleFromFleetByLocalId(fleetId, vehicleId)
-        insuranceService.registerInsurance(vehicle.id, dto.startDate, dto.endDate, dto.companyName)
+        insuranceService.registerInsurance(vehicle.id, dto.startDate, dto.endDate, dto.company)
     }
 
     fun registerCheckout(fleetId: Long, vehicleId: Long, dto: RegisterCheckoutDto) {

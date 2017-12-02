@@ -11,7 +11,7 @@ import javax.persistence.*
 @Table(name = "vehicle")
 class VehicleDto(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0,
+        @JsonIgnore val id: Long = 0,
         val model: String = "",
         val manufacturer: String = "",
         val productionYear: Int = 0,

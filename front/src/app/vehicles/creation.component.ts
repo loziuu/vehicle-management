@@ -1,6 +1,8 @@
-import { Vehicle } from '../vehicle';
+import { Vehicle } from '../models/vehicle';
 import { VehicleService } from '../vehicle.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-creation',
@@ -23,16 +25,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreationComponent implements OnInit {
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService,
+              private route: ActivatedRoute,
+              private location: Location,
+              private router: Router) { }
   vehicle: Vehicle;
   isSuccess: boolean;
+  fleetId: number;
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => this.fleetId =  + params.get("id"));
     this.initVehicle();
   }
 
   public submit() {
-    this.vehicleService.createVehicle(this.vehicle).then(() => {
+    this.vehicleService.createVehicle(this.fleetId, this.vehicle).then(() => {
      this.isSuccess = true;
      this.initVehicle();
     });
@@ -43,6 +50,8 @@ export class CreationComponent implements OnInit {
   }
 
   private initVehicle() {
+    if (this.isSuccess)
+      this.router.navigate(['/fleet', this.fleetId]);
     this.vehicle = new Vehicle();
   }
 }

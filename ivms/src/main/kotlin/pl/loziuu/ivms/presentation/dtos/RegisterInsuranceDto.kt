@@ -4,4 +4,4 @@ import java.time.LocalDate
 
 class RegisterInsuranceDto(val startDate: LocalDate = LocalDate.now(),
                            val endDate: LocalDate = LocalDate.now(),
-                           val companyName: String = "")
+                           val company: String = "")

@@ -3,5 +3,4 @@ export class Repair {
   cost: number;
   description: string;
   date: Date;
-  vehicleId: number;
 }

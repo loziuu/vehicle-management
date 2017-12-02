@@ -1,4 +1,4 @@
-import { Repair } from '../repair';
+import { Repair } from '../models/repair';
 import { Injectable, Input } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
@@ -9,8 +9,8 @@ export class RepairService {
 
   constructor(private http: Http) {}
 
-  public postRepair(id, repair: Repair): Promise<any> {
-    return this.http.post('http://localhost:8080/v1/vehicles/' + id + '/repairs', repair)
+  public postRepair(fleetId, vehicleId, repair: Repair): Promise<any> {
+    return this.http.post('http://localhost:8080/api/v1/fleets/' + fleetId + '/vehicles/' + vehicleId + '/repairs', repair)
       .toPromise();
   }
 

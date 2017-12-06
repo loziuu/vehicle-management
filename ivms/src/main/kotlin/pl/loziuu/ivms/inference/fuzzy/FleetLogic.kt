@@ -29,7 +29,6 @@ object FleetLogic {
         val perfect: Term = Term.term("perfect", 80.0, 90.0, 100.0, 100.0)
 
         val fleetStatus: Variable = Variable.input("status", bad, weak, medium, good, perfect).start(0.0).end(100.0)
-
         val impl = ControllerBuilder.newBuilder()
                 .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
                 .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(good)
@@ -57,9 +56,12 @@ object FleetLogic {
                 .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(bad)
                 .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
                 .`when`().`var`(checkouts).`is`(HedgeBuilder.very(checkoutLittle)).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(HedgeBuilder.very(checkoutLittle)).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
                 .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
                 .`when`().`var`(checkouts).`is`(HedgeBuilder.very(checkoutLittle)).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(good)
                 .create()
+
 
         val map = mutableMapOf<Variable, Double>()
         map.put(insurances, withoutInsurances)

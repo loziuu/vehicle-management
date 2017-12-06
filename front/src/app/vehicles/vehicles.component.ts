@@ -1,4 +1,4 @@
-import { Vehicle } from '../vehicle';
+import { Vehicle } from '../models/vehicle';
 import { VehicleService } from '../vehicle.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -19,8 +19,6 @@ export class VehiclesComponent implements OnInit {
   }
   
   public getVehicles() {
-    this.vehicleService.getVehicles()
-      .then(vehicles => this.vehicles = vehicles);
   }
   
   public delete(id) {

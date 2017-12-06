@@ -1,5 +1,5 @@
-import { Insurance } from '../insurance';
-import { Repair } from '../repair';
+import { Insurance } from '../models/insurance';
+import { Repair } from '../models/repair';
 import { RepairService } from './repair.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InsuranceService } from "./insurance.service";
@@ -28,6 +28,7 @@ import { InsuranceService } from "./insurance.service";
 })
 export class InsuranceformComponent implements OnInit {
 
+  @Input() fleet_id: number;
   @Input() vehicle_id: number;
   @Output() onAdd = new EventEmitter<boolean>();
 
@@ -40,7 +41,7 @@ export class InsuranceformComponent implements OnInit {
   }
 
   public submit() {
-    this.insuranceService.postInsurance(this.vehicle_id, this.insurance)
+    this.insuranceService.postInsurance(this.fleet_id, this.vehicle_id, this.insurance)
       .then(() => {
         this.onAdd.emit(true);
         this.insurance = new Insurance();

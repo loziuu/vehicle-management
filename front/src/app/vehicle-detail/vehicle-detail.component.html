@@ -1,51 +1,72 @@
 <div *ngIf="vehicle">
 	<div class="col-lg-12">
-		<h1>{{vehicle.content.manufacturer}} {{vehicle.content.model}},
-			{{vehicle.content.productionYear}}</h1>
+		<h1>{{vehicle.manufacturer}} {{vehicle.model}},
+			{{vehicle.productionYear}}</h1>
 		<br />
 	</div>
 
 	<button (click)='goBack()' class="btn btn-default">Back</button>
 
-	<div class="row">
-			<h2>Repairs</h2>
-			<table class="table">
-				<tr>
-					<th>Date</th>
-					<th>Cost</th>
-					<th>Description</th>
-					<th>Options</th>
-				</tr>
-				<tr *ngFor="let repair of vehicle.content.repairs">
-					<td class="col-lg-2">{{repair.date}}</td>
-					<td class="col-lg-2">{{repair.cost}}</td>
-					<td class="col-lg-7">{{repair.description}}</td>
-					<td><button class="btn btn-danger btn-xs" (click)="removeRepair(repair.id)">Delete</button></td>
-				</tr>
-			</table>
-			<p *ngIf="vehicle.content.repairs[0] == undefined">No repairs!</p>
-		</div>
+  //TODO: Usuwanie z journala?
+	<div *ngFor="let jor of vehicle.journal" class="row">
+    <h2>Repairs</h2>
+    <table class="table">
+      <thead class="thead-inverse">
+      <th>Description</th>
+      <th>Cost</th>
+      <th>Date</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let repair of jor.repairs">
+          <td>{{ repair.description }}</td>
+          <td> {{ repair.cost }}</td>
+          <td> {{ repair.date }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-		<div class="row">
-			<h2>Insurances</h2>
-			<table class="table">
-				<tr>
-					<th>Company</th>
-					<th>Start date</th>
-					<th>End date</th>
-				</tr>
-				<tr *ngFor="let insurance of vehicle.content.insurances">
-					<td>{{insurance.company}}</td>
-					<td>{{insurance.startDate}}</td>
-					<td>{{insurance.endDate}}</td>
-				</tr>
-			</table>
-	</div>
-	<div class="row">
-		<div class="col-lg-6">
-			<app-repairform [vehicle_id]="vehicle.content.id" (onAdd)="initVehicle()"></app-repairform>
-		</div>
-		<div class="col-lg-6">
-			<app-insuranceform [vehicle_id]="vehicle.content.id" (onAdd)="initVehicle()"></app-insuranceform>
-		</div>
-</div>
+    <h2>Checkouts</h2>
+    <table class="table">
+      <thead class="thead-inverse">
+        <th>Date of checkout</th>
+        <th>Expiration Date</th>
+        <th>Result</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let checkout of jor.checkouts">
+          <td>{{ checkout.date }}</td>
+          <td>{{ checkout.expirationDate }}</td>
+          <td>{{ checkout.result }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Insurances</h2>
+    <table class="table">
+      <thead class="thead-inverse">
+      <th>Company</th>
+      <th>Start date</th>
+      <th>Expiration date</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let insurance of jor.insurances">
+          <td *ngIf="insurance.company">{{ insurance.company.name }}</td>
+          <td> {{ insurance.startDate }}</td>
+          <td> {{ insurance.endDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <app-repairform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-repairform>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <app-checkoutform [fleetId]="fleetId" [vehicleId]="vehicleId" (onAdd)="initVehicle()"></app-checkoutform>
+    </div>
+    <div class="col-lg-6">
+      <app-insuranceform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-insuranceform>
+    </div>
+  </div>

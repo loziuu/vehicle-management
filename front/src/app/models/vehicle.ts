@@ -1,9 +1,12 @@
 import { Insurance } from './insurance';
-import { Repair } from './repair';
+import { Journal } from "./journal";
 
 export class Vehicle {
   id: number;
   model: String;
   manufacturer: String;
   productionYear: number;
+  hasValidCheckout: boolean;
+  hasActualInsurance: boolean;
+  journal: Journal[]
 }

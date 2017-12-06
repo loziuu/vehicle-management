@@ -8,7 +8,7 @@
 	<tr *ngFor="let vehicle of vehicles">
 		<td>{{ vehicle.model }}</td>
 		<td>{{ vehicle.manufacturer }}</td>
-		<td>{{vehicle.productionYear }}</td>
+		<td>{{ vehicle.productionYear }}</td>
 		<td>
 			<a [routerLink]="['/vehicle', vehicle.id]" class="btn btn-xs btn-info">Show</a>
 			<button (click)="delete(vehicle.content.id)" class="btn btn-xs btn-danger">Delete</button>

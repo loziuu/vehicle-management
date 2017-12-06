@@ -1,4 +1,4 @@
-import { Repair } from '../repair';
+import { Repair } from '../models/repair';
 import { RepairService } from './repair.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
@@ -25,6 +25,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RepairformComponent implements OnInit {
 
+  @Input() fleet_id: number;
   @Input() vehicle_id: number;
   @Output() onAdd = new EventEmitter<boolean>();
 
@@ -37,7 +38,7 @@ export class RepairformComponent implements OnInit {
   }
 
   public submit() {
-    this.repairService.postRepair(this.vehicle_id, this.repair).then(() => {
+    this.repairService.postRepair(this.fleet_id, this.vehicle_id, this.repair).then(() => {
      this.onAdd.emit(true);
      this.repair = new Repair();
     });

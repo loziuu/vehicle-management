@@ -23,10 +23,9 @@ export class VehicleService {
     return this.http.get(api + vehicleId);
   }
 
-  public createVehicle(fleetId: number, vehicle: Vehicle): Promise<any> {
+  public createVehicle(fleetId: number, vehicle: Vehicle): Observable<any> {
     var api = this.apiLocation + fleetId + '/vehicles/';
-    return this.http.post(api, vehicle)
-      .toPromise();
+    return this.http.post(api, vehicle, { responseType: "text" });
   }
 
   public deleteVehicle(id: number): Promise<any> {

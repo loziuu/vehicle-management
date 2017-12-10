@@ -24,11 +24,9 @@ export class FleetComponent implements OnInit {
 
   private submit() {
     this.service.createFleet(this.fleet)
-      .then(result => {
+      .subscribe(() => {
         this.isSuccess = true;
         this.reset();
-      }).catch(error => {
-        this.isSuccess = false;
       });
   }
 

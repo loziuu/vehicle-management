@@ -1,72 +1,144 @@
-<div *ngIf="vehicle">
-	<div class="col-lg-12">
-		<h1>{{vehicle.manufacturer}} {{vehicle.model}},
-			{{vehicle.productionYear}}</h1>
-		<br />
-	</div>
+<div class="row">
+  <div class="col-lg-10">
+      <button (click)='goBack()' class="btn btn-default">Back</button>
+      <div *ngIf="vehicle">
+        <h1>{{vehicle.manufacturer}} {{vehicle.model}},
+          {{vehicle.productionYear}}</h1>
+          <hr/>
+        <br />
 
-	<button (click)='goBack()' class="btn btn-default">Back</button>
+    <div *ngFor="let jor of vehicle.journal" >
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="insurance-tab" data-toggle="tab" href="#insurance" role="tab" aria-controls="insurance" aria-selected="true">Insurances</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="checkout-tab" data-toggle="tab" href="#checkout" role="tab" aria-controls="checkout" aria-selected="false">Checkouts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="repair-tab" data-toggle="tab" href="#repair" role="tab" aria-controls="repair" aria-selected="false">Repairs</a>
+          </li>
+        </ul>
 
-  //TODO: Usuwanie z journala?
-	<div *ngFor="let jor of vehicle.journal" class="row">
-    <h2>Repairs</h2>
-    <table class="table">
-      <thead class="thead-inverse">
-      <th>Description</th>
-      <th>Cost</th>
-      <th>Date</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let repair of jor.repairs">
-          <td>{{ repair.description }}</td>
-          <td> {{ repair.cost }}</td>
-          <td> {{ repair.date }}</td>
-        </tr>
-      </tbody>
-    </table>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="insurance" role="tabpanel" aria-labelledby="insurance-tab">
+            <table class="table">
+                <thead class="thead-inverse">
+                <th>Company</th>
+                <th>Start date</th>
+                <th>Expiration date</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let insurance of jor.insurances">
+                    <td *ngIf="insurance.company">{{ insurance.company.name }}</td>
+                    <td> {{ insurance.startDate }}</td>
+                    <td> {{ insurance.endDate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <div class="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
+            <table class="table">
+                <thead class="thead-inverse">
+                  <th>Date of checkout</th>
+                  <th>Expiration Date</th>
+                  <th>Result</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let checkout of jor.checkouts">
+                    <td>{{ checkout.date }}</td>
+                    <td>{{ checkout.expirationDate }}</td>
+                    <td>{{ checkout.result }}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+          <div class="tab-pane fade" id="repair" role="tabpanel" aria-labelledby="repair-tab">
+              <table class="table">
+                  <thead class="thead-inverse">
+                  <th>Description</th>
+                  <th>Cost</th>
+                  <th>Date</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let repair of jor.repairs">
+                      <td>{{ repair.description }}</td>
+                      <td> {{ repair.cost }}</td>
+                      <td> {{ repair.date }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
 
-    <h2>Checkouts</h2>
-    <table class="table">
-      <thead class="thead-inverse">
-        <th>Date of checkout</th>
-        <th>Expiration Date</th>
-        <th>Result</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let checkout of jor.checkouts">
-          <td>{{ checkout.date }}</td>
-          <td>{{ checkout.expirationDate }}</td>
-          <td>{{ checkout.result }}</td>
-        </tr>
-      </tbody>
-    </table>
+      <div id="repairModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add new repair</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <app-repairform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-repairform>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <h2>Insurances</h2>
-    <table class="table">
-      <thead class="thead-inverse">
-      <th>Company</th>
-      <th>Start date</th>
-      <th>Expiration date</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let insurance of jor.insurances">
-          <td *ngIf="insurance.company">{{ insurance.company.name }}</td>
-          <td> {{ insurance.startDate }}</td>
-          <td> {{ insurance.endDate }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+      <div id="insuranceModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Add new insurance</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <app-insuranceform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-insuranceform>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div class="row">
-    <app-repairform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-repairform>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-6">
-      <app-checkoutform [fleetId]="fleetId" [vehicleId]="vehicleId" (onAdd)="initVehicle()"></app-checkoutform>
+        <div id="checkoutModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Add new checkout</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <app-checkoutform [fleetId]="fleetId" [vehicleId]="vehicleId" (onAdd)="initVehicle()"></app-checkoutform>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </div>
-    <div class="col-lg-6">
-      <app-insuranceform [fleet_id]="fleetId" [vehicle_id]="vehicleId" (onAdd)="initVehicle()"></app-insuranceform>
+  </div>
+  <div class="col-lg-2 flex-column">
+    <div class="card">
+      <nav class="nav bg-light sidebar">
+        <ul class="nav nav-pills flex-column">
+          <li>
+            <a class="nav-link" data-toggle="modal" href="#" data-target="#insuranceModal">Add insurance</a>
+          </li>
+          <li>
+            <a class="nav-link" data-toggle="modal" href="#" data-target="#checkoutModal">Add checkout</a>
+          </li>
+          <li>
+            <a class="nav-link" data-toggle="modal" href="#" data-target="#repairModal">Add repair</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
+</div>

@@ -2,3 +2,7 @@
 .selected {
 	background-color: #F3F3F3;
 }
+
+.container-fluid {
+	margin-top: 3.5%;
+}

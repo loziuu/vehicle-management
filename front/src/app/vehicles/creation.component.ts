@@ -39,7 +39,7 @@ export class CreationComponent implements OnInit {
   }
 
   public submit() {
-    this.vehicleService.createVehicle(this.fleetId, this.vehicle).then(() => {
+    this.vehicleService.createVehicle(this.fleetId, this.vehicle).subscribe(() => {
      this.isSuccess = true;
      this.initVehicle();
     });

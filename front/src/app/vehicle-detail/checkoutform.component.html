@@ -1,16 +1,15 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Add checkout</div>
   <div class="panel-body">
     <form>
       <label for="date">Date of checkout</label>
-      <input type="date" name="date" class="form-control" [(ngModel)]="checkout.date" />
+      <input type="date" name="date" class="form-control" [(ngModel)]="checkout.date" /><br/>
       <label for="expiration_date">Expiration of checkout</label>
-      <input type="date" name="checkout_date" class="form-control" [(ngModel)]="checkout.expirationDate" />
+      <input type="date" name="checkout_date" class="form-control" [(ngModel)]="checkout.expirationDate" /><br/>
       <label for="checkout_result">Result of checkout</label>
       <select name="checkout_result" class="form-control" [(ngModel)]="checkout.result">
         <option value="POSITIVE">POSITIVE</option>
         <option value="NEGATIVE">NEGATIVE</option>
-      </select>
+      </select><br/>
       <button class="btn btn-primary" (click)="submit()">Add new insurance</button>
       <button class="btn btn-warning" (click)="reset()">Reset</button>
     </form>

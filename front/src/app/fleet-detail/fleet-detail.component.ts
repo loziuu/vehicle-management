@@ -22,7 +22,10 @@ export class FleetDetailComponent implements OnInit {
     private location: Location) { }
   
   fleet: Fleet;
+  data: Array<any>;
   vehicles: Vehicle[];
+  field: string;
+  phrase: any;
   
   ngOnInit() {
     this.initFleet();
@@ -32,12 +35,33 @@ export class FleetDetailComponent implements OnInit {
   private initFleet() {
       this.route.paramMap
       .switchMap((params: ParamMap) => this.fleetService.getFleet(+params.get('id')))
-      .subscribe(result => this.fleet = result);
+      .subscribe(result => {
+        this.fleet = result;
+      });
   }
 
   private initVehicles() {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.vehicleService.getVehicles(+params.get('id')))
-      .subscribe(result => this.vehicles = result);
+      .subscribe(result => {
+        this.vehicles = result;
+        this.data = this.vehicles;
+      });
+  }
+
+  resetFilter() {
+    this.vehicles = this.data;
+  }
+
+  filterNoCheckout() {
+    this.vehicles = this.data.filter(v => !v.hasValidCheckout);
+  }
+
+  filterNoInsurance() {
+    this.vehicles = this.data.filter(v => !v.hasActualInsurance);
+  }
+
+  search() {
+    this.vehicles = this.data.filter(v => v[this.field].includes(this.phrase));
   }
 }

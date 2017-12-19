@@ -1,15 +1,33 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    {{ fleet?.name }}
-  </div>
-  <div class="panel-body">
-    <span>Fleet status: {{ fleet?.status.status }}</span><br />
-    <span>Vehicles without insurance: {{ fleet?.vehiclesWithoutInsurance }}</span><br />
-    <span>Vehicles without checkouts {{ fleet?.vehiclesWithoutCheckout }}</span>
+<h2>{{ fleet?.name }}</h2>
+<hr/>
+<div class="card">
+  <div class="card-body">
+    <div class="card-block">
+      <div class="card-deck">
+        <div class="card">
+          <h4 class="card-title text-center">Fleet status</h4>
+            <p class="h2 text-center">{{ fleet?.status.status }}</p>
+        </div>
+        <div class="card">
+          <h4 class="card-title text-center">Without insurance</h4>
+          <p class="h2 text-center">{{ fleet?.vehiclesWithoutInsurance }}</p><br />
+        </div>
+        <div class="card">
+          <h4 class="card-title text-center">Without checkout</h4>
+          <p class="h2 text-center">{{ fleet?.vehiclesWithoutCheckout }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<a [routerLink]="['vehicles/new']"class="btn btn-info">Add vehicle</a><br/><br/>
+<br/>
+<a [routerLink]="['vehicles/new']"class="btn btn-success">Add vehicle</a><br/><br/>
+<div class="btn-group">
+  <button class="btn btn-info" (click)="resetFilter()">All</button>
+  <button class="btn btn-info" (click)="filterNoInsurance()">Without insurance</button>
+  <button class="btn btn-info" (click)="filterNoCheckout()">Without checkout</button>
+</div>
+<br/><br/>
 
 <table class="table table-hover table-striped">
   <tr>
@@ -18,7 +36,7 @@
     <th>Production Year</th>
     <th>Insurance</th>
     <th>Checkout</th>
-    <th>Actions</th>
+    <th></th>
   </tr>
   <tr *ngFor="let vehicle of vehicles">
     <td>{{ vehicle.model }}</td>
@@ -26,12 +44,12 @@
     <td>{{ vehicle.productionYear }}</td>
     <td>
       <div *ngIf="vehicle.hasActualInsurance;else other_content">
-        <span class="btn btn-xs btn-success btn-block">YES</span>
+        <span class="btn btn-xs btn-success btn-block disabled">YES</span>
       </div>
     </td>
     <td>
       <div *ngIf="vehicle.hasValidCheckout;else other_content">
-        <span class="btn btn-xs btn-success btn-block">YES</span>
+        <span class="btn btn-xs btn-success btn-block disabled">YES</span>
       </div></td>
     <td>
       <a [routerLink]="['vehicle/', vehicle.id]" class="btn btn-xs btn-info">Show</a>
@@ -40,4 +58,4 @@
   </tr>
 </table>
 
-<ng-template #other_content><span class="btn btn-xs btn-block btn-warning">NO</span></ng-template>
+<ng-template #other_content><span class="btn btn-xs btn-block btn-warning disabled">NO</span></ng-template>

@@ -6,7 +6,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   selector: 'app-repairform',
   template: `
   <div class="panel panel-default">
-    <div class="panel-heading">Add repair</div>
     <div class="panel-body">
       <label for="date">Date</label>
       <input type="date" class="form-control" name="date" [(ngModel)]="repair.date"><br/>
@@ -18,7 +17,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
       <button class="btn btn-warning" (click)="reset()">Reset</button>
     </div>
   </div>
-  <br/><br/>
   `,
   styles: ['textarea { resize: none;}'],
   providers: [RepairService]

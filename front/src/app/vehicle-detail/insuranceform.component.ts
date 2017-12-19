@@ -9,7 +9,6 @@ import { InsuranceService } from "./insurance.service";
   template: `
   <div>
   <div class="panel panel-default">
-    <div class="panel-heading">Add insurance</div>
     <div class="panel-body">
       <label for="company">Company</label>
       <input type="text" class="form-control" name="company" [(ngModel)]="insurance.company"><br/>
@@ -21,7 +20,6 @@ import { InsuranceService } from "./insurance.service";
       <button class="btn btn-warning" (click)="reset()">Reset</button>
     </div>
   </div>
-  <br/><br/>
   `,
   styles: ['textarea { resize: none;}'],
   providers: [InsuranceService]

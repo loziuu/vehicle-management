@@ -21,9 +21,8 @@ export class FleetService {
     return this.http.get(this.apiLocation + id);
   }
 
-  public createFleet(fleet: Fleet): Promise<any> {
-    return this.http.post(this.apiLocation, fleet)
-      .toPromise();
+  public createFleet(fleet: Fleet): Observable<any> {
+    return this.http.post(this.apiLocation, fleet, { responseType: "text" });
   }
 
   public deleteFleet(id: number): Promise<any> {

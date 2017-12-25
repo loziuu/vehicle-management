@@ -1,8 +1,8 @@
-package pl.loziuu.ivms.presentation
+package pl.loziuu.ivms.presentation.fleet
 
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
-import pl.loziuu.ivms.presentation.adapters.RestCommandAdapter
 import pl.loziuu.ivms.presentation.dtos.CreateFleetDto
 import pl.loziuu.ivms.presentation.dtos.RegisterCheckoutDto
 import pl.loziuu.ivms.presentation.dtos.RegisterInsuranceDto
@@ -11,6 +11,7 @@ import pl.loziuu.ivms.presentation.dtos.RegisterRepairDto
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/fleets")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 class FleetCommandController(val command: RestCommandAdapter) {
 
     @PostMapping

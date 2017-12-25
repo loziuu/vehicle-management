@@ -1,12 +1,8 @@
-package pl.loziuu.ivms.presentation
+package pl.loziuu.ivms.presentation.fleet
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import pl.loziuu.ivms.management.fleet.query.FleetDto
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
-import pl.loziuu.ivms.presentation.adapters.FleetResource
-import pl.loziuu.ivms.presentation.adapters.RestFleetAdapter
-import pl.loziuu.ivms.presentation.adapters.VehicleResource
 
 @CrossOrigin
 @RestController

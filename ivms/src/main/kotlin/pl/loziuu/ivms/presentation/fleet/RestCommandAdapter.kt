@@ -1,4 +1,4 @@
-package pl.loziuu.ivms.presentation.adapters
+package pl.loziuu.ivms.presentation.fleet
 
 import org.springframework.stereotype.Component
 import pl.loziuu.ivms.maintenance.checkout.ports.CheckoutService

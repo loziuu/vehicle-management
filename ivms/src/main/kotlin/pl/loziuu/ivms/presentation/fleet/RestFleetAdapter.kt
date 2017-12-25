@@ -1,14 +1,11 @@
-package pl.loziuu.ivms.presentation.adapters
+package pl.loziuu.ivms.presentation.fleet
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import fuzzy4j.flc.Variable
-import org.aspectj.weaver.ast.Var
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import pl.loziuu.ivms.inference.application.InferenceService
 import pl.loziuu.ivms.maintenance.application.MaintenanceQueryService
-import pl.loziuu.ivms.maintenance.journal.domain.Journal
 import pl.loziuu.ivms.maintenance.journal.query.JournalDto
 import pl.loziuu.ivms.management.application.ManagementQueryService
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
@@ -23,7 +20,7 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
     }
 
     fun getFleetVehicles(id: Long): List<VehicleResource> {
-        return managementQueryService.getFleet(id).vehicles.map { VehicleResource(it.local, it.model, it.manufacturer, it.productionYear, it.journal)  }
+        return managementQueryService.getFleet(id).vehicles.map { VehicleResource(it.local, it.model, it.manufacturer, it.productionYear, it.journal) }
     }
 
     fun getFleetVehicle(id: Long, vehicleId: Long): VehicleDto {

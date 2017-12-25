@@ -8,12 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.WebApplicationContext
@@ -26,7 +30,8 @@ import pl.loziuu.ivms.presentation.dtos.RegisterRepairDto
 @SpringBootTest
 @Transactional
 @RunWith(SpringRunner::class)
-class ControllerTest {
+@WithMockUser(roles = arrayOf("ADMIN"))
+class FleetControllerTest {
 
     @Autowired
     lateinit var jackson2HttpMessageConverter: MappingJackson2HttpMessageConverter
@@ -38,11 +43,12 @@ class ControllerTest {
     lateinit var webCtx: WebApplicationContext
 
     lateinit var mockMvc: MockMvc
-    lateinit var restul: MvcResult
 
     @Before
     fun setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webCtx).build()
+        mockMvc = MockMvcBuilders.webAppContextSetup(webCtx)
+                .apply<DefaultMockMvcBuilder>(springSecurity())
+                .build()
     }
 
     @Test
@@ -71,15 +77,25 @@ class ControllerTest {
 
     @Test
     fun postFleet() {
-        mockMvc.perform(post("/api/v1/fleets")
+        mockMvc.perform(post("/api/v1/fleets").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(CreateFleetDto())))
                 .andExpect(status().isOk)
     }
 
     @Test
+    @WithMockUser(roles = arrayOf("VISITOR"))
+    fun visitorTryingToCreateFleetShouldBeDenied() {
+        mockMvc.perform(post("/api/v1/fleets").with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(CreateFleetDto())))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().`is`(403))
+    }
+
+    @Test
     fun postFleetVehicle() {
-        mockMvc.perform(post("/api/v1/fleets/1/vehicles")
+        mockMvc.perform(post("/api/v1/fleets/1/vehicles").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(VehicleDetails())))
                 .andExpect(status().isOk)
@@ -87,7 +103,7 @@ class ControllerTest {
 
     @Test
     fun postVehicleInsurance() {
-        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/insurances")
+        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/insurances").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(RegisterInsuranceDto())))
                 .andExpect(status().isOk)
@@ -95,7 +111,7 @@ class ControllerTest {
 
     @Test
     fun postVehicleRepair() {
-        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/repairs")
+        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/repairs").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(RegisterRepairDto())))
                 .andExpect(status().isOk)
@@ -103,9 +119,10 @@ class ControllerTest {
 
     @Test
     fun postVehicleCheckout() {
-        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/checkouts")
+        mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/checkouts").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(RegisterCheckoutDto())))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk)
     }
 }

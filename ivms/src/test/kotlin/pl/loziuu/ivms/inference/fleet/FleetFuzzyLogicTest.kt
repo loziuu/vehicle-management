@@ -1,9 +1,6 @@
 package pl.loziuu.ivms.inference.fleet
 
-import fuzzy4j.flc.ControllerBuilder
-import fuzzy4j.flc.InputInstance
-import fuzzy4j.flc.Term
-import fuzzy4j.flc.Variable
+import fuzzy4j.flc.*
 import fuzzy4j.sets.FuzzyFunction
 import fuzzy4j.sets.TriangularFunction
 import org.assertj.core.api.Assertions.assertThat
@@ -12,40 +9,96 @@ import org.junit.Test
 class FleetFuzzyLogicTest {
 
     @Test
-    fun testCreationOfTriangularFunction() {
-        val function : FuzzyFunction = TriangularFunction(0.0, 3.0, 6.0)
-
-        assertThat(function.apply(0.0)).isEqualTo(0.0)
-        assertThat(function.apply(3.0)).isEqualTo(1.0)
-        assertThat(function.apply(6.0)).isEqualTo(0.0)
-    }
-
-    @Test
     fun createNewTerm() {
-        // Number of vehicles in next week
-        val small : Term = Term.term("small", 0.0, 1.0, 3.0)
-        val med : Term = Term.term("med", 1.0, 3.0, 5.0)
-        val big : Term = Term.term("big", 3.0, 10.0, 10.0)
+        val zero: Term = Term.term("zero", 0.0, 0.0, 5.0)
+        val checkoutLittle: Term = Term.term("little", 0.0, 5.0, 10.0, 15.0)
+        val checkoutMedium: Term = Term.term("medium", 10.0, 15.0, 30.0, 35.0)
+        val checkoutBig: Term = Term.term("big", 30.0, 35.0, 65.0, 70.0)
+        val checkoutHumongous: Term = Term.term("humongous", 65.0, 70.0, 100.0, 100.0)
 
-        val checkouts : Variable = Variable.input("checkouts", small, med, big).start(10.0).end(100.0);
+        val insuranceLittle: Term = Term.term("little", 0.0, 5.0, 10.0, 30.0)
+        val insuranceMedium: Term = Term.term("medium", 10.0, 30.0, 40.0, 60.0)
+        val insuranceBig: Term = Term.term("big", 40.0, 60.0, 75.0, 80.0)
+        val insuranceHumongous: Term = Term.term("humongous", 75.0, 80.0, 100.0, 100.0)
 
-        val low = Term.term("Low", 0.0, 25.0, 50.0)
-        val high = Term.term("High", 25.0, 75.0, 100.0)
+        val checkouts: Variable =
+                Variable.input("checkouts", zero, checkoutLittle, checkoutMedium, checkoutBig, checkoutHumongous).start(0.0).end(100.0)
 
-        val effort : Variable = Variable.input("effort", low, high).start(0.0).end(100.0)
+        val insurances: Variable =
+                Variable.input("insurances", zero, insuranceLittle, insuranceMedium, insuranceBig, insuranceHumongous).start(0.0).end(100.0)
+
+        val bad: Term = Term.term("bad", 0.0, 1.0, 10.0, 15.0)
+        val weak: Term = Term.term("weak", 10.0, 15.0, 30.0)
+        val medium: Term = Term.term("medium", 15.0, 30.0, 60.0)
+        val good: Term = Term.term("good", 30.0, 60.0, 80.0)
+        val perfect: Term = Term.term("perfect", 80.0, 90.0, 100.0, 100.0)
+
+        val fleetStatus: Variable = Variable.input("status", bad, weak, medium, good, perfect).start(0.0).end(100.0)
+
 
         val impl = ControllerBuilder.newBuilder()
-                .`when`().`var`(checkouts).`is`(small).then().`var`(effort).`is`(low)
-                .`when`().`var`(checkouts).`is`(med).then().`var`(effort).`is`(low)
-                .`when`().`var`(checkouts).`is`(big).then().`var`(effort).`is`(high)
+                // CHECKOUTS ZERO
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.somewhat(zero)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.very(zero)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.somewhat(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.somewhat(insuranceMedium)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(medium)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceMedium)).then().`var`(fleetStatus).`is`(medium)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.somewhat(insuranceBig)).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceBig)).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(zero).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
+
+                // CHECKOUTS LITTLE
+                .`when`().`var`(checkouts).`is`(HedgeBuilder.very(checkoutLittle)).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(HedgeBuilder.somewhat(checkoutLittle)).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(HedgeBuilder.somewhat(checkoutLittle)).and().`var`(insurances).`is`(HedgeBuilder.somewhat(zero)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(HedgeBuilder.somewhat(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(good)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(medium)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
+
+                // CHECKOUT MEDIUM
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(good)
+                .`when`().`var`(checkouts).`is`(HedgeBuilder.somewhat(checkoutMedium)).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(good)
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(medium)
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceMedium)).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutMedium).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
+
+                .`when`().`var`(checkouts).`is`(checkoutBig).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(checkoutBig).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(weak)
+                .`when`().`var`(checkouts).`is`(checkoutBig).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutBig).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutBig).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
+
+                .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(zero).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceLittle).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceBig).then().`var`(fleetStatus).`is`(bad)
+                .`when`().`var`(checkouts).`is`(checkoutHumongous).and().`var`(insurances).`is`(insuranceHumongous).then().`var`(fleetStatus).`is`(bad)
                 .create()
+        val map = mutableMapOf<Variable, Double>()
 
-        val input = InputInstance().`is`(checkouts, 11.0)
-
-        print(impl.applyFuzzy(input))
-
-        val result = impl.apply(input);
-
-        System.out.println("crisp = " + result);
+        var i = 0.0
+        var j = 0.0
+        do {
+            print(i)
+            print( " " )
+            print(j)
+            map.put(checkouts, i)
+            map.put(insurances, j)
+            val message = impl.apply(InputInstance.wrap(map))
+            println(message)
+            i = i + 1.0
+            j = j + 1.0
+        } while (i < 100)
     }
 }

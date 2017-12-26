@@ -62,5 +62,7 @@ class FleetFuzzyLogicTest {
                 .`when`().`var`(checkouts).`is`(checkoutLittle).and().`var`(insurances).`is`(HedgeBuilder.very(insuranceLittle)).then().`var`(fleetStatus).`is`(perfect)
                 .`when`().`var`(checkouts).`is`(HedgeBuilder.very(checkoutLittle)).and().`var`(insurances).`is`(insuranceMedium).then().`var`(fleetStatus).`is`(good)
                 .create()
+
+
     }
 }

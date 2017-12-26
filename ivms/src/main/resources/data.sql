@@ -42,3 +42,5 @@ insert into checkout(id, date, expiration_date, result, journal_id) values (6, P
 insert into checkout(id, date, expiration_date, result, journal_id) values (7, PARSEDATETIME ('2000-01-01', 'yyyy-MM-dd'), PARSEDATETIME ('2051-01-01', 'yyyy-MM-dd'), 'POSITIVE', 7);
 insert into checkout(id, date, expiration_date, result, journal_id) values (8, PARSEDATETIME ('2000-01-01', 'yyyy-MM-dd'), PARSEDATETIME ('2051-01-01', 'yyyy-MM-dd'), 'POSITIVE', 8);
 insert into checkout(id, date, expiration_date, result, journal_id) values (9, PARSEDATETIME ('2000-01-01', 'yyyy-MM-dd'), PARSEDATETIME ('2051-01-01', 'yyyy-MM-dd'), 'POSITIVE', 9);
+
+insert into users(id, login, password, role, enabled) values (1, 'admin', 'admin', 'ADMIN', 1);

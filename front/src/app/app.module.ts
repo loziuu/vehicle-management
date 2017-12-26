@@ -15,6 +15,11 @@ import { InsuranceformComponent } from './vehicle-detail/insuranceform.component
 import { FleetComponent } from './fleet/fleet.component';
 import { FleetDetailComponent } from './fleet-detail/fleet-detail.component';
 import { CheckoutformComponent } from './vehicle-detail/checkoutform.component';
+import { HttpXsrfInterceptor } from './HttpXsrfInterceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientXsrfModule } from '@angular/common/http';
+import { UsersComponent } from './users/users.component';
+import { PermissionDeniedComponent } from './permission-denied/permission-denied.component';
 
 @NgModule({
   declarations: [
@@ -27,12 +32,15 @@ import { CheckoutformComponent } from './vehicle-detail/checkoutform.component';
     InsuranceformComponent,
     FleetComponent,
     FleetDetailComponent,
-    CheckoutformComponent
+    CheckoutformComponent,
+    UsersComponent,
+    PermissionDeniedComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
+    HttpClientXsrfModule,
     RouterModule.forRoot([
       {
         path: 'fleets',
@@ -66,11 +74,19 @@ import { CheckoutformComponent } from './vehicle-detail/checkoutform.component';
       {
         path: 'fleet/:id/vehicles/new',
         component: CreationComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent
+      },
+      {
+        path: '403',
+        component: PermissionDeniedComponent
       }
     ]),
     FormsModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

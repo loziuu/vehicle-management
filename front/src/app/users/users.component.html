@@ -1,0 +1,91 @@
+<a class="btn btn-primary" data-toggle="modal" href="#" data-target="#newUserModal">Add new user</a>
+
+<table class="table table-hover">
+  <thead>
+    <th class="w-25">Login</th>
+    <th class="w-25">Role</th>
+    <th class="w-25">isActive</th>
+    <th class="w-25">Actions</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.login }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <button class="btn" [ngClass]="{'btn-success' : user.enabled, 'btn-warning' : !user.enabled }" (click)="changeEnabledState(user)">
+            <i class="fa" [ngClass]="{'fa-check' : user.enabled, 'fa-minus-circle' : !user.enabled }"></i>
+        </button>
+      </td>
+      <td>
+          <a class="btn btn-info" data-toggle="modal" href="#" data-target="#changeRoleModal" (click)="chosenUser=user">Change role</a>
+          <a class="btn btn-info" data-toggle="modal" href="#" data-target="#changePasswordModal" (click)="chosenUser=user">Change password</a>          
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div id="newUserModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add new user</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <input type="text" name="login" placeholder="login" [(ngModel)]="newUser.login" class="form-control" /><br/>
+          <input type="password" name="pasword" placeholder="password" [(ngModel)]="newUser.password" class="form-control" /><br/>
+          <button class="btn btn-info" (click)="addNewUser()">Add new user</button>          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="changePasswordModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Change password</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <input type="password" name="pasword" placeholder="new password" [(ngModel)]="newUser.password" class="form-control" /><br/>
+            <button class="btn btn-info" (click)="changePassword()">Change password</button>          
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="changeRoleModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Change role</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <select class="form-control" [(ngModel)]="role" name="role">
+                <option value="ADMIN">ADMIN</option>
+                <option value="USER">USER</option>
+                <option value="VISITOR">VISITOR</option>
+              </select>
+              <button class="btn btn-info" (click)="changeRole()">Change role</button>          
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>

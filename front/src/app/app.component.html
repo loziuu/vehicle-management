@@ -1,13 +1,47 @@
+<header>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<a class="navbar-brand" href="#">Vehicle Management</a>
+		<ul class="nav navbar-nav ml-auto text-white" *ngIf="logged">
+			<li class="nav-link text-white">
+				{{ user.login }}
+			</li>
+			<li class="nav-item">
+				<button class="btn btn-danger" (click)="logout()">Logout</button>
+			</li>
+		</ul>		
+	</nav>
+</header>
+
 <div class="row">
 	<nav class="position-fixed h-100 col-lg-2 d-block bg-light">
 		<ul class="nav nav-pills flex-column">
 			<li>
-				<a [routerLink]="['/']" class="nav-link active">Dashboard</a>
+				<a [routerLink]="['/dashboard']" class="nav-link" routerLinkActive="active">Dashboard</a>
+			</li>
+			<li>
+				<a [routerLink]="['/users']" class="nav-link" routerLinkActive="active">Users</a>
 			</li>
 		</ul>
 	</nav>
 
 	<main role="main" class="ml-sm-auto col-lg-10">
-		<router-outlet></router-outlet>
+		<span *ngIf="logged == true; else login">
+			<router-outlet></router-outlet>
+		</span>
+
+		<ng-template #login>
+			<div class="col-lg-5">
+				<div class="alert alert-warning" *ngIf="error.occured">
+					{{ error.message }}
+				</div>
+				<form class="form-group">
+					<label for="login">Login</label>
+					<input type="text" name="login" [(ngModel)]="username" class="form-control"/>
+					<label for="password">Password</label>
+					<input type="password" name="password" [(ngModel)]="password" class="form-control"/><br/>
+					<button class="btn btn-info" (click)="tryToLogIn()">Login</button>
+				</form>
+			</div>
+		</ng-template>
 	</main>
 </div>

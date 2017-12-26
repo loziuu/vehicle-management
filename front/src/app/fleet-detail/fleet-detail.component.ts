@@ -21,7 +21,7 @@ export class FleetDetailComponent implements OnInit {
     private vehicleService: VehicleService,
     private location: Location) { }
   
-  fleet: Fleet;
+  fleet: any;
   data: Array<any>;
   vehicles: Vehicle[];
   field: string;
@@ -37,6 +37,8 @@ export class FleetDetailComponent implements OnInit {
       .switchMap((params: ParamMap) => this.fleetService.getFleet(+params.get('id')))
       .subscribe(result => {
         this.fleet = result;
+        if (this.fleet.status.status > 92) 
+          this.fleet.status.status = 100.0
       });
   }
 

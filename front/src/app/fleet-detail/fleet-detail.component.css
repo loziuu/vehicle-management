@@ -1,0 +1,11 @@
+.progress {
+    position:relative;
+    border:1px solid #333;
+    position:relative;
+    padding:3px;
+}
+.bar {
+    background-color:#00ff00;
+    width:50%;
+    height:20px;
+}

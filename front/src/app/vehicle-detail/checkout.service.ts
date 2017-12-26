@@ -10,7 +10,7 @@ export class CheckoutService {
   constructor(private http: Http) { }
 
   public postCheckout(fleetId, vehicleId, checkout): Promise<any> {
-    return this.http.post("http://localhost:8080/api/v1/fleets/" + fleetId + "/vehicles/" + vehicleId + "/checkouts", checkout)
+    return this.http.post("http://localhost:8080/api/v1/fleets/" + fleetId + "/vehicles/" + vehicleId + "/checkouts", checkout, { withCredentials: true })
       .toPromise();
   }
 }

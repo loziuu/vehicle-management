@@ -51,6 +51,6 @@ class MaintenanceServiceTest {
     fun getJournalsForFleet() {
         val journals = queryService.getJournalsForFleet(1L)
 
-        assertThat(journals).hasSize(10)
+        assertThat(journals).hasSize(26)
     }
 }

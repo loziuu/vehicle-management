@@ -64,7 +64,7 @@ class ManagementServiceTest {
 
         val vehicleId = service.addVehicle(fleetId, VehicleDetails())
 
-        assertThat(vehicleId).isEqualTo(12L)
+        assertThat(vehicleId).isEqualTo(28L)
         val journal = journalRepository.findOneByVehicleId(vehicleId)
         print(journal.repairs)
         assertThat(journal).isNotNull()
@@ -75,6 +75,6 @@ class ManagementServiceTest {
     fun getFleet() {
         val fleet = queryService.getFleet(1L)
 
-        assertThat(fleet.vehicles).hasSize(10)
+        assertThat(fleet.vehicles).hasSize(26)
     }
 }

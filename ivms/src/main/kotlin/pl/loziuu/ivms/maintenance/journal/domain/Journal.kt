@@ -25,12 +25,14 @@ class Journal(
         repairs.add(Repair(0, repairDetails, id))
     }
 
-    fun registerInsurance(period: InsurancePeriod, company: Company) {
-        insurances.add(Insurance(0, period, company, id))
+    fun registerInsurance(insurance: Insurance) {
+        insurance.journalId = id
+        insurances.add(insurance)
     }
 
-    fun registerCheckout(date: LocalDate, expDate: LocalDate, result: CheckoutResult) {
-        checkouts.add(Checkout(0, date, expDate, result, id))
+    fun registerCheckout(checkout: Checkout) {
+        checkout.journalId = id
+        checkouts.add(checkout)
     }
 
     fun sumRepairExpenses(): Double {

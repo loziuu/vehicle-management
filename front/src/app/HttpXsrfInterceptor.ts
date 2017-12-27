@@ -7,12 +7,14 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
+import { AlertsService } from './alerts.service';
 
 @Injectable()
 export class HttpXsrfInterceptor implements HttpInterceptor {
 
   constructor(private tokenExtractor: HttpXsrfTokenExtractor,
-              private router: Router) {
+              private router: Router,
+              private service: AlertsService) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -33,6 +35,9 @@ export class HttpXsrfInterceptor implements HttpInterceptor {
     if (error instanceof HttpErrorResponse) {
       if (error.status == 403) {
         this.router.navigate(['/403']);
+      }
+      if (error.status == 400) {
+        this.service.addAlert(error.error.content);
       }
     }
   }

@@ -1,5 +1,6 @@
 package pl.loziuu.ivms.presentation.fleet
 
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
@@ -19,18 +20,18 @@ class FleetCommandController(val command: RestCommandAdapter) {
             = command.createFleet(dto)
 
     @PostMapping("{fleetId}/vehicles")
-    fun postVehicle(@PathVariable fleetId: Long, @RequestBody dto: VehicleDetails)
+    fun postVehicle(@PathVariable fleetId: Long, @RequestBody dto: VehicleDetails): ResponseEntity<Any>
             = command.addVehicle(fleetId, dto)
 
     @PostMapping("{fleetId}/vehicles/{localId}/insurances")
-    fun postNewInsurance(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterInsuranceDto)
+    fun postNewInsurance(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterInsuranceDto): ResponseEntity<Any>
             = command.registerInsurance(fleetId, localId, dto)
 
     @PostMapping("{fleetId}/vehicles/{localId}/repairs")
-    fun postVehicle(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterRepairDto)
+    fun postVehicle(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterRepairDto): ResponseEntity<Any>
             = command.registerRepair(fleetId, localId, dto)
 
     @PostMapping("{fleetId}/vehicles/{localId}/checkouts")
-    fun postVehicle(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterCheckoutDto)
+    fun postVehicle(@PathVariable fleetId: Long, @PathVariable localId: Long, @RequestBody dto: RegisterCheckoutDto): ResponseEntity<Any>
             = command.registerCheckout(fleetId, localId, dto)
 }

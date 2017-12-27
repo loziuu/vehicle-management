@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit4.SpringRunner
+import pl.loziuu.ivms.ddd.DomainValidationException
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult
 import pl.loziuu.ivms.maintenance.journal.domain.Journal
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
@@ -52,5 +53,15 @@ class MaintenanceServiceTest {
         val journals = queryService.getJournalsForFleet(1L)
 
         assertThat(journals).hasSize(26)
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun registerCheckoutDateAfterExpirationDateShouldThrowException() {
+        service.registerCheckout(1, LocalDate.now().plusDays(1), LocalDate.now(), CheckoutResult.POSITIVE)
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun insuranceStartDateAfterExpirationDateShouldThrowException() {
+        service.registerInsurance(1, LocalDate.now().plusDays(1), LocalDate.now(), "Test")
     }
 }

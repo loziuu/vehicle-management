@@ -1,14 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { Insurance } from "../models/insurance";
-
-import 'rxjs/add/operator/toPromise';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class InsuranceService {
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   public postInsurance(fleet_id, vehicle_id, insurance): Promise<any> {
+    console.log("http://localhost:8080/api/v1/fleets/" + fleet_id + "/vehicles/ " + vehicle_id + "/insurances");
     return this.http.post("http://localhost:8080/api/v1/fleets/" + fleet_id + "/vehicles/ " + vehicle_id + "/insurances", insurance, { withCredentials: true })
       .toPromise();
     }

@@ -22,7 +22,7 @@ export class FleetService {
   }
 
   public createFleet(fleet: Fleet): Observable<any> {
-    return this.http.post(this.apiLocation, fleet, { responseType: "text" });
+    return this.http.post(this.apiLocation, fleet);
   }
 
   public deleteFleet(id: number): Promise<any> {

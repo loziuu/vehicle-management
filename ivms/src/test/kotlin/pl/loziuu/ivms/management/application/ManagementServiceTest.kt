@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.junit4.SpringRunner
+import pl.loziuu.ivms.ddd.DomainValidationException
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
 import pl.loziuu.ivms.management.fleet.port.FleetRepository
+import pl.loziuu.ivms.management.vehicle.domain.Vehicle
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
 
 @SpringBootTest
@@ -38,10 +40,9 @@ class ManagementServiceTest {
     fun addVehicleToFleetShouldReturnVehicleIdAndRegisterNewJournal() {
         val fleetId = 2L
 
-        val vehicleId = service.addVehicle(fleetId, VehicleDetails(model = "Test"))
+        val vehicleId = service.addVehicle(fleetId, VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
 
         val vehicle = repository.findOne(fleetId).getVehicle(2L)
-        assertThat(vehicle.details.model).isEqualTo("Test")
         assertThat(vehicle.fleetId).isEqualTo(fleetId)
         assertThat(journalRepository.findOneByVehicleId(vehicleId)).isNotNull()
     }
@@ -62,11 +63,11 @@ class ManagementServiceTest {
     fun createFleetAndAddVehicleToItShouldCreateJournal() {
         val fleetId = service.createFleet("Second fleet")
 
-        val vehicleId = service.addVehicle(fleetId, VehicleDetails())
+        val vehicleId = service.addVehicle(fleetId, VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
 
         assertThat(vehicleId).isEqualTo(28L)
         val journal = journalRepository.findOneByVehicleId(vehicleId)
-        print(journal.repairs)
+
         assertThat(journal).isNotNull()
         assertThat(journal.sumRepairExpenses()).isEqualTo(0.0)
     }
@@ -76,5 +77,26 @@ class ManagementServiceTest {
         val fleet = queryService.getFleet(1L)
 
         assertThat(fleet.vehicles).hasSize(26)
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun addFleetWithNoNameShouldThrowException() {
+        val fleet = service.createFleet(" ")
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun addVehicleWithEmptyManufacturerShouldThrowException() {
+        val fleet = service.addVehicle(1L, VehicleDetails(manufacturer = "", model = "Test", productionYear = 2012))
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun addVehicleWithEmptyModelShouldThrowException() {
+        val fleet = service.addVehicle(1L, VehicleDetails(manufacturer = "Test", productionYear = 2012))
+
+    }
+
+    @Test(expected = DomainValidationException::class)
+    fun addVehicleWithProductionYearEarlierThan1950ShouldThrowException() {
+        val fleet = service.addVehicle(1L, VehicleDetails(productionYear = 1949, model = "Test", manufacturer = "Test"))
     }
 }

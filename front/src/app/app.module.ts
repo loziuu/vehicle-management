@@ -20,6 +20,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientXsrfModule } from '@angular/common/http';
 import { UsersComponent } from './users/users.component';
 import { PermissionDeniedComponent } from './permission-denied/permission-denied.component';
+import { AlertComponent } from './alert/alert.component';
+import { AlertsService } from './alerts.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { PermissionDeniedComponent } from './permission-denied/permission-denied
     FleetDetailComponent,
     CheckoutformComponent,
     UsersComponent,
-    PermissionDeniedComponent
+    PermissionDeniedComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ import { PermissionDeniedComponent } from './permission-denied/permission-denied
     ]),
     FormsModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true},
+              { provide: AlertsService, useClass: AlertsService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

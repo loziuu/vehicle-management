@@ -25,6 +25,7 @@
 	</nav>
 
 	<main role="main" class="ml-sm-auto col-lg-10">
+		<app-alert></app-alert>
 		<span *ngIf="logged == true; else login">
 			<router-outlet></router-outlet>
 		</span>

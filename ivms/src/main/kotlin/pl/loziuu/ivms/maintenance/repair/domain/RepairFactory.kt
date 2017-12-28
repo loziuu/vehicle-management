@@ -1,6 +1,6 @@
 package pl.loziuu.ivms.maintenance.repair.domain
 
-import pl.loziuu.ivms.management.infrastructure.exceptions.ValidationException
+import pl.loziuu.ivms.ddd.DomainValidationException
 
 object RepairFactory {
     fun create(details: RepairDetails): Repair {
@@ -10,6 +10,6 @@ object RepairFactory {
 
     private fun validate(details: RepairDetails) {
         if (details.cost < 0)
-            throw ValidationException()
+            throw DomainValidationException("Cost can't be negative")
     }
 }

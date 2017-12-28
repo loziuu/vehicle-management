@@ -79,7 +79,7 @@ class FleetControllerTest {
     fun postFleet() {
         mockMvc.perform(post("/api/v1/fleets").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(CreateFleetDto())))
+                .content(objectMapper.writeValueAsString(CreateFleetDto(name = "Test"))))
                 .andExpect(status().isOk)
     }
 
@@ -97,7 +97,7 @@ class FleetControllerTest {
     fun postFleetVehicle() {
         mockMvc.perform(post("/api/v1/fleets/1/vehicles").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(VehicleDetails())))
+                .content(objectMapper.writeValueAsString(VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))))
                 .andExpect(status().isOk)
     }
 
@@ -105,7 +105,7 @@ class FleetControllerTest {
     fun postVehicleInsurance() {
         mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/insurances").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(RegisterInsuranceDto())))
+                .content(objectMapper.writeValueAsString(RegisterInsuranceDto(company = "Test"))))
                 .andExpect(status().isOk)
     }
 

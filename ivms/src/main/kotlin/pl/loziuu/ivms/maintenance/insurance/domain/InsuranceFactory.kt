@@ -1,16 +1,20 @@
 package pl.loziuu.ivms.maintenance.insurance.domain
 
-import pl.loziuu.ivms.management.infrastructure.exceptions.ValidationException
+import pl.loziuu.ivms.ddd.DomainValidationException
+import java.time.LocalDate
 
 object InsuranceFactory {
 
-    fun create(dto: InsuranceDto): Insurance {
-        validate(dto)
-        return Insurance(0, InsurancePeriod(dto.startDate, dto.endDate), Company(dto.company))
+    fun create(start: LocalDate, end: LocalDate, companyName: String): Insurance {
+        val insurance = Insurance(dateRange = InsurancePeriod(start, end), company = Company(companyName))
+        validate(insurance)
+        return insurance
     }
 
-    private fun validate(dto: InsuranceDto) {
-        if (dto.company.isBlank() || dto.startDate.isAfter(dto.endDate))
-            throw ValidationException()
+    private fun validate(insurance: Insurance) {
+        if (insurance.company.name.isBlank())
+            throw DomainValidationException("Company name can't be empty")
+        if (insurance.getBeginningDate().isAfter(insurance.getExpirationDate()))
+            throw DomainValidationException("Start date cannot be after end date")
     }
 }

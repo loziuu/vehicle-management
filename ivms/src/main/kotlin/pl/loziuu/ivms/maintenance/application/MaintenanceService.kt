@@ -1,9 +1,11 @@
 package pl.loziuu.ivms.maintenance.application
 
 import pl.loziuu.ivms.ddd.ApplicationService
+import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutFactory
 import pl.loziuu.ivms.maintenance.checkout.domain.CheckoutResult
 import pl.loziuu.ivms.maintenance.checkout.ports.CheckoutService
 import pl.loziuu.ivms.maintenance.insurance.domain.Company
+import pl.loziuu.ivms.maintenance.insurance.domain.InsuranceFactory
 import pl.loziuu.ivms.maintenance.insurance.domain.InsurancePeriod
 import pl.loziuu.ivms.maintenance.insurance.ports.InsuranceService
 import pl.loziuu.ivms.maintenance.journal.domain.Journal
@@ -28,7 +30,8 @@ class MaintenanceService(val repository: JournalRepository) : JournalSetupComman
 
     override fun registerInsurance(vehicleId: Long, startDate: LocalDate, endDate: LocalDate, companyName: String) {
         val journal = repository.findOneByVehicleId(vehicleId)
-        journal.registerInsurance(InsurancePeriod(startDate, endDate), Company(companyName))
+        val insurance = InsuranceFactory.create(startDate, endDate, companyName)
+        journal.registerInsurance(insurance)
         repository.save(journal)
     }
 
@@ -40,7 +43,8 @@ class MaintenanceService(val repository: JournalRepository) : JournalSetupComman
 
     override fun registerCheckout(vehicleId: Long, checkoutDate: LocalDate, expirationDate: LocalDate, result: CheckoutResult) {
         val journal = repository.findOneByVehicleId(vehicleId)
-        journal.registerCheckout(checkoutDate, expirationDate, result)
+        val checkout = CheckoutFactory.create(checkoutDate, expirationDate, result)
+        journal.registerCheckout(checkout)
         repository.save(journal)
     }
 

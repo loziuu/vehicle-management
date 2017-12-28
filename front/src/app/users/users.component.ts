@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit {
   }
 
   public addNewUser() {
-    this.http.post(environment.apiUrl + "/users", this.newUser, { responseType: "text" })
+    this.http.post(environment.apiUrl + "/users", this.newUser)
       .subscribe(result => this.initUsers());
   }
 

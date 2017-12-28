@@ -14,9 +14,11 @@ class Fleet(
         val name: String = "",
         @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "fleetId") val vehicles: MutableSet<Vehicle> = HashSet()) {
 
-    fun addVehicle(details: VehicleDetails): Long {
+    fun addVehicle(vehicle: Vehicle): Long {
         val localId = vehicles.size+1.toLong()
-        vehicles.add(Vehicle(0, details, id, localId))
+        vehicle.local = localId
+        vehicle.fleetId = id
+        vehicles.add(vehicle)
         return localId
     }
 

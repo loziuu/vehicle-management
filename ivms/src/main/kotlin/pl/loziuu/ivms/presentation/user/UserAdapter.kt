@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import pl.loziuu.ivms.identity.user.application.UserQueryService
 import pl.loziuu.ivms.identity.user.application.UserService
+import pl.loziuu.ivms.presentation.RestResponse
 import java.net.URI
 
 @Service
@@ -17,26 +18,26 @@ class UserAdapter(@Autowired val queryService: UserQueryService,
 
     fun addUser(request: NewUserRequest): ResponseEntity<Any> {
         val createdUserId = commandService.addUser(request.login, request.password)
-        return ResponseEntity.created(URI.create(createdUserId.toString())).build()
+        return RestResponse("User created", 201).toResponseEntity()
     }
 
     fun activate(id: Long): ResponseEntity<Any> {
         commandService.activate(id)
-        return ResponseEntity.ok().build()
+        return RestResponse("User activated").toResponseEntity()
     }
 
     fun deactivate(id: Long): ResponseEntity<Any> {
         commandService.deactivate(id)
-        return ResponseEntity.ok().build()
+        return RestResponse("User deactivated").toResponseEntity()
     }
 
     fun changePassword(id: Long, request: ChangePasswordRequest): ResponseEntity<Any> {
         commandService.changePassword(id, request.password)
-        return ResponseEntity.ok().build()
+        return RestResponse("Password changed").toResponseEntity()
     }
 
     fun changeRole(id: Long, request: ChangeRoleRequest): ResponseEntity<Any> {
         commandService.changeRole(id, request.role)
-        return ResponseEntity.ok().build()
+        return RestResponse("Role changed").toResponseEntity()
     }
 }

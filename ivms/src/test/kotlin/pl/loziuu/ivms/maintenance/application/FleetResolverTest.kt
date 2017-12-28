@@ -18,6 +18,6 @@ class FleetResolverTest {
     fun getVehicleIdsForFleet() {
         val ids : List<Long> = resolver.getVehicleIdsForFleet(1L)
 
-        assertThat(ids).hasSize(10)
+        assertThat(ids).hasSize(26)
     }
 }

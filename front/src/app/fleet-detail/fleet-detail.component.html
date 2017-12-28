@@ -35,6 +35,13 @@
 </div>
 <br/><br/>
 
+<div>
+  <label for="date">Change report date</label>
+  <input type="date" name="date" class="form-control" [(ngModel)]="date"/> 
+  <button (click)="getFutureFleet()" class="btn btn-primary">Submit</button>
+  <button (click)="initFleet()" class="btn btn-warning">Reset</button>
+</div><br/>
+
 <table class="table table-hover table-striped">
   <tr>
     <th>Model</th>

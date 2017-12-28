@@ -5,13 +5,14 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Observable } from "rxjs/Observable";
 import { HttpClient } from "@angular/common/http";
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class FleetService {
 
   constructor(private http: HttpClient) {}
  
-  private apiLocation = 'http://localhost:8080/api/v1/fleets/';
+  private apiLocation = environment.apiUrl + "/fleets/";
 
   public getFleets(): Observable<any> {
     return this.http.get(this.apiLocation);
@@ -19,6 +20,10 @@ export class FleetService {
 
   public getFleet(id: number): Observable<any> {
     return this.http.get(this.apiLocation + id);
+  }
+
+  public getFutureFleet(id: number, date: any): Observable<any> {
+    return this.http.get(this.apiLocation + id + "/" + date);
   }
 
   public createFleet(fleet: Fleet): Observable<any> {

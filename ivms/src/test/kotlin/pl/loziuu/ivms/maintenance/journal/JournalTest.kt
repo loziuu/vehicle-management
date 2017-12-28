@@ -1,6 +1,5 @@
 package pl.loziuu.ivms.maintenance.journal
 
-import org.apache.tomcat.jni.Local
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import pl.loziuu.ivms.maintenance.checkout.domain.Checkout
@@ -104,6 +103,50 @@ class JournalTest {
         journal.registerCheckout(Checkout())
 
         assertThat(journal.hasValidCheckout()).isFalse()
+    }
+
+    @Test
+    fun journalWithActualInsuranceForNextYearShouldReturnTrueIfAskedForSomeDateInThisPeriod() {
+        val journal = Journal()
+        journal.registerInsurance(Insurance(company = Company("Test")))
+
+        val result = journal.willHaveActualInsuranceAt(LocalDate.now().plusMonths(3))
+
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun journalWithActualInsuranceShouldReturnFalseWhenAskedForDateOutsideThisPeriod() {
+        val journal = Journal()
+        journal.registerInsurance(Insurance(company = Company("Test")))
+
+        val result = journal.willHaveActualInsuranceAt(LocalDate.now().plusYears(2))
+
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun journalWithActualCheckoutShouldReturnTrueWhenAskedAboutDateBeforeExpiration() {
+        val journal = Journal()
+        journal.registerCheckout(Checkout(
+                expirationDate = LocalDate.now().plusYears(1),
+                result = CheckoutResult.POSITIVE))
+
+        val result = journal.willHaveActualCheckoutAt(LocalDate.now().plusMonths(2))
+
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun journalWithActualCheckoutShouldReturnTrueWhenAskedAboutDateAfterExpiration() {
+        val journal = Journal()
+        journal.registerCheckout(Checkout(
+                expirationDate = LocalDate.now().plusYears(1),
+                result = CheckoutResult.POSITIVE))
+
+        val result = journal.willHaveActualCheckoutAt(LocalDate.now().plusYears(2))
+
+        assertThat(result).isFalse()
     }
 
     private fun date(date: String) = LocalDate.parse(date)

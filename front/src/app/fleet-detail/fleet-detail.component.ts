@@ -18,7 +18,6 @@ export class FleetDetailComponent implements OnInit {
 
   constructor(private fleetService: FleetService,
     private route: ActivatedRoute,
-    private vehicleService: VehicleService,
     private location: Location) { }
   
   fleet: any;
@@ -26,28 +25,33 @@ export class FleetDetailComponent implements OnInit {
   vehicles: Vehicle[];
   field: string;
   phrase: any;
+  date: any;
   
   ngOnInit() {
     this.initFleet();
-    this.initVehicles();
   }
 
-  private initFleet() {
+  public getFutureFleet() {
+        this.route.paramMap
+        .switchMap((params: ParamMap) => this.fleetService.getFutureFleet(+params.get('id'), this.date))
+        .subscribe(result => {
+          this.fleet = result;
+          this.vehicles = result.vehicles;
+          this.data = this.vehicles;
+          if (this.fleet.status.status > 92) 
+            this.fleet.status.status = 100.0
+        });
+  }
+
+  public initFleet() {
       this.route.paramMap
       .switchMap((params: ParamMap) => this.fleetService.getFleet(+params.get('id')))
       .subscribe(result => {
         this.fleet = result;
+        this.vehicles = result.vehicles;
+        this.data = this.vehicles;
         if (this.fleet.status.status > 92) 
           this.fleet.status.status = 100.0
-      });
-  }
-
-  private initVehicles() {
-    this.route.paramMap
-      .switchMap((params: ParamMap) => this.vehicleService.getVehicles(+params.get('id')))
-      .subscribe(result => {
-        this.vehicles = result;
-        this.data = this.vehicles;
       });
   }
 

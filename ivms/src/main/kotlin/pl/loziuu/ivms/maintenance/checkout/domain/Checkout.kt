@@ -8,7 +8,7 @@ import javax.persistence.*
 class Checkout(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long = 0,
         val date: LocalDate = LocalDate.now(),
-        val expirationDate: LocalDate = LocalDate.now(),
+        val expirationDate: LocalDate = LocalDate.now().plusYears(1),
         @Enumerated(EnumType.STRING) val result: CheckoutResult = CheckoutResult.NEGATIVE,
         var journalId: Long = 0) {
 

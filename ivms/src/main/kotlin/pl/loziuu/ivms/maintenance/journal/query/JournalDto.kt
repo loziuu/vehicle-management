@@ -25,6 +25,14 @@ class JournalDto(
         return checkouts.firstOrNull { it.isViable() } != null
     }
 
+    fun willHaveActualInsuranceAt(date: LocalDate): Boolean {
+        return insurances.firstOrNull { it -> it.endDate.isAfter(date) } != null
+    }
+
+    fun willHaveActualCheckoutAt(date: LocalDate): Boolean {
+        return checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
+    }
+
     fun sumRepairExpenses(): Double {
         return repairs.map { it -> it.cost }.sum()
     }

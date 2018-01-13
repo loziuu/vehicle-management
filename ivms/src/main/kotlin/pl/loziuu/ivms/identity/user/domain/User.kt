@@ -20,10 +20,6 @@ class User(@Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long 
         enabled = false
     }
 
-    override fun toString(): String {
-        return "User(id=$id, role=$role, login='$login', password='$password', enabled=$enabled)"
-    }
-
     fun changePassword(password: String) {
         this.password = password;
     }

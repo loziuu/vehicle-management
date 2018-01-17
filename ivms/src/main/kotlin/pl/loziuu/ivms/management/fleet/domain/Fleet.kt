@@ -22,9 +22,7 @@ class Fleet(
         return localId
     }
 
-    fun getVehicle(vehicleId: Long): Vehicle {
-        return vehicles.first { it -> it.local == vehicleId }
-    }
+    fun getVehicle(vehicleId: Long): Vehicle = vehicles.first { it -> it.local == vehicleId }
 
     fun removeVehicle(vehicleId: Long): Long {
         val vehicle = getVehicle(vehicleId);

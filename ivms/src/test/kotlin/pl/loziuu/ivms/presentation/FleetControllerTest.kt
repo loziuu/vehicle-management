@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.WebApplicationContext
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
-import pl.loziuu.ivms.presentation.dtos.CreateFleetDto
-import pl.loziuu.ivms.presentation.dtos.RegisterCheckoutDto
-import pl.loziuu.ivms.presentation.dtos.RegisterInsuranceDto
-import pl.loziuu.ivms.presentation.dtos.RegisterRepairDto
+import pl.loziuu.ivms.presentation.fleet.requests.CreateFleetRequest
+import pl.loziuu.ivms.presentation.fleet.requests.RegisterCheckoutRequest
+import pl.loziuu.ivms.presentation.fleet.requests.RegisterInsuranceRequest
+import pl.loziuu.ivms.presentation.fleet.requests.RegisterRepairRequest
 
 @SpringBootTest
 @Transactional
@@ -79,7 +79,7 @@ class FleetControllerTest {
     fun postFleet() {
         mockMvc.perform(post("/api/v1/fleets").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(CreateFleetDto(name = "Test"))))
+                .content(objectMapper.writeValueAsString(CreateFleetRequest(name = "Test"))))
                 .andExpect(status().isOk)
     }
 
@@ -88,7 +88,7 @@ class FleetControllerTest {
     fun visitorTryingToCreateFleetShouldBeDenied() {
         mockMvc.perform(post("/api/v1/fleets").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(CreateFleetDto())))
+                .content(objectMapper.writeValueAsString(CreateFleetRequest())))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().`is`(403))
     }
@@ -105,7 +105,7 @@ class FleetControllerTest {
     fun postVehicleInsurance() {
         mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/insurances").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(RegisterInsuranceDto(company = "Test"))))
+                .content(objectMapper.writeValueAsString(RegisterInsuranceRequest(company = "Test"))))
                 .andExpect(status().isOk)
     }
 
@@ -113,7 +113,7 @@ class FleetControllerTest {
     fun postVehicleRepair() {
         mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/repairs").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(RegisterRepairDto())))
+                .content(objectMapper.writeValueAsString(RegisterRepairRequest())))
                 .andExpect(status().isOk)
     }
 
@@ -121,7 +121,7 @@ class FleetControllerTest {
     fun postVehicleCheckout() {
         mockMvc.perform(post("/api/v1/fleets/1/vehicles/1/checkouts").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(RegisterCheckoutDto())))
+                .content(objectMapper.writeValueAsString(RegisterCheckoutRequest())))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk)
     }

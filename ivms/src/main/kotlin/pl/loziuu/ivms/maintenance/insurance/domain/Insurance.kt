@@ -11,15 +11,10 @@ data class Insurance(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
                      val company: Company = Company(),
                      var journalId: Long = 0) {
 
-    fun isActual(): Boolean {
-        return getExpirationDate().isAfter(LocalDate.now())
-    }
+    fun isActual(): Boolean = getExpirationDate().isAfter(LocalDate.now())
 
-    fun getExpirationDate(): LocalDate {
-        return dateRange.endDate
-    }
+    fun getExpirationDate(): LocalDate = dateRange.endDate
 
-    fun getBeginningDate(): LocalDate {
-        return dateRange.startDate
-    }
+    fun getBeginningDate(): LocalDate = dateRange.startDate
+
 }

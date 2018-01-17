@@ -17,23 +17,15 @@ class JournalDto(
         @OneToMany(mappedBy = "journalId", fetch = FetchType.EAGER) var checkouts: MutableSet<CheckoutQueryDto> = HashSet(),
         @OneToMany(mappedBy = "journalId", fetch = FetchType.EAGER) var insurances: MutableSet<InsuranceQueryDto> = HashSet()) {
 
-    fun hasActualInsurance(): Boolean {
-        return insurances.firstOrNull { it -> it.endDate.isAfter(LocalDate.now()) } != null
-    }
+    fun hasActualInsurance(): Boolean = insurances.firstOrNull { it -> it.endDate.isAfter(LocalDate.now()) } != null
 
-    fun hasValidCheckout(): Boolean {
-        return checkouts.firstOrNull { it.isViable() } != null
-    }
+    fun hasValidCheckout(): Boolean = checkouts.firstOrNull { it.isViable() } != null
 
-    fun willHaveActualInsuranceAt(date: LocalDate): Boolean {
-        return insurances.firstOrNull { it -> it.endDate.isAfter(date) } != null
-    }
+    fun willHaveActualInsuranceAt(date: LocalDate): Boolean =
+        insurances.firstOrNull { it -> it.endDate.isAfter(date) } != null
 
-    fun willHaveActualCheckoutAt(date: LocalDate): Boolean {
-        return checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
-    }
+    fun willHaveActualCheckoutAt(date: LocalDate): Boolean =
+        checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
 
-    fun sumRepairExpenses(): Double {
-        return repairs.map { it -> it.cost }.sum()
-    }
+    fun sumRepairExpenses(): Double = repairs.map { it -> it.cost }.sum()
 }

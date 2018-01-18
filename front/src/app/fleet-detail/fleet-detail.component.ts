@@ -23,7 +23,7 @@ export class FleetDetailComponent implements OnInit {
   fleet: any;
   data: Array<any>;
   vehicles: Vehicle[];
-  field: string;
+  field: string = "manufacturer";
   phrase: any;
   date: any;
   
@@ -68,6 +68,6 @@ export class FleetDetailComponent implements OnInit {
   }
 
   search() {
-    this.vehicles = this.data.filter(v => v[this.field].includes(this.phrase));
+    this.vehicles = this.data.filter(v => v[this.field].toString().includes(this.phrase));
   }
 }

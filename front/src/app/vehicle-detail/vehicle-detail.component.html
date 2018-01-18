@@ -22,7 +22,7 @@
 
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="insurance" role="tabpanel" aria-labelledby="insurance-tab">
-            <table class="table">
+            <table class="table" *ngIf="jor.insurances.length > 0">
                 <thead class="thead-inverse">
                 <th>Company</th>
                 <th>Start date</th>
@@ -35,10 +35,11 @@
                     <td> {{ insurance.endDate }}</td>
                   </tr>
                 </tbody>
-              </table>
+            </table>
+            <app-empty *ngIf="jor.insurances.length == 0" message="This vehicle is not insured yet!"></app-empty>
           </div>
           <div class="tab-pane fade" id="checkout" role="tabpanel" aria-labelledby="checkout-tab">
-            <table class="table">
+            <table class="table" *ngIf="jor.checkouts.length > 0">
                 <thead class="thead-inverse">
                   <th>Date of checkout</th>
                   <th>Expiration Date</th>
@@ -52,9 +53,10 @@
                   </tr>
                 </tbody>
               </table>
+            <app-empty *ngIf="jor.checkouts.length == 0" message="This vehicle is not checked yet!"></app-empty>
           </div>
           <div class="tab-pane fade" id="repair" role="tabpanel" aria-labelledby="repair-tab">
-              <table class="table">
+              <table class="table" *ngIf="jor.repairs.length > 0">
                   <thead class="thead-inverse">
                   <th>Description</th>
                   <th>Cost</th>
@@ -68,6 +70,7 @@
                     </tr>
                   </tbody>
                 </table>
+              <app-empty *ngIf="jor.repairs.length == 0" message="Vehicle had no repairs yet!"></app-empty>
           </div>
         </div>
       </div>

@@ -1,0 +1,14 @@
+<a [routerLink]="['/fleets/new']" class="btn btn-primary">Add new fleet</a>
+<br/><br/>
+<table class="table table-hover">
+  <thead>
+    <th>Name</th>
+    <th>Actions</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fleet of fleets">
+      <td>{{ fleet.name }}</td>
+      <td><a [routerLink]="['/fleet', fleet.id]" class="btn btn-xs btn-info">Show</a></td>
+    </tr>
+  </tbody>
+</table>

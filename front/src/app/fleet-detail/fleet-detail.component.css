@@ -9,3 +9,27 @@
     width:50%;
     height:20px;
 }
+
+.card-deck {
+    background: transparent;
+    border: 0px;
+}
+
+.card {
+    background-color: #81011e;
+    color: white;
+    border-radius: 0;
+}
+
+.card-block {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #F2F2F2;
+    color: black;
+    height: 100%;
+}
+
+.good {
+    background-color: #5c965d;
+    color: white;
+}

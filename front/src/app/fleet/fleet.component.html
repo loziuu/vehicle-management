@@ -2,12 +2,10 @@
   Successfuly added vehicle!
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">Add fleet</div>
-  <div class="panel-body">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" name="name" [(ngModel)]="fleet.name"><br />
-    <button class="btn btn-primary" (click)="submit()">Add new fleet</button>
-    <button class="btn btn-warning" (click)="reset()">Reset</button>
-  </div>
+<h4>Add fleet</h4>
+<div class="panel-body">
+  <label for="name">Name</label>
+  <input type="text" class="form-control" name="name" [(ngModel)]="fleet.name"><br />
+  <button class="btn btn-primary" (click)="submit()">Add new fleet</button>
+  <button class="btn btn-warning" (click)="reset()">Reset</button>
 </div>

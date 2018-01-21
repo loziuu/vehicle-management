@@ -3,6 +3,7 @@ package pl.loziuu.ivms.presentation.fleet
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
+import java.time.LocalDate
 
 @CrossOrigin
 @RestController
@@ -19,8 +20,14 @@ class FleetQueryController(val fleetAdapter: RestFleetAdapter) {
         return fleetAdapter.getFleet(id)
     }
 
+    @GetMapping("{id}/{date}")
+    fun getFutureFleet(@PathVariable id: Long, @PathVariable date: String) : ResponseEntity<Any> {
+        val date = LocalDate.parse(date)
+        return fleetAdapter.getFutureFleet(id, date)
+    }
+
     @GetMapping("{id}/vehicles")
-    fun getFleetVehicles(@PathVariable id: Long): List<VehicleResource> {
+    fun getFleetVehicles(@PathVariable id: Long): Set<VehicleDto> {
         return fleetAdapter.getFleetVehicles(id)
     }
 

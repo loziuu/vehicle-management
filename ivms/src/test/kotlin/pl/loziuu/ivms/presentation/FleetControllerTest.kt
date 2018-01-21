@@ -125,4 +125,13 @@ class FleetControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk)
     }
+
+    @Test
+    fun getFutureFleet() {
+        mockMvc.perform(get("/api/v1/fleets/1/2080-01-01").with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(RegisterCheckoutDto())))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+    }
 }

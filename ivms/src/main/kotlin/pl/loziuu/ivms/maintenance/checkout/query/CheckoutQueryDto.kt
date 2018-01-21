@@ -15,7 +15,5 @@ class CheckoutQueryDto(
         val journalId: Long = 0) {
 
     @JsonIgnore
-    fun isViable(): Boolean {
-        return LocalDate.now().isBefore(expirationDate) && result.equals(CheckoutResult.POSITIVE);
-    }
+    fun isViable(): Boolean = LocalDate.now().isBefore(expirationDate) && result.equals(CheckoutResult.POSITIVE)
 }

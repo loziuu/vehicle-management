@@ -19,10 +19,3 @@ class VehicleDto(
         @JsonIgnore val local: Long = 0,
         @OneToMany(mappedBy = "vehicleId", fetch = FetchType.EAGER)
         val journal: MutableSet<JournalDto> = HashSet())
-
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class CheckoutNotFoundException : Throwable()
-
-@ResponseStatus(HttpStatus.NOT_FOUND)
-class RepairNotFoundException : RuntimeException()
-

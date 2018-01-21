@@ -11,8 +11,8 @@ import java.util.*
 class ControllerExceptionAdvices {
 
     @ExceptionHandler(*arrayOf(NoSuchElementException::class))
-    fun handleNoSuchElement(): ResponseEntity<Any>
-            = RestResponse("Resource does not exists!", 404).toResponseEntity()
+    fun handleNoSuchElement(): ResponseEntity<Any> =
+            RestResponse("Resource does not exists!", 404).toResponseEntity()
 
     @ExceptionHandler(*arrayOf(DomainValidationException::class))
     fun handleValidationException(exception: DomainValidationException): ResponseEntity<Any> =
@@ -20,9 +20,7 @@ class ControllerExceptionAdvices {
 }
 
 class RestResponse(val content: String = "", val code: Int = 200) {
-    fun toResponseEntity(): ResponseEntity<Any> {
-        return ResponseEntity(this, HttpStatus.valueOf(code))
-    }
+    fun toResponseEntity(): ResponseEntity<Any> = ResponseEntity(this, HttpStatus.valueOf(code))
 }
 
 

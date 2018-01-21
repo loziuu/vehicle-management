@@ -22,6 +22,8 @@ import { UsersComponent } from './users/users.component';
 import { PermissionDeniedComponent } from './permission-denied/permission-denied.component';
 import { AlertComponent } from './alert/alert.component';
 import { AlertsService } from './alerts.service';
+import { EmptyComponent } from './empty/empty.component';
+import { FleetListComponent } from './fleet-list/fleet-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { AlertsService } from './alerts.service';
     CheckoutformComponent,
     UsersComponent,
     PermissionDeniedComponent,
-    AlertComponent
+    AlertComponent,
+    EmptyComponent,
+    FleetListComponent
   ],
   imports: [
     BrowserModule,
@@ -46,8 +50,8 @@ import { AlertsService } from './alerts.service';
     HttpClientXsrfModule,
     RouterModule.forRoot([
       {
-        path: 'fleets',
-        component: FleetComponent
+        path: 'fleet',
+        component: FleetListComponent
       },
       {
         path: 'fleet/:id',

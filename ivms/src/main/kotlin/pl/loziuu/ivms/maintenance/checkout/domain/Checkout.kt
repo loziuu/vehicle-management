@@ -12,9 +12,7 @@ class Checkout(
         @Enumerated(EnumType.STRING) val result: CheckoutResult = CheckoutResult.NEGATIVE,
         var journalId: Long = 0) {
 
-    fun isViable(): Boolean {
-        return LocalDate.now().isBefore(expirationDate) && result.equals(CheckoutResult.POSITIVE);
-    }
+    fun isViable(): Boolean = LocalDate.now().isBefore(expirationDate) && result.equals(CheckoutResult.POSITIVE);
 }
 
 enum class CheckoutResult {

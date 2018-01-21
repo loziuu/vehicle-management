@@ -1,8 +1,70 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+	height: 100%;
+	background-color: black;
+}
+
+#header {
+	min-height: 75px;
+	max-height: 75px;
+}
+
+.btn, .nav-link {
+	border-radius: 0;
+	font-size: 20px;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.nav-link {
+	color: white;
+}
+
+.nav-link:hover {
+	color: white;
+	background-color: #21232C;
+}
+
+#menu .active {
+	border-radius: 0;
+	background-color: #345BE5;
+}
+
+#menu {
+	background-color: #333745;
+	padding: 0;
+	min-height: 100vh;
+	margin-top: 75px;
+	max-width: 16.6%;
+}
+	
 .selected {
 	background-color: #F3F3F3;
 }
 
 .container-fluid {
-	margin-top: 3.5%;
+	background-color: #FBFCFE;
+	min-height: 100vh;
+	padding-left: 17.2%;
+	margin-top: 75px;
+}
+
+.content {
+	min-height: 100%;
+	width: 100%;
+	padding: 15px;
+}
+
+.btn-primary {
+	background-color: #345BE5;
+	border: 0px;
+}
+
+h4 {
+    font-size: 32px;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+table {
+	text-align: center;
 }

@@ -7,9 +7,7 @@ import pl.loziuu.ivms.management.fleet.query.FleetQueryRepository
 @ApplicationService
 class ManagementQueryService(val repository: FleetQueryRepository) {
 
-    fun getAllFleets(): List<FleetDto> {
-        return repository.findAll()
-    }
+    fun getAllFleets(): List<FleetDto> = repository.findAll()
 
     fun getFleet(fleetId: Long): FleetDto {
         val fleet = repository.findOne(fleetId)

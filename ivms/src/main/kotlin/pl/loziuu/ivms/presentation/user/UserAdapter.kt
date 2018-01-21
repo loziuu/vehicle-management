@@ -6,18 +6,18 @@ import org.springframework.stereotype.Service
 import pl.loziuu.ivms.identity.user.application.UserQueryService
 import pl.loziuu.ivms.identity.user.application.UserService
 import pl.loziuu.ivms.presentation.RestResponse
-import java.net.URI
+import pl.loziuu.ivms.presentation.user.requests.ChangePasswordRequest
+import pl.loziuu.ivms.presentation.user.requests.ChangeRoleRequest
+import pl.loziuu.ivms.presentation.user.requests.NewUserRequest
 
 @Service
 class UserAdapter(@Autowired val queryService: UserQueryService,
                   @Autowired val commandService: UserService) {
 
-    fun getAll() : ResponseEntity<Any> {
-        return ResponseEntity.ok(queryService.getAll())
-    }
+    fun getAll() : ResponseEntity<Any> = ResponseEntity.ok(queryService.getAll())
 
     fun addUser(request: NewUserRequest): ResponseEntity<Any> {
-        val createdUserId = commandService.addUser(request.login, request.password)
+        commandService.addUser(request.login, request.password)
         return RestResponse("User created", 201).toResponseEntity()
     }
 

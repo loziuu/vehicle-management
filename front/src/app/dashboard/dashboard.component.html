@@ -1,18 +1,38 @@
 <h2>Dashboard</h2>
 <hr/>
-<h3>All fleets</h3>
-<a [routerLink]="['/fleets/new']" class="btn btn-info">Add new fleet</a>
-<br/><br/>
-<table class="table table-hover">
-  <thead>
-    <th>Name</th>
-    <th>Actions</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let fleet of fleets">
-      <td>{{ fleet.name }}</td>
-      <td><a [routerLink]="['/fleet', fleet.id]" class="btn btn-xs btn-info">Show</a></td>
-    </tr>
-  </tbody>
-</table>
+<div class="row" *ngIf="fleets">
+  <div class="col-lg-6">
+    <ngx-charts-bar-vertical 
+      [view]="[600,600]"
+      [results]="data"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Fleets'"
+      [yAxisLabel]="'Number of vehicles'"
+      >
+    </ngx-charts-bar-vertical>
+  </div>
+  <div class="col-lg-6">
+    <ngx-charts-line-chart 
+    [view]="[600,600]"
+    [results]="weekData"
+    [xAxis]="true"
+    [yAxis]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Fleets'"
+    [yAxisLabel]="'Number of vehicles'">
+    </ngx-charts-line-chart>
+    <table class="table">
+        <tr *ngFor="let fleet of fleets">
+          <td>{{ fleet.name }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="showGraph(fleet)">Pick</button>
+          </td>
+        </tr>
+      </table>
+  </div>
+</div>
 

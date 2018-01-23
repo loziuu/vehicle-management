@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import pl.loziuu.ivms.presentation.security.handlers.LoginFailureHandler
@@ -26,7 +27,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
         if (auth != null) {
             auth
                     .jdbcAuthentication()
-//                    .passwordEncoder(BCryptPasswordEncoder())
+                    .passwordEncoder(BCryptPasswordEncoder())
                     .dataSource(dataSource)
                     .usersByUsernameQuery("SELECT u.login, u.password, u.enabled " +
                             "FROM users u " +

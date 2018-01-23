@@ -68,3 +68,8 @@ h4 {
 table {
 	text-align: center;
 }
+
+input, select {
+	min-height: 50px;
+	font-family: 'Open Sans', sans-serif;
+}

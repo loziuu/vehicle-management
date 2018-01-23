@@ -42,7 +42,7 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
 
 class FleetResource(val id: Long = 0,
                     val name: String = "",
-                    val status: MutableMap<Variable, Double>? = hashMapOf(),
+                    val status: Double? = 100.0,
                     @JsonIgnore val journals: List<JournalDto> = emptyList(),
                     @JsonIgnore val vehicles: MutableSet<VehicleDto>) {
 
@@ -82,7 +82,7 @@ class FutureFleetResource(@JsonIgnore val fleet: FleetDto = FleetDto(),
                           @JsonIgnore val journals: List<JournalDto> = emptyList(),
                           @JsonIgnore val vehiclesDto: MutableSet<VehicleDto> = mutableSetOf(),
                           val date: LocalDate,
-                          val status: MutableMap<Variable, Double>? = hashMapOf()) {
+                          val status: Double) {
 
     fun getId(): Long = fleet.id
     fun getName(): String = fleet.name

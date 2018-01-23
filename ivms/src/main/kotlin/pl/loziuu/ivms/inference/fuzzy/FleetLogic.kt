@@ -4,7 +4,7 @@ import fuzzy4j.flc.*
 
 object FleetLogic {
 
-    fun getStatus(withoutInsurances: Double, withoutCheckout: Double) : MutableMap<Variable, Double>? {
+    fun getStatus(withoutInsurances: Double, withoutCheckout: Double): MutableMap<Variable, Double>? {
         val zero: Term = Term.term("zero", 0.0, 0.0, 1.0)
         val checkoutLittle: Term = Term.term("little", 0.0, 1.0, 10.0, 15.0)
         val checkoutMedium: Term = Term.term("medium", 10.0, 15.0, 30.0, 35.0)

@@ -16,7 +16,7 @@ class ControllerExceptionAdvices {
 
     @ExceptionHandler(*arrayOf(DomainValidationException::class))
     fun handleValidationException(exception: DomainValidationException): ResponseEntity<Any> =
-        RestResponse(exception.message.orEmpty(), 400).toResponseEntity()
+            RestResponse(exception.message.orEmpty(), 400).toResponseEntity()
 }
 
 class RestResponse(val content: String = "", val code: Int = 200) {

@@ -14,5 +14,5 @@ class MaintenanceQueryService(val fleetResolver: FleetResolver, val repository: 
 
     @Transactional(readOnly = true)
     fun getJournalsForFleet(fleetId: Long): List<JournalDto> =
-        fleetResolver.getVehicleIdsForFleet(fleetId).map { repository.findOneByVehicleId(it) }
+            fleetResolver.getVehicleIdsForFleet(fleetId).map { repository.findOneByVehicleId(it) }
 }

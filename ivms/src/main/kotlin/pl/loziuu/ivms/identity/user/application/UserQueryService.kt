@@ -10,5 +10,5 @@ import pl.loziuu.ivms.identity.user.domain.UserRepository
 class UserQueryService(val repository: UserRepository) {
 
     fun getAll(): List<User> =
-        repository.findAll()
+            repository.findAll()
 }

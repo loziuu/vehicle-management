@@ -11,7 +11,7 @@ import pl.loziuu.ivms.identity.user.domain.UserRepository
 class UserService(val repository: UserRepository) {
 
     fun addUser(login: String, password: String): Long {
-        val user = User(login = login, password =  password)
+        val user = User(login = login, password = password)
         return repository.save(user).id
     }
 

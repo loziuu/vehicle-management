@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter
 import javax.persistence.Converter
 
 @Converter(autoApply = true)
-class LocalDatePersistenceConverter: AttributeConverter<LocalDate, Date> {
+class LocalDatePersistenceConverter : AttributeConverter<LocalDate, Date> {
     override fun convertToEntityAttribute(dbData: Date?): LocalDate? {
         if (dbData != null) {
             return LocalDate.parse(getDate(dbData));

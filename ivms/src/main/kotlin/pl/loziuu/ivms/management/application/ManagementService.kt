@@ -11,9 +11,9 @@ class ManagementService(var command: FleetCommand) {
 
     fun createFleet(name: String): Long = command.createFleet(name)
 
-    fun addVehicle(fleetId: Long, vehicleDetails: VehicleDetails) : Long =
-        command.createVehicle(fleetId, vehicleDetails)
+    fun addVehicle(fleetId: Long, vehicleDetails: VehicleDetails): Long =
+            command.createVehicle(fleetId, vehicleDetails)
 
     fun removeVehicle(fleetId: Long, vehicleId: Long) =
-        command.removeVehicle(fleetId, vehicleId)
+            command.removeVehicle(fleetId, vehicleId)
 }

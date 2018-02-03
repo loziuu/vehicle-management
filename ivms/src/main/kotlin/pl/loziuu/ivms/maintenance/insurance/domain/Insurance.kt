@@ -15,6 +15,6 @@ data class Insurance(@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     fun getExpirationDate(): LocalDate = dateRange.endDate
 
-    fun getBeginningDate(): LocalDate = dateRange.startDate
+    fun getStartDate(): LocalDate = dateRange.startDate
 
 }

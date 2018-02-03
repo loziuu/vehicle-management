@@ -14,7 +14,9 @@ object InsuranceFactory {
     private fun validate(insurance: Insurance) {
         if (insurance.company.name.isBlank())
             throw DomainValidationException("Company name can't be empty")
-        if (insurance.getBeginningDate().isAfter(insurance.getExpirationDate()))
+        if (insurance.getStartDate().isAfter(insurance.getExpirationDate()))
             throw DomainValidationException("Start date cannot be after end date")
+        if (insurance.getStartDate().plusMonths(12) < insurance.getExpirationDate())
+            throw DomainValidationException("Vehicle can't be insuranced for more than 12 months")
     }
 }

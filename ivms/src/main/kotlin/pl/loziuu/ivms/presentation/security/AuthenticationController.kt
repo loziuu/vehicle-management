@@ -13,7 +13,7 @@ class AuthenticationController(val repository: UserRepository) {
 
 
     @GetMapping("/auth")
-    fun getLogged(principal: Principal) : User {
+    fun getLogged(principal: Principal): User {
         return repository.findOneByLogin(principal.name)
     }
 }

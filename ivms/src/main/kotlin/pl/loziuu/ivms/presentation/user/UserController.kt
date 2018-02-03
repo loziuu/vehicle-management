@@ -14,24 +14,24 @@ import pl.loziuu.ivms.presentation.user.requests.NewUserRequest
 class UserController(val adapter: UserAdapter) {
 
     @GetMapping
-    fun getAll() : ResponseEntity<Any> = adapter.getAll()
+    fun getAll(): ResponseEntity<Any> = adapter.getAll()
 
     @PostMapping
-    fun addNewUser(@RequestBody request: NewUserRequest) : ResponseEntity<Any> = adapter.addUser(request)
+    fun addNewUser(@RequestBody request: NewUserRequest): ResponseEntity<Any> = adapter.addUser(request)
 
     @PutMapping("{id}/activate")
-    fun activateUser(@PathVariable id: Long) : ResponseEntity<Any> = adapter.activate(id)
+    fun activateUser(@PathVariable id: Long): ResponseEntity<Any> = adapter.activate(id)
 
     @PutMapping("{id}/deactivate")
-    fun deactivateUser(@PathVariable id: Long) : ResponseEntity<Any> = adapter.deactivate(id)
+    fun deactivateUser(@PathVariable id: Long): ResponseEntity<Any> = adapter.deactivate(id)
 
 
     @PutMapping("{id}/change-password")
-    fun changePassword(@PathVariable id: Long, @RequestBody request: ChangePasswordRequest) : ResponseEntity<Any> =
+    fun changePassword(@PathVariable id: Long, @RequestBody request: ChangePasswordRequest): ResponseEntity<Any> =
             adapter.changePassword(id, request)
 
     @PutMapping("{id}/change-role")
-    fun changeRole(@PathVariable id: Long, @RequestBody request: ChangeRoleRequest) : ResponseEntity<Any> =
+    fun changeRole(@PathVariable id: Long, @RequestBody request: ChangeRoleRequest): ResponseEntity<Any> =
             adapter.changeRole(id, request)
 
 }

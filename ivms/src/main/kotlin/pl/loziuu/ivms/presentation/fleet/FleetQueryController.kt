@@ -11,17 +11,17 @@ import java.time.LocalDate
 class FleetQueryController(val fleetAdapter: RestFleetAdapter) {
 
     @GetMapping
-    fun getAllFleets() : ResponseEntity<Any> {
+    fun getAllFleets(): ResponseEntity<Any> {
         return fleetAdapter.getFleets()
     }
 
     @GetMapping("{id}")
-    fun getFleet(@PathVariable id: Long) : ResponseEntity<Any> {
+    fun getFleet(@PathVariable id: Long): ResponseEntity<Any> {
         return fleetAdapter.getFleet(id)
     }
 
     @GetMapping("{id}/{date}")
-    fun getFutureFleet(@PathVariable id: Long, @PathVariable date: String) : ResponseEntity<Any> {
+    fun getFutureFleet(@PathVariable id: Long, @PathVariable date: String): ResponseEntity<Any> {
         val date = LocalDate.parse(date)
         return fleetAdapter.getFutureFleet(id, date)
     }

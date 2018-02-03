@@ -17,22 +17,19 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
                        val maintenanceQueryService: MaintenanceQueryService,
                        val inferenceService: InferenceService) {
 
-    fun getFleets(): ResponseEntity<Any> {
-        return ResponseEntity.ok(managementQueryService.getAllFleets().map { it -> FleetResource(it.id, it.name) })
-    }
+    fun getFleets(): ResponseEntity<Any> =
+            ResponseEntity.ok(managementQueryService.getAllFleets().map { it -> FleetResource(it) })
 
-    fun getFleetVehicles(id: Long): Set<VehicleDto> {
-        return managementQueryService.getFleet(id).vehicles
-    }
 
-    fun getFleetVehicle(id: Long, vehicleId: Long): VehicleDto {
-        val vehicle = managementQueryService.getFleet(id).getVehicle(vehicleId)
-        return vehicle
-    }
+    fun getFleetVehicles(id: Long): Set<VehicleDto> =
+            managementQueryService.getFleet(id).vehicles
 
-    fun getFleet(id: Long): ResponseEntity<Any> {
-        return getFutureFleet(id, LocalDate.now());
-    }
+    fun getFleetVehicle(id: Long, vehicleId: Long): VehicleDto =
+            managementQueryService.getFleet(id).getVehicle(vehicleId)
+
+
+    fun getFleet(id: Long): ResponseEntity<Any> =
+            getFutureFleet(id, LocalDate.now());
 
     fun getFutureFleet(id: Long, date: LocalDate): ResponseEntity<Any> {
         val fleet = managementQueryService.getFleet(id)
@@ -45,16 +42,21 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
 
 class FleetResource(val id: Long = 0,
                     val name: String = "",
-                    val status: MutableMap<Variable, Double>? = hashMapOf(),
-                    @JsonIgnore val journals: List<JournalDto> = emptyList()) {
+                    val status: Double? = 100.0,
+                    @JsonIgnore val journals: List<JournalDto> = emptyList(),
+                    @JsonIgnore val vehicles: MutableSet<VehicleDto>) {
 
-    fun getVehiclesWithoutInsurance(): Int {
-        return journals.filter { !it.hasActualInsurance() }.count()
-    }
+    constructor(dto: FleetDto) : this(dto.id, dto.name, vehicles = dto.vehicles)
 
-    fun getVehiclesWithoutCheckout(): Int {
-        return journals.filter { !it.hasValidCheckout() }.count()
-    }
+    fun getVehiclesWithoutInsurance(): Int =
+            journals.filter { !it.hasActualInsurance() }.count()
+
+
+    fun getVehiclesWithoutCheckout(): Int =
+            journals.filter { !it.hasValidCheckout() }.count()
+
+    fun getVehiclesCount(): Int =
+            vehicles.size
 }
 
 class VehicleResource(val id: Long = 0,
@@ -63,24 +65,24 @@ class VehicleResource(val id: Long = 0,
                       val productionYear: Int = 0,
                       @JsonIgnore val journal: MutableSet<JournalDto> = HashSet()) {
 
-    fun getHasActualInsurance(): Boolean {
-        return journal.first().hasActualInsurance()
-    }
+    fun getHasActualInsurance(): Boolean =
+            journal.first().hasActualInsurance()
 
-    fun getHasValidCheckout(): Boolean {
-        return journal.first().hasValidCheckout()
-    }
 
-    fun getTotalRepairsCost(): Double {
-        return journal.first().sumRepairExpenses()
-    }
+    fun getHasValidCheckout(): Boolean =
+            journal.first().hasValidCheckout()
+
+
+    fun getTotalRepairsCost(): Double =
+            journal.first().sumRepairExpenses()
+
 }
 
 class FutureFleetResource(@JsonIgnore val fleet: FleetDto = FleetDto(),
                           @JsonIgnore val journals: List<JournalDto> = emptyList(),
                           @JsonIgnore val vehiclesDto: MutableSet<VehicleDto> = mutableSetOf(),
                           val date: LocalDate,
-                          val status: MutableMap<Variable, Double>? = hashMapOf()) {
+                          val status: Double) {
 
     fun getId(): Long = fleet.id
     fun getName(): String = fleet.name
@@ -93,13 +95,13 @@ class FutureFleetResource(@JsonIgnore val fleet: FleetDto = FleetDto(),
         }.toList()
     }
 
-    fun getVehiclesWithoutInsurance(): Int {
-        return journals.filter { !it.willHaveActualInsuranceAt(date) }.count()
-    }
+    fun getVehiclesWithoutInsurance(): Int =
+            journals.filter { !it.willHaveActualInsuranceAt(date) }.count()
 
-    fun getVehiclesWithoutCheckout(): Int {
-        return journals.filter { !it.willHaveActualCheckoutAt(date) }.count()
-    }
+
+    fun getVehiclesWithoutCheckout(): Int =
+            journals.filter { !it.willHaveActualCheckoutAt(date) }.count()
+
 }
 
 class FutureVehicleResource(val id: Long = 0,

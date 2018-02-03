@@ -22,10 +22,10 @@ class JournalDto(
     fun hasValidCheckout(): Boolean = checkouts.firstOrNull { it.isViable() } != null
 
     fun willHaveActualInsuranceAt(date: LocalDate): Boolean =
-        insurances.firstOrNull { it -> it.endDate.isAfter(date) } != null
+            insurances.firstOrNull { it -> it.endDate.isAfter(date) } != null
 
     fun willHaveActualCheckoutAt(date: LocalDate): Boolean =
-        checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
+            checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
 
     fun sumRepairExpenses(): Double = repairs.map { it -> it.cost }.sum()
 }

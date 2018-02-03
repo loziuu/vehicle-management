@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { VehicleDetailComponent } from './vehicle-detail/vehicle-detail.component';
@@ -45,6 +47,8 @@ import { FleetListComponent } from './fleet-list/fleet-list.component';
   ],
   imports: [
     BrowserModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
     HttpModule,
     HttpClientModule,
     HttpClientXsrfModule,

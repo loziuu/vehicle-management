@@ -14,7 +14,7 @@ import pl.loziuu.ivms.presentation.user.requests.NewUserRequest
 class UserAdapter(@Autowired val queryService: UserQueryService,
                   @Autowired val commandService: UserService) {
 
-    fun getAll() : ResponseEntity<Any> = ResponseEntity.ok(queryService.getAll())
+    fun getAll(): ResponseEntity<Any> = ResponseEntity.ok(queryService.getAll())
 
     fun addUser(request: NewUserRequest): ResponseEntity<Any> {
         commandService.addUser(request.login, request.password)

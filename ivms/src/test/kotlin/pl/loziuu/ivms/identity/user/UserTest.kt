@@ -2,6 +2,7 @@ package pl.loziuu.ivms.identity.user
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.springframework.security.crypto.bcrypt.BCrypt
 import pl.loziuu.ivms.identity.user.domain.Role
 import pl.loziuu.ivms.identity.user.domain.User
 import javax.jws.soap.SOAPBinding
@@ -43,5 +44,10 @@ class UserTest {
         user.changeRole(Role.VISITOR)
 
         assertThat(user.role).isEqualTo(Role.VISITOR)
+    }
+
+    @Test
+    fun hashedPassword() {
+        print(BCrypt.hashpw("admin", BCrypt.gensalt()))
     }
 }

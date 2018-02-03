@@ -22,10 +22,10 @@ export class FleetDetailComponent implements OnInit {
   
   fleet: any;
   data: Array<any>;
-  vehicles: Vehicle[];
+  vehicles = [];
   field: string = "manufacturer";
   phrase: any;
-  date: any;
+  date = "";
   
   ngOnInit() {
     this.initFleet();

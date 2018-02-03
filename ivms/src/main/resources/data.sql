@@ -111,4 +111,4 @@ insert into checkout(id, date, expiration_date, result, journal_id) values (25, 
 insert into checkout(id, date, expiration_date, result, journal_id) values (26, PARSEDATETIME ('2000-01-01', 'yyyy-MM-dd'), PARSEDATETIME ('2051-01-01', 'yyyy-MM-dd'), 'POSITIVE', 26);
 insert into checkout(id, date, expiration_date, result, journal_id) values (27, PARSEDATETIME ('2000-01-01', 'yyyy-MM-dd'), PARSEDATETIME ('2051-01-01', 'yyyy-MM-dd'), 'POSITIVE', 27);
 
-insert into users(id, login, password, role, enabled) values (1, 'admin', 'admin', 'ADMIN', 1);
+insert into users(id, login, password, role, enabled) values (1, 'admin', '$2a$10$7frXG5jdRLwljpi9B9RlZOKZ2BOLwCHvBMhhfdGpDM4HDJX1e1fYK', 'ADMIN', 1);

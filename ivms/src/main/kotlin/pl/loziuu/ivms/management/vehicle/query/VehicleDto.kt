@@ -1,8 +1,6 @@
 package pl.loziuu.ivms.management.vehicle.query
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.ResponseStatus
 import pl.loziuu.ivms.maintenance.journal.query.JournalDto
 import java.util.*
 import javax.persistence.*

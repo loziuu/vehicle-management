@@ -12,7 +12,7 @@ import pl.loziuu.ivms.presentation.fleet.requests.RegisterRepairRequest
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/fleets")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 class FleetCommandController(val command: RestCommandAdapter) {
 
     @PostMapping

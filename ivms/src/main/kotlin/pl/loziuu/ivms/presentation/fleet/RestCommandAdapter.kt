@@ -54,4 +54,9 @@ class RestCommandAdapter(val fleetCommand: FleetCommand,
         val vehicle = managementQueryService.getFleet(fleetId).getVehicle(vehicleId)
         return vehicle
     }
+
+    fun deleteVehicle(fleetId: Long, vehicleId: Long): ResponseEntity<Any> {
+        fleetCommand.removeVehicle(fleetId, vehicleId)
+        return RestResponse("Vehicle deleted").toResponseEntity()
+    }
 }

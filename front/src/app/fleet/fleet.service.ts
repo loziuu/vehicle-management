@@ -34,6 +34,10 @@ export class FleetService {
     return this.http.delete(this.apiLocation + id).toPromise();
   }
 
+  public deleteVehicle(fleetId: number, vehicleId: number): Observable<any> {
+    return this.http.delete(this.apiLocation + fleetId + "/vehicles/" + vehicleId);
+  }
+
   handleError(error) {
   }
 }

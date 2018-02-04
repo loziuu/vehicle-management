@@ -70,4 +70,9 @@ export class FleetDetailComponent implements OnInit {
   search() {
     this.vehicles = this.data.filter(v => v[this.field].toString().includes(this.phrase));
   }
+
+  delete(id) {
+    this.fleetService.deleteVehicle(this.fleet.id, id)
+      .subscribe(() => { this.initFleet() });
+  }
 }

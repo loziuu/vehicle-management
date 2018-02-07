@@ -30,13 +30,19 @@ export class FleetService {
     return this.http.post(this.apiLocation, fleet);
   }
 
-  public deleteFleet(id: number): Promise<any> {
-    return this.http.delete(this.apiLocation + id).toPromise();
+  public deleteFleet(id: number): Observable<any> {
+    return this.http.delete(this.apiLocation + id);
   }
 
   public deleteVehicle(fleetId: number, vehicleId: number): Observable<any> {
     return this.http.delete(this.apiLocation + fleetId + "/vehicles/" + vehicleId);
   }
+
+  public moveVehicle(fleetId: number, vehicleId: number, newVehicleId: number): Observable<any> {
+    var request = { "fleetId": newVehicleId };
+    console.log(request);
+    return this.http.put(this.apiLocation + fleetId + "/vehicles/" + vehicleId + "/change-fleet", request);
+  }  
 
   handleError(error) {
   }

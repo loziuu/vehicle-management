@@ -5,6 +5,7 @@ import fuzzy4j.flc.Variable
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import pl.loziuu.ivms.inference.application.InferenceService
+import pl.loziuu.ivms.inference.fuzzy.FuzzyRaport
 import pl.loziuu.ivms.maintenance.application.MaintenanceQueryService
 import pl.loziuu.ivms.maintenance.journal.query.JournalDto
 import pl.loziuu.ivms.management.application.ManagementQueryService
@@ -82,7 +83,7 @@ class FutureFleetResource(@JsonIgnore val fleet: FleetDto = FleetDto(),
                           @JsonIgnore val journals: List<JournalDto> = emptyList(),
                           @JsonIgnore val vehiclesDto: MutableSet<VehicleDto> = mutableSetOf(),
                           val date: LocalDate,
-                          val status: Double) {
+                          val status: FuzzyRaport) {
 
     fun getId(): Long = fleet.id
     fun getName(): String = fleet.name

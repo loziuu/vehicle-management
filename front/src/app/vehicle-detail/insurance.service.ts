@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Insurance } from "../models/insurance";
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class InsuranceService {
@@ -12,8 +13,7 @@ export class InsuranceService {
       .toPromise();
     }
 
-  public deleteInsurance(fleet_id, vehicle_id, insurances_id): Promise<any> {
-    return this.http.delete("http://localhost:8080/api/v1/fleets/" + fleet_id + "/vehicles/ " + vehicle_id + "/insurances", { withCredentials: true })
-      .toPromise();
+  public deleteInsurance(fleet_id, vehicle_id, insurances_id): Observable<any> {
+    return this.http.delete("http://localhost:8080/api/v1/fleets/" + fleet_id + "/vehicles/ " + vehicle_id + "/insurances/" + insurances_id, { withCredentials: true });
   }
 }

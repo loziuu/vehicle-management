@@ -16,7 +16,15 @@ export class FleetListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initFleets();
+  }
+
+  initFleets() {
     this.service.getFleets()
-      .subscribe(result => this.fleets = result);
+    .subscribe(result => this.fleets = result);
+  }
+
+  removeFleet(fleetId) {
+    this.service.deleteFleet(fleetId).subscribe(result => { this.initFleets() })
   }
 }

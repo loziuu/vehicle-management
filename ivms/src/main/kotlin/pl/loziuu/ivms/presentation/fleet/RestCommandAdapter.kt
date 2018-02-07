@@ -10,10 +10,7 @@ import pl.loziuu.ivms.management.fleet.port.FleetCommand
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
 import pl.loziuu.ivms.presentation.RestResponse
-import pl.loziuu.ivms.presentation.fleet.requests.CreateFleetRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterCheckoutRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterInsuranceRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterRepairRequest
+import pl.loziuu.ivms.presentation.fleet.requests.*
 
 @Component
 class RestCommandAdapter(val fleetCommand: FleetCommand,
@@ -58,5 +55,33 @@ class RestCommandAdapter(val fleetCommand: FleetCommand,
     fun deleteVehicle(fleetId: Long, vehicleId: Long): ResponseEntity<Any> {
         fleetCommand.removeVehicle(fleetId, vehicleId)
         return RestResponse("Vehicle deleted").toResponseEntity()
+    }
+
+    fun deleteInsurance(fleetId: Long, vehicleLocalId: Long, insuranceId: Long): ResponseEntity<Any> {
+        val vehicle = getVehicleFromFleetByLocalId(fleetId, vehicleLocalId)
+        insuranceService.removeInsurance(vehicle.id, insuranceId)
+        return RestResponse("Insurance deleted").toResponseEntity()
+    }
+
+    fun deleteRepair(fleetId: Long, localId: Long, id: Long): ResponseEntity<Any> {
+        val vehicle = getVehicleFromFleetByLocalId(fleetId, localId)
+        repairService.removeRepair(vehicle.id, id)
+        return RestResponse("Repair deleted").toResponseEntity()
+    }
+
+    fun deleteCheckout(fleetId: Long, localId: Long, id: Long): ResponseEntity<Any> {
+        val vehicle = getVehicleFromFleetByLocalId(fleetId, localId)
+        checkoutService.removeCheckout(vehicle.id, id)
+        return RestResponse("Checkout deleted").toResponseEntity()
+    }
+
+    fun deleteFleet(fleetId: Long): Any {
+        fleetCommand.removeFleet(fleetId)
+        return RestResponse("Fleet deleted").toResponseEntity()
+    }
+
+    fun moveVehicle(fleetId: Long, vehicleId: Long, request: MoveVehicle): ResponseEntity<Any> {
+        fleetCommand.moveVehicleToFleet(fleetId, vehicleId, request.fleetId)
+        return RestResponse("Vehicle moved").toResponseEntity()
     }
 }

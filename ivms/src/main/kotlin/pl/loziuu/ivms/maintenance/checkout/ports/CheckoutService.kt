@@ -5,4 +5,5 @@ import java.time.LocalDate
 
 interface CheckoutService {
     fun registerCheckout(vehicleId: Long, checkoutDate: LocalDate, expirationDate: LocalDate, result: CheckoutResult)
+    fun removeCheckout(vehicleId: Long, checkoutId: Long)
 }

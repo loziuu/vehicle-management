@@ -1,0 +1,70 @@
+FUNCTION_BLOCK status
+
+VAR_INPUT
+	woCheckout: REAL;
+	woInsurance: REAL;
+END_VAR
+
+VAR_OUTPUT
+	status: REAL;
+END_VAR
+
+FUZZIFY woCheckout
+	TERM zero := (0, 1) (1, 0);
+	TERM little := (0, 0) (1, 1) (10, 1) (15, 0);
+	TERM medium := (10, 0) (15, 1) (30, 1) (35, 0);
+	TERM big := (30, 0) (35, 1) (65, 1) (75, 0);
+	TERM humongous := (65, 0) (70, 1) (100, 1);
+END_FUZZIFY
+
+FUZZIFY woInsurance
+	TERM zero := (0, 1) (1, 0);
+	TERM little := (0, 0) (1, 1) (15, 1) (30, 0);
+	TERM medium := (15, 0) (30, 1) (40, 1) (45, 0);
+	TERM big := (40, 0) (45, 1) (75, 1) (80, 0);
+	TERM humongous := (75, 0) (80, 1) (100, 1);
+END_FUZZIFY
+
+DEFUZZIFY status
+	TERM bad := (0,1) (10,0);
+	TERM weak := (10,0) (20,1) (30,0);
+	TERM medium := (20,0) (30,1) (40,0);
+	TERM good := (30,0) (40,1) (50,0);
+	TERM perfect := (40,0) (50,1);
+	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
+	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
+END_DEFUZZIFY
+
+RULEBLOCK No1
+	AND : MIN;			// Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
+	ACT : MIN;			// Use 'min' activation method
+	ACCU : MAX;			// Use 'max' accumulation method
+
+	RULE 1 : IF woCheckout IS zero AND woInsurance IS zero THEN status IS perfect;
+	RULE 2 : IF woCheckout IS zero AND woInsurance IS little THEN status IS perfect;
+	RULE 3 : IF woCheckout IS zero AND woInsurance IS medium THEN status IS medium;
+	RULE 4 : IF woCheckout IS zero AND woInsurance IS big THEN status IS weak;
+	RULE 5 : IF woCheckout IS zero AND woInsurance IS little THEN status IS bad;
+	RULE 6 : IF woCheckout IS little AND woInsurance IS zero THEN status IS perfect;
+	RULE 7 : IF woCheckout IS little AND woInsurance IS little THEN status IS good;
+	RULE 8 : IF woCheckout IS little AND woInsurance IS medium THEN status IS medium;
+	RULE 9 : IF woCheckout IS little AND woInsurance IS big THEN status IS weak;
+	RULE 10 : IF woCheckout IS little AND woInsurance IS humongous THEN status IS bad;
+	RULE 11 : IF woCheckout IS medium AND woInsurance IS zero THEN status IS good;
+	RULE 12 : IF woCheckout IS medium AND woInsurance IS little THEN status IS medium;
+	RULE 13 : IF woCheckout IS medium AND woInsurance IS medium THEN status IS weak;
+	RULE 14 : IF woCheckout IS medium AND woInsurance IS big THEN status IS bad;
+	RULE 15 : IF woCheckout IS medium AND woInsurance IS humongous THEN status IS bad;
+	RULE 16 : IF woCheckout IS big AND woInsurance IS zero THEN status IS weak;
+	RULE 17 : IF woCheckout IS big AND woInsurance IS little THEN status IS weak;
+	RULE 18 : IF woCheckout IS big AND woInsurance IS medium THEN status IS bad;
+	RULE 19 : IF woCheckout IS big AND woInsurance IS big THEN status IS bad;
+	RULE 20 : IF woCheckout IS big AND woInsurance IS humongous THEN status IS bad;
+	RULE 21 : IF woCheckout IS humongous AND woInsurance IS zero THEN status IS bad;
+	RULE 22 : IF woCheckout IS humongous AND woInsurance IS little THEN status IS bad;
+	RULE 23 : IF woCheckout IS humongous AND woInsurance IS medium THEN status IS bad;
+	RULE 24 : IF woCheckout IS humongous AND woInsurance IS big THEN status IS bad;
+	RULE 25 : IF woCheckout IS humongous AND woInsurance IS humongous THEN status IS bad;
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

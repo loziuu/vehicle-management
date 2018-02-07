@@ -9,10 +9,25 @@ import pl.loziuu.ivms.management.vehicle.domain.VehicleFactory
 import javax.transaction.Transactional
 
 @Component
+@Transactional
 class DefaultFleetCommand(val repository: FleetRepository, val journalSetupPort: JournalSetupCommand) : FleetCommand {
+    override fun moveVehicleToFleet(currentFleetId: Long, currentVehicleLocalId: Long, newFleetId: Long) {
+        val currentFleet = repository.findOne(currentFleetId)
+        val newFleet = repository.findOne(newFleetId)
+        val vehicle = currentFleet.getVehicle(currentVehicleLocalId)
+        currentFleet.removeVehicle(currentVehicleLocalId)
+        newFleet.addVehicle(vehicle)
+        repository.save(currentFleet)
+        repository.save(newFleet)
+    }
+
     override fun createFleet(name: String): Long {
         val fleet = FleetFactory.create(name)
         return repository.save(fleet).id
+    }
+
+    override fun removeFleet(fleetId: Long) {
+        repository.delete(fleetId)
     }
 
     override fun createVehicle(fleetId: Long, details: VehicleDetails): Long {

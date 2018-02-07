@@ -33,13 +33,19 @@ class Journal(
     fun sumRepairExpenses(): Double = repairs.map { it -> it.getCost() }.sum()
 
     fun hasActualInsurance(): Boolean =
-            insurances.firstOrNull { it -> it.getExpirationDate().isAfter(LocalDate.now()) } != null
+            insurances.firstOrNull { it -> it.getStartDate().isBefore(LocalDate.now()) && it.getExpirationDate().isAfter(LocalDate.now()) } != null
 
     fun willHaveActualInsuranceAt(date: LocalDate): Boolean =
-            insurances.firstOrNull { it -> it.getExpirationDate().isAfter(date) } != null
+            insurances.firstOrNull { it -> it.getStartDate().isBefore(LocalDate.now()) && it.getExpirationDate().isAfter(date) } != null
 
     fun willHaveActualCheckoutAt(date: LocalDate): Boolean =
             checkouts.firstOrNull { it -> it.isViable() && it.expirationDate.isAfter(date) } != null
 
     fun hasValidCheckout(): Boolean = checkouts.firstOrNull { it.isViable() } != null
+
+    fun removeInsurance(insuranceId: Long) = insurances.removeIf( { it -> it.id.equals(insuranceId) })
+
+    fun removeCheckout(checkoutId: Long) = checkouts.removeIf( { it -> it.id.equals(checkoutId) })
+
+    fun removeRepair(repairId: Long) = repairs.removeIf( { it -> it.id.equals(repairId) })
 }

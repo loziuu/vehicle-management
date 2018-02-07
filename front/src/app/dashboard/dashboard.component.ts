@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
     });
     
     function pushSeries(object) {
-      series.push({"name": object.date, "value": object.status.status});
+      series.push({"name": object.date, "value": object.status.result});
       console.log(series);
       console.log(object.date);
     }
@@ -67,6 +67,7 @@ export class DashboardComponent implements OnInit {
 
   getJsonDateWithOffset(days) {
     var today = new Date();
-    return today.getFullYear() + "-" + today.getMonth()+1 + "-" + (today.getDate()+days);
+    today.setDate(today.getDate() + days);
+    return today.toJSON().substring(0, 10);
   }
 }

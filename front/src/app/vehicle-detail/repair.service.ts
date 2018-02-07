@@ -4,6 +4,7 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RepairService {
@@ -15,9 +16,8 @@ export class RepairService {
       .toPromise();
   }
 
-  public removeRepair(vehicleId, repairId): Promise<any> {
-    return this.http.delete('http://localhost:8080/v1/vehicles/' + vehicleId + '/repairs/' + repairId, { withCredentials: true })
-    .toPromise();
+  public deleteRepair(fleetId, vehicleId, repairId): Observable<any> {
+    return this.http.delete('http://localhost:8080/api/v1/fleets/' + fleetId + '/vehicles/' + vehicleId + '/repairs/' + repairId, { withCredentials: true });
   }
 
     handleError(error) {

@@ -8,7 +8,10 @@
   <tbody>
     <tr *ngFor="let fleet of fleets">
       <td>{{ fleet.name }}</td>
-      <td><a [routerLink]="['/fleet', fleet.id]" class="btn btn-xs btn-info">Show</a></td>
+      <td>
+        <a [routerLink]="['/fleet', fleet.id]" class="btn btn-xs btn-info">Show</a>
+        <button class="btn btn-xs btn-danger" (click)="removeFleet(fleet.id)">Remove</button>
+      </td>
     </tr>
   </tbody>
 </table>

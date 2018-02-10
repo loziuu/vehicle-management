@@ -19,7 +19,8 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
                        val inferenceService: InferenceService) {
 
     fun getFleets(): ResponseEntity<Any> =
-            ResponseEntity.ok(managementQueryService.getAllFleets().map { it -> FleetResource(it) })
+            ResponseEntity.ok(managementQueryService.getAllFleets()
+                    .map { it -> FleetResource(it, status = inferenceService.getFutureFleetStatusForDate(it.id, LocalDate.now())) })
 
 
     fun getFleetVehicles(id: Long): Set<VehicleDto> =
@@ -43,11 +44,11 @@ class RestFleetAdapter(val managementQueryService: ManagementQueryService,
 
 class FleetResource(val id: Long = 0,
                     val name: String = "",
-                    val status: Double? = 100.0,
                     @JsonIgnore val journals: List<JournalDto> = emptyList(),
-                    @JsonIgnore val vehicles: MutableSet<VehicleDto>) {
+                    @JsonIgnore val vehicles: MutableSet<VehicleDto>,
+                    var status: FuzzyRaport) {
 
-    constructor(dto: FleetDto) : this(dto.id, dto.name, vehicles = dto.vehicles)
+    constructor(dto: FleetDto, status: FuzzyRaport) : this(dto.id, dto.name, vehicles = dto.vehicles, status = status)
 
     fun getVehiclesWithoutInsurance(): Int =
             journals.filter { !it.hasActualInsurance() }.count()

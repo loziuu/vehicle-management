@@ -26,12 +26,12 @@ FUZZIFY woInsurance
 END_FUZZIFY
 
 DEFUZZIFY status
-	TERM bad := (0,1) (10,0);
-	TERM weak := (10,0) (20,1) (30,0);
-	TERM medium := (20,0) (30,1) (40,0);
-	TERM good := (30,0) (40,1) (50,0);
-	TERM perfect := (40,0) (50,1);
-	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
+	TERM bad := 1
+	TERM weak := 2
+	TERM medium := 3
+	TERM good := 4
+	TERM perfect := 5
+	METHOD : COGS;		
 	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 

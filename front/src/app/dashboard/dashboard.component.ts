@@ -12,9 +12,11 @@ export class DashboardComponent implements OnInit {
 
   fleets: Array<any>;
   data = [];
+  date = Date.now();
   weekData = [ { "name" : "Flota", "series": [ 
-    { "name": "24-01-2018", "value": "50" } ] } ];
-    date = Date.now();
+    { "name": this.date.toString(), "value": "0" } ] } ];  
+  i = 3;
+  selectedFleet: any;
 
   constructor(private service: FleetService) {
     this.service = service;
@@ -29,7 +31,8 @@ export class DashboardComponent implements OnInit {
         this.fleets = result;
         this.fleets.forEach(fleet => {
           this.data.push(this.getChartColumn(fleet));
-        console.log(this.data);
+        if (this.fleets.length > 0)
+          this.showGraph(this.fleets[0]);
         })
       });
   }
@@ -39,35 +42,36 @@ export class DashboardComponent implements OnInit {
   }
 
   showGraph(fleet) {
+    this.selectedFleet = fleet;
     var series = [];
-    
-    this.service.getFutureFleet(fleet.id, this.getJsonDateWithOffset(0)).subscribe(result => {
-      pushSeries(result);
-      this.weekData = [ { "name": fleet.name,  series}];
-      this.service.getFutureFleet(fleet.id, this.getJsonDateWithOffset(1)).subscribe(result => {
-        pushSeries(result);
-        this.weekData = [ { "name": fleet.name,  series}];
-        this.service.getFutureFleet(fleet.id, this.getJsonDateWithOffset(2)).subscribe(result => {
-          pushSeries(result);
-          this.weekData = [ { "name": fleet.name,  series}];
-          this.service.getFutureFleet(fleet.id, this.getJsonDateWithOffset(3)).subscribe(result => {
-            pushSeries(result);
-            this.weekData = [ { "name": fleet.name,  series}];
+    this.data = [this.getChartColumn(fleet)];
+    var i = 0;
+    do {
+      this.service.getFutureFleet(fleet.id, this.getJsonDateWithOffset(i)).toPromise().then(result => {
+        series.push({"name": result.date, "value": result.status.result})
+        this.weekData = [ { "name": fleet.name,  series} ];
+        if (i == this.i) {
+          series = series.sort(function(a,b){
+            if (a.name > b.name) return 1;
+            if (a.name < b.name) return -1;
+            return 0;
           });
-        });
+          console.log(i);
+          console.log(series);
+        }
       });
-    });
-    
-    function pushSeries(object) {
-      series.push({"name": object.date, "value": object.status.result});
-      console.log(series);
-      console.log(object.date);
-    }
+      i = i + 1;
+    } while(i < this.i);
   }
 
   getJsonDateWithOffset(days) {
     var today = new Date();
     today.setDate(today.getDate() + days);
     return today.toJSON().substring(0, 10);
+  }
+
+  public changeDays(days) {
+    this.i = days;
+    this.showGraph(this.selectedFleet);
   }
 }

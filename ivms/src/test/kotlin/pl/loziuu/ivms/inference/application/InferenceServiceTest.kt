@@ -19,6 +19,6 @@ class InferenceServiceTest {
     fun getFleetStatusByPassingAPercentage() {
         val status = service.getFleetStatus(40.0, 0.0)
 
-        assertThat(status.result).isGreaterThan(30.0);
+        assertThat(status.result).isGreaterThan(2.0);
     }
 }

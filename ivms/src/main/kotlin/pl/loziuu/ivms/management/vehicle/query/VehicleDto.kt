@@ -13,7 +13,10 @@ class VehicleDto(
         val model: String = "",
         val manufacturer: String = "",
         val productionYear: Int = 0,
+        val registration: String = "",
         @JsonIgnore val fleetId: Long = 0,
         @JsonIgnore val local: Long = 0,
-        @OneToMany(mappedBy = "vehicleId", fetch = FetchType.EAGER)
-        val journal: MutableSet<JournalDto> = HashSet())
+        @OneToOne
+        @JoinColumn(name = "id", referencedColumnName = "vehicleId",
+                insertable = false, updatable = false)
+        val journal: JournalDto = JournalDto())

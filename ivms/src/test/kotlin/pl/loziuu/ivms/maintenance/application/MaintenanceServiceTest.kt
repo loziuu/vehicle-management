@@ -28,7 +28,7 @@ class MaintenanceServiceTest {
 
     @Test
     fun registerNewInsuranceShouldInsureVehicle() {
-        service.registerInsurance(2L, LocalDate.now(), LocalDate.now().plusYears(1), "PZU")
+        service.registerInsurance(2L, LocalDate.now().minusDays(1), LocalDate.now().plusMonths(5), "PZU")
 
         assertThat(repository.findOneByVehicleId(2L).hasActualInsurance()).isTrue()
     }

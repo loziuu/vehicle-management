@@ -20,8 +20,8 @@ class FleetCommandController(val command: RestCommandAdapter) {
     fun deleteFleet(@PathVariable fleetId: Long) = command.deleteFleet(fleetId)
 
     @PostMapping("{fleetId}/vehicles")
-    fun postVehicle(@PathVariable fleetId: Long, @RequestBody dto: VehicleDetails): ResponseEntity<Any>
-            = command.addVehicle(fleetId, dto)
+    fun postVehicle(@PathVariable fleetId: Long, @RequestBody request: CreateVehicleRequest): ResponseEntity<Any>
+            = command.addVehicle(fleetId, request.registration, request.details)
 
 
     @PutMapping("/{fleetId}/vehicles/{vehicleId}/change-fleet")

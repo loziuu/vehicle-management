@@ -8,7 +8,7 @@ import pl.loziuu.ivms.maintenance.insurance.domain.InsuranceFactory
 import pl.loziuu.ivms.maintenance.insurance.ports.InsuranceService
 import pl.loziuu.ivms.maintenance.journal.domain.Journal
 import pl.loziuu.ivms.maintenance.journal.domain.JournalRepository
-import pl.loziuu.ivms.maintenance.journal.port.JournalSetupCommand
+import pl.loziuu.ivms.maintenance.journal.port.JournalService
 import pl.loziuu.ivms.maintenance.repair.domain.RepairDetails
 import pl.loziuu.ivms.maintenance.repair.ports.RepairService
 import java.time.LocalDate
@@ -16,7 +16,7 @@ import javax.transaction.Transactional
 
 @Transactional
 @ApplicationService
-class MaintenanceService(val repository: JournalRepository) : JournalSetupCommand, InsuranceService, RepairService, CheckoutService {
+class MaintenanceService(val repository: JournalRepository) : JournalService, InsuranceService, RepairService, CheckoutService {
     override fun setupJournal(vehicleId: Long): Long = repository.save(Journal(vehicleId = vehicleId)).id
 
     override fun removeJournal(vehicleId: Long) = repository.deleteByVehicleId(vehicleId)

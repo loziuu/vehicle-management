@@ -12,7 +12,6 @@
       </div>
     </div>
 
-
   <div id="fuzzy" class="modal fade" role="dialog">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -72,6 +71,7 @@
       <option value="model">Model</option>
       <option value="manufacturer">Manufacturer</option>
       <option value="productionYear">Production Year</option>
+      <option value="registration">Registration</option>
     </select>
   </div>
   <div class="col-lg-10">
@@ -82,7 +82,8 @@
 
 <table class="table table-hover table-bordered table-striped" *ngIf="vehicles.length > 0">
   <thead>
-    <tr>
+    <tr> 
+      <th>Registration</th>
       <th>Model</th>
       <th>Manufacturer</th>
       <th>Production Year</th>
@@ -93,6 +94,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let vehicle of vehicles">
+      <td class="align-middle">{{ vehicle.registration }}</td>
       <td class="align-middle">{{ vehicle.model }}</td>
       <td class="align-middle">{{ vehicle.manufacturer }}</td>
       <td class="align-middle">{{ vehicle.productionYear }}</td>

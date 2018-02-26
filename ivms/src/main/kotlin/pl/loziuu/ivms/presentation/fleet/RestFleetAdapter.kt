@@ -12,6 +12,7 @@ import pl.loziuu.ivms.management.application.ManagementQueryService
 import pl.loziuu.ivms.management.fleet.query.FleetDto
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
 import java.time.LocalDate
+import javax.management.MBeanRegistration
 
 @Service
 class RestFleetAdapter(val managementQueryService: ManagementQueryService,
@@ -50,13 +51,6 @@ class FleetResource(val id: Long = 0,
 
     constructor(dto: FleetDto, status: FuzzyRaport) : this(dto.id, dto.name, vehicles = dto.vehicles, status = status)
 
-    fun getVehiclesWithoutInsurance(): Int =
-            journals.filter { !it.hasActualInsurance() }.count()
-
-
-    fun getVehiclesWithoutCheckout(): Int =
-            journals.filter { !it.hasValidCheckout() }.count()
-
     fun getVehiclesCount(): Int =
             vehicles.size
 }
@@ -91,9 +85,9 @@ class FutureFleetResource(@JsonIgnore val fleet: FleetDto = FleetDto(),
     fun getVehicles(): List<FutureVehicleResource> {
         return vehiclesDto.map { it ->
             FutureVehicleResource(
-                    it.local, it.model, it.manufacturer, it.productionYear,
-                    it.journal.first().willHaveActualInsuranceAt(date),
-                    it.journal.first().willHaveActualCheckoutAt(date))
+                    it.local, it.model, it.manufacturer, it.productionYear, it.registration,
+                    it.journal.willHaveActualInsuranceAt(date),
+                    it.journal.willHaveActualCheckoutAt(date))
         }.toList()
     }
 
@@ -110,6 +104,7 @@ class FutureVehicleResource(val id: Long = 0,
                             val model: String = "",
                             val manufacturer: String = "",
                             val productionYear: Int = 0,
+                            val registration: String? = "",
                             val hasActualInsurance: Boolean = false,
                             val hasValidCheckout: Boolean = false)
 

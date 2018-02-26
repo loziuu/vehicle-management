@@ -23,7 +23,7 @@ export class VehicleService {
     return this.http.get(api + vehicleId);
   }
 
-  public createVehicle(fleetId: number, vehicle: Vehicle): Observable<any> {
+  public createVehicle(fleetId: number, vehicle: any): Observable<any> {
     var api = this.apiLocation + fleetId + '/vehicles/';
     return this.http.post(api, vehicle);
   }

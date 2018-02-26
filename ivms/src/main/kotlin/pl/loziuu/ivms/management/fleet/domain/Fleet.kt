@@ -14,7 +14,9 @@ class Fleet(
         @OneToMany(cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "fleetId") val vehicles: MutableSet<Vehicle> = HashSet()) {
 
     fun addVehicle(vehicle: Vehicle): Long {
-        val localId = vehicles.size + 1.toLong()
+        var localId = 1L
+        if (vehicles.size != 0)
+            localId = vehicles.last().local + 1
         vehicle.local = localId
         vehicle.fleetId = id
         vehicles.add(vehicle)

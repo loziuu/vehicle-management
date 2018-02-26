@@ -3,9 +3,9 @@ package pl.loziuu.ivms.management.vehicle.domain
 import pl.loziuu.ivms.ddd.DomainValidationException
 
 object VehicleFactory {
-    fun create(details: VehicleDetails): Vehicle {
+    fun create(registration: String, details: VehicleDetails): Vehicle {
         validate(details)
-        return Vehicle(details = details)
+        return Vehicle(registration = registration, details = details)
     }
 
     private fun validate(details: VehicleDetails) {

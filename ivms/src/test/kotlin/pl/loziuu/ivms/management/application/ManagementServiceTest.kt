@@ -40,7 +40,7 @@ class ManagementServiceTest {
     fun addVehicleToFleetShouldReturnVehicleIdAndRegisterNewJournal() {
         val fleetId = 2L
 
-        val vehicleId = service.addVehicle(fleetId, VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
+        val vehicleId = service.addVehicle(fleetId, "AA223", VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
 
         val vehicle = repository.findOne(fleetId).getVehicle(2L)
         assertThat(vehicle.fleetId).isEqualTo(fleetId)
@@ -63,7 +63,7 @@ class ManagementServiceTest {
     fun createFleetAndAddVehicleToItShouldCreateJournal() {
         val fleetId = service.createFleet("Second fleet")
 
-        val vehicleId = service.addVehicle(fleetId, VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
+        val vehicleId = service.addVehicle(fleetId, "AA123", VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
 
         assertThat(vehicleId).isEqualTo(28L)
         val journal = journalRepository.findOneByVehicleId(vehicleId)
@@ -86,17 +86,17 @@ class ManagementServiceTest {
 
     @Test(expected = DomainValidationException::class)
     fun addVehicleWithEmptyManufacturerShouldThrowException() {
-        val fleet = service.addVehicle(1L, VehicleDetails(manufacturer = "", model = "Test", productionYear = 2012))
+        val fleet = service.addVehicle(1L, "AA323", VehicleDetails(manufacturer = "", model = "Test", productionYear = 2012))
     }
 
     @Test(expected = DomainValidationException::class)
     fun addVehicleWithEmptyModelShouldThrowException() {
-        val fleet = service.addVehicle(1L, VehicleDetails(manufacturer = "Test", productionYear = 2012))
+        val fleet = service.addVehicle(1L, "AA423", VehicleDetails(manufacturer = "Test", productionYear = 2012))
 
     }
 
     @Test(expected = DomainValidationException::class)
     fun addVehicleWithProductionYearEarlierThan1950ShouldThrowException() {
-        val fleet = service.addVehicle(1L, VehicleDetails(productionYear = 1949, model = "Test", manufacturer = "Test"))
+        val fleet = service.addVehicle(1L, "AA523", VehicleDetails(productionYear = 1949, model = "Test", manufacturer = "Test"))
     }
 }

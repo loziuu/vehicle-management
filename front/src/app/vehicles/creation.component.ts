@@ -1,8 +1,8 @@
-import { Vehicle } from '../models/vehicle';
 import { VehicleService } from '../vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { CreateVehicleRequest, Details } from './vehiclerequest';
 
 @Component({
   selector: 'app-creation',
@@ -11,12 +11,14 @@ import { Location } from '@angular/common';
       Successfuly added vehicle!
     </div>
 
-    <label for="model">Model</label>
-    <input [(ngModel)]="vehicle.model" type="text" class="form-control" name="model"><br/>
-    <label for="manufacturer">Manufacturer</label>
-    <input [(ngModel)]="vehicle.manufacturer" type="text" class="form-control" name="manufacturer"><br/>
-    <label for="productionYear">Production Year</label>
-    <input [(ngModel)]="vehicle.productionYear" type="number" class="form-control" name="productionYear"><br/>
+    <label for="details.model">Model</label>
+    <input [(ngModel)]="vehicle.details.model" type="text" class="form-control" name="details.model"><br/>
+    <label for="details.manufacturer">Manufacturer</label>
+    <input [(ngModel)]="vehicle.details.manufacturer" type="text" class="form-control" name="details.manufacturer"><br/>
+    <label for="details.productionYear">Production Year</label>
+    <input [(ngModel)]="vehicle.details.productionYear" type="number" class="form-control" name="details.productionYear"><br/>
+    <label for="registration">Registration</label>
+    <input [(ngModel)]="vehicle.registration" type="text" class="form-control" name="registration"><br/>
     <button (click)="submit()" class="btn btn-primary">Add new vehicle</button>
     <button (click)="reset()" class="btn btn-warning">Reset</button>
   `,
@@ -29,7 +31,7 @@ export class CreationComponent implements OnInit {
               private route: ActivatedRoute,
               private location: Location,
               private router: Router) { }
-  vehicle: Vehicle;
+  vehicle: CreateVehicleRequest;
   isSuccess: boolean;
   fleetId: number;
 
@@ -52,6 +54,7 @@ export class CreationComponent implements OnInit {
   private initVehicle() {
     if (this.isSuccess)
       this.router.navigate(['/fleet', this.fleetId]);
-    this.vehicle = new Vehicle();
+    this.vehicle = new CreateVehicleRequest();
+    this.vehicle.details = new Details();
   }
 }

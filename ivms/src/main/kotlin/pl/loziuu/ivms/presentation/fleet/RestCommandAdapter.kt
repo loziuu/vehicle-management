@@ -6,26 +6,27 @@ import pl.loziuu.ivms.maintenance.checkout.ports.CheckoutService
 import pl.loziuu.ivms.maintenance.insurance.ports.InsuranceService
 import pl.loziuu.ivms.maintenance.repair.ports.RepairService
 import pl.loziuu.ivms.management.application.ManagementQueryService
-import pl.loziuu.ivms.management.fleet.port.FleetCommand
+import pl.loziuu.ivms.management.application.ManagementService
+import pl.loziuu.ivms.management.fleet.port.FleetService
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
 import pl.loziuu.ivms.management.vehicle.query.VehicleDto
 import pl.loziuu.ivms.presentation.RestResponse
 import pl.loziuu.ivms.presentation.fleet.requests.*
 
 @Component
-class RestCommandAdapter(val fleetCommand: FleetCommand,
+class RestCommandAdapter(val managementService: ManagementService,
                          val managementQueryService: ManagementQueryService,
                          val insuranceService: InsuranceService,
                          val repairService: RepairService,
                          var checkoutService: CheckoutService) {
 
     fun createFleet(request: CreateFleetRequest): ResponseEntity<Any> {
-        fleetCommand.createFleet(name = request.name)
+        managementService.createFleet(request.name)
         return RestResponse("Fleet created").toResponseEntity()
     }
 
-    fun addVehicle(fleetId: Long, dto: VehicleDetails): ResponseEntity<Any> {
-        fleetCommand.createVehicle(fleetId, dto)
+    fun addVehicle(fleetId: Long, registration: String, dto: VehicleDetails): ResponseEntity<Any> {
+        managementService.addVehicle(fleetId, registration, dto)
         return RestResponse("Vehicle added").toResponseEntity()
     }
 
@@ -53,7 +54,7 @@ class RestCommandAdapter(val fleetCommand: FleetCommand,
     }
 
     fun deleteVehicle(fleetId: Long, vehicleId: Long): ResponseEntity<Any> {
-        fleetCommand.removeVehicle(fleetId, vehicleId)
+        managementService.removeVehicle(fleetId, vehicleId)
         return RestResponse("Vehicle deleted").toResponseEntity()
     }
 
@@ -76,12 +77,12 @@ class RestCommandAdapter(val fleetCommand: FleetCommand,
     }
 
     fun deleteFleet(fleetId: Long): Any {
-        fleetCommand.removeFleet(fleetId)
+        managementService.removeFleet(fleetId)
         return RestResponse("Fleet deleted").toResponseEntity()
     }
 
     fun moveVehicle(fleetId: Long, vehicleId: Long, request: MoveVehicle): ResponseEntity<Any> {
-        fleetCommand.moveVehicleToFleet(fleetId, vehicleId, request.fleetId)
+        managementService.moveVehicleToFleet(fleetId, vehicleId, request.fleetId)
         return RestResponse("Vehicle moved").toResponseEntity()
     }
 }

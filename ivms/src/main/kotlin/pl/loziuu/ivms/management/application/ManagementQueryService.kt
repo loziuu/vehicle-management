@@ -2,7 +2,7 @@ package pl.loziuu.ivms.management.application
 
 import pl.loziuu.ivms.ddd.ApplicationService
 import pl.loziuu.ivms.management.fleet.query.FleetDto
-import pl.loziuu.ivms.management.fleet.query.FleetQueryRepository
+import pl.loziuu.ivms.management.fleet.port.FleetQueryRepository
 
 @ApplicationService
 class ManagementQueryService(val repository: FleetQueryRepository) {

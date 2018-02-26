@@ -3,11 +3,11 @@
       <button (click)='goBack()' class="btn btn-default">Back</button>
       <div *ngIf="vehicle">
         <h1>{{vehicle.manufacturer}} {{vehicle.model}},
-          {{vehicle.productionYear}}</h1>
+          {{vehicle.productionYear}}. {{ vehicle.registration }}</h1>
           <hr/>
         <br />
 
-    <div *ngFor="let jor of vehicle.journal" >
+    <div *ngIf="vehicle.journal as jor">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="insurance-tab" data-toggle="tab" href="#insurance" role="tab" aria-controls="insurance" aria-selected="true">Insurances</a>

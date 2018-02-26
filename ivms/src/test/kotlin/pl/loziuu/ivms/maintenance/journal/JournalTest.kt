@@ -63,7 +63,7 @@ class JournalTest {
 
         journal.registerInsurance(Insurance())
 
-        assertThat(journal.hasActualInsurance()).isTrue()
+        assertThat(journal.hasActualInsurance()).isFalse()
     }
 
     @Test
@@ -112,7 +112,7 @@ class JournalTest {
 
         val result = journal.willHaveActualInsuranceAt(LocalDate.now().plusMonths(3))
 
-        assertThat(result).isTrue()
+        assertThat(result).isFalse()
     }
 
     @Test

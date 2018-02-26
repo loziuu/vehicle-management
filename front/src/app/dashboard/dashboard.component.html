@@ -1,9 +1,46 @@
 <h2>Dashboard</h2>
 <hr/>
 <div class="row" *ngIf="fleets">
-  <div class="col-lg-6">
+    <div class="col-lg-8">
+        <table class="table">
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+          </tr>
+          <tr *ngFor="let fleet of fleets">
+            <td>{{ fleet.name }}</td>
+            <td>
+              <img data-toggle="modal" href="#" data-target="#fuzzy" width=100 height=100 src="/assets/excellent.png" alt="Profile Picture" *ngIf="fleet?.status.result == 5">
+              <img data-toggle="modal" href="#" data-target="#fuzzy" width=100 height=100 src="/assets/verygood.png" alt="Profile Picture" *ngIf="fleet?.status.result == 4">
+              <img data-toggle="modal" href="#" data-target="#fuzzy" width=100 height=100 src="/assets/medium.png" alt="Profile Picture" *ngIf="fleet?.status.result == 3">
+              <img data-toggle="modal" href="#" data-target="#fuzzy" width=100 height=100 src="/assets/weak.png" alt="Profile Picture" *ngIf="fleet?.status.result == 2">
+              <img data-toggle="modal" href="#" data-target="#fuzzy" width=100 height=100 src="/assets/bad.png" alt="Profile Picture" *ngIf="fleet?.status.result == 1">    
+            </td>
+            <td>
+              <button class="btn btn-primary btn-sm" (click)="showGraph(fleet)">Pick</button>
+            </td>
+          </tr>
+        </table>
+        <div class="btn-group btn-block mb-2">
+          <button class="btn btn-secondary" (click)="changeDays(2)">2</button>
+          <button class="btn btn-secondary" (click)="changeDays(3)">3</button>
+          <button class="btn btn-secondary" (click)="changeDays(5)">5</button>
+          <button class="btn btn-secondary" (click)="changeDays(7)">7</button>
+        </div>
+        <ngx-charts-line-chart 
+        [view]="[800,600]"
+        [results]="weekData"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxisLabel]="'Date'"
+        [yAxisLabel]="'Status'">
+        </ngx-charts-line-chart>
+      </div>
+  <div class="col-lg-4">
     <ngx-charts-bar-vertical 
-      [view]="[600,600]"
+      [view]="[400,600]"
       [results]="data"
       [xAxis]="true"
       [yAxis]="true"
@@ -13,26 +50,6 @@
       [yAxisLabel]="'Number of vehicles'"
       >
     </ngx-charts-bar-vertical>
-  </div>
-  <div class="col-lg-6">
-    <ngx-charts-line-chart 
-    [view]="[600,600]"
-    [results]="weekData"
-    [xAxis]="true"
-    [yAxis]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxisLabel]="'Fleets'"
-    [yAxisLabel]="'Number of vehicles'">
-    </ngx-charts-line-chart>
-    <table class="table">
-        <tr *ngFor="let fleet of fleets">
-          <td>{{ fleet.name }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="showGraph(fleet)">Pick</button>
-          </td>
-        </tr>
-      </table>
   </div>
 </div>
 

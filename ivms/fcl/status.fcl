@@ -26,11 +26,11 @@ FUZZIFY woInsurance
 END_FUZZIFY
 
 DEFUZZIFY status
-	TERM bad := 1
-	TERM weak := 2
-	TERM medium := 3
-	TERM good := 4
-	TERM perfect := 5
+	TERM bad := 1;
+	TERM weak := 2;
+	TERM medium := 3;
+	TERM good := 4;
+	TERM perfect := 5;
 	METHOD : COGS;		
 	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
@@ -41,11 +41,11 @@ RULEBLOCK No1
 	ACCU : MAX;			// Use 'max' accumulation method
 
 	RULE 1 : IF woCheckout IS zero AND woInsurance IS zero THEN status IS perfect;
-	RULE 2 : IF woCheckout IS zero AND woInsurance IS little THEN status IS perfect;
+	RULE 2 : IF woCheckout IS zero AND woInsurance IS little THEN status IS good;
 	RULE 3 : IF woCheckout IS zero AND woInsurance IS medium THEN status IS medium;
 	RULE 4 : IF woCheckout IS zero AND woInsurance IS big THEN status IS weak;
-	RULE 5 : IF woCheckout IS zero AND woInsurance IS little THEN status IS bad;
-	RULE 6 : IF woCheckout IS little AND woInsurance IS zero THEN status IS perfect;
+	RULE 5 : IF woCheckout IS zero AND woInsurance IS humongous THEN status IS bad;
+	RULE 6 : IF woCheckout IS little AND woInsurance IS zero THEN status IS good;
 	RULE 7 : IF woCheckout IS little AND woInsurance IS little THEN status IS good;
 	RULE 8 : IF woCheckout IS little AND woInsurance IS medium THEN status IS medium;
 	RULE 9 : IF woCheckout IS little AND woInsurance IS big THEN status IS weak;

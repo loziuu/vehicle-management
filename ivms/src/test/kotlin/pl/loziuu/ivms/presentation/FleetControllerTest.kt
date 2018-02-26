@@ -22,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.context.WebApplicationContext
 import pl.loziuu.ivms.management.vehicle.domain.VehicleDetails
 import pl.loziuu.ivms.presentation.dtos.RegisterCheckoutDto
-import pl.loziuu.ivms.presentation.fleet.requests.CreateFleetRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterCheckoutRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterInsuranceRequest
-import pl.loziuu.ivms.presentation.fleet.requests.RegisterRepairRequest
+import pl.loziuu.ivms.presentation.fleet.requests.*
 
 @SpringBootTest
 @Transactional
@@ -95,9 +92,10 @@ class FleetControllerTest {
 
     @Test
     fun postFleetVehicle() {
+        val request = CreateVehicleRequest("AAA123", VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))
         mockMvc.perform(post("/api/v1/fleets/1/vehicles").with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(VehicleDetails(manufacturer = "Test", model = "Test", productionYear = 2012))))
+                .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk)
     }
 
